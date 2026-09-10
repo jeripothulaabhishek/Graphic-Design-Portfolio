@@ -1,75 +1,271 @@
 "use client";
 
+import { useState, useRef } from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
-import { ArrowRight, Instagram } from "lucide-react";
-import { PORTFOLIO_CATEGORIES } from "@/data/projects";
+import Link from "next/link";
+import { motion, AnimatePresence } from "framer-motion";
+import { Instagram, ChevronLeft, ChevronRight, Maximize2, X, ArrowUpRight, Sparkles, Layers } from "lucide-react";
+import Sparkle3D from "@/components/ui/Sparkle3D";
+import { PORTFOLIO_CATEGORIES, ProjectItem } from "@/data/projects";
+
+const FILTER_TAGS = ["ALL", "CAROUSELS", "AD POSTS", "CAMPAIGNS"];
 
 export default function SocialDesignShowcase() {
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [activeFilter, setActiveFilter] = useState("ALL");
+  const [selectedLightboxProject, setSelectedLightboxProject] = useState<ProjectItem | null>(null);
+  const [scrollProgress, setScrollProgress] = useState(0);
+
   const socialCat = PORTFOLIO_CATEGORIES.find((cat) => cat.id === "social");
-  const projects = socialCat?.projects || [];
+  const allProjects = socialCat?.projects || [];
+
+  // Filter projects based on active pill
+  const filteredProjects = allProjects.filter((item) => {
+    if (activeFilter === "ALL") return true;
+    if (activeFilter === "CAROUSELS") return item.tags.some((t) => t.toLowerCase().includes("carousel"));
+    if (activeFilter === "AD POSTS") return item.tags.some((t) => t.toLowerCase().includes("ad") || t.toLowerCase().includes("post"));
+    if (activeFilter === "CAMPAIGNS") return item.tags.some((t) => t.toLowerCase().includes("campaign"));
+    return true;
+  });
+
+  // Smooth Horizontal Scroll Functions
+  const scroll = (direction: "left" | "right") => {
+    if (!scrollContainerRef.current) return;
+    const container = scrollContainerRef.current;
+    const scrollAmount = container.clientWidth * 0.75;
+    const targetScroll =
+      direction === "left"
+        ? container.scrollLeft - scrollAmount
+        : container.scrollLeft + scrollAmount;
+
+    container.scrollTo({
+      left: targetScroll,
+      behavior: "smooth",
+    });
+  };
+
+  const handleScroll = () => {
+    if (!scrollContainerRef.current) return;
+    const container = scrollContainerRef.current;
+    const maxScroll = container.scrollWidth - container.clientWidth;
+    if (maxScroll > 0) {
+      const progress = (container.scrollLeft / maxScroll) * 100;
+      setScrollProgress(progress);
+    }
+  };
 
   return (
-    <section className="py-24 bg-[#F7F7F3] border-b border-[#E5E5E0] overflow-hidden">
+    <section id="social-showcase" className="py-24 bg-[#F7F7F3] border-b border-[#E5E5E0] overflow-hidden">
       <div className="max-w-[1400px] mx-auto px-6 md:px-12">
         
         {/* SECTION HEADER */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-10 gap-6">
           <div>
             <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white border border-[#E5E5E0] shadow-xs mb-4">
               <Instagram className="w-3.5 h-3.5 text-[#FF6B35]" />
               <span className="font-mono-meta text-xs font-semibold text-[#FF6B35] tracking-widest uppercase">
-                05 / SOCIAL DESIGN
+                05 / SOCIAL DESIGN & CAMPAIGNS
               </span>
             </div>
-            <h2 className="font-display text-4xl sm:text-5xl font-extrabold text-[#111111] uppercase tracking-tight">
+            <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-extrabold text-[#111111] uppercase tracking-tight">
               DESIGN THAT LIVES IN THE FEED.
             </h2>
           </div>
-          <p className="text-[#707070] text-sm md:text-base max-w-md">
-            High-converting social campaigns, Instagram carousels, Reels visual assets & promotional ad design.
-          </p>
+
+          {/* FILTER PILLS & SMOOTH NAV BUTTONS */}
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+            {/* Filter Pills */}
+            <div className="flex items-center gap-1.5 bg-white p-1.5 rounded-full border border-[#E5E5E0] shadow-xs">
+              {FILTER_TAGS.map((tag) => {
+                const isActive = activeFilter === tag;
+                return (
+                  <button
+                    key={tag}
+                    onClick={() => setActiveFilter(tag)}
+                    className={`px-3.5 py-1.5 rounded-full font-mono-meta text-[11px] font-bold tracking-wider transition-all duration-200 ${
+                      isActive
+                        ? "bg-[#FF6B35] text-white shadow-xs"
+                        : "text-[#707070] hover:text-[#111111] hover:bg-[#F7F7F3]"
+                    }`}
+                  >
+                    {tag}
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Smooth Left / Right Scroll Controls */}
+            <div className="hidden sm:flex items-center gap-2">
+              <button
+                onClick={() => scroll("left")}
+                aria-label="Scroll Left"
+                className="w-11 h-11 rounded-full bg-white border border-[#E5E5E0] shadow-xs flex items-center justify-center text-[#111111] hover:bg-[#FF6B35] hover:text-white transition-all transform active:scale-95"
+              >
+                <ChevronLeft className="w-5 h-5" />
+              </button>
+              <button
+                onClick={() => scroll("right")}
+                aria-label="Scroll Right"
+                className="w-11 h-11 rounded-full bg-white border border-[#E5E5E0] shadow-xs flex items-center justify-center text-[#111111] hover:bg-[#FF6B35] hover:text-white transition-all transform active:scale-95"
+              >
+                <ChevronRight className="w-5 h-5" />
+              </button>
+            </div>
+          </div>
         </div>
 
-        {/* HORIZONTAL EDITORIAL GALLERY */}
-        <div className="flex gap-6 overflow-x-auto pb-8 pt-2 scrollbar-none snap-x snap-mandatory">
-          {projects.map((item, idx) => (
+        {/* SMOOTH SCROLLING GALLERY CONTAINER */}
+        <div
+          ref={scrollContainerRef}
+          onScroll={handleScroll}
+          data-cursor="move"
+          className="flex gap-6 overflow-x-auto pb-6 pt-3 scrollbar-none snap-x snap-mandatory cursor-grab active:cursor-grabbing"
+        >
+          {filteredProjects.map((item, idx) => (
             <motion.div
               key={item.id}
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: idx * 0.1 }}
-              className="snap-start shrink-0 w-[280px] sm:w-[340px] md:w-[380px] bg-white border border-[#E5E5E0] rounded-3xl p-4 shadow-card hover:shadow-lift transition-all duration-300 group"
+              transition={{ duration: 0.5, delay: idx * 0.08 }}
+              className="snap-start shrink-0 w-[290px] sm:w-[350px] md:w-[390px] bg-white border border-[#E5E5E0] rounded-3xl p-4 shadow-card hover:shadow-lift transition-all duration-300 group flex flex-col justify-between"
             >
-              {/* Image Aspect Ratio Box */}
-              <div className="relative w-full h-[400px] sm:h-[460px] rounded-2xl overflow-hidden bg-[#111111] mb-4">
+              {/* IMAGE ASPECT RATIO CONTAINER */}
+              <div className="relative w-full h-[390px] sm:h-[460px] rounded-2xl overflow-hidden bg-[#0F0F0F] mb-4">
                 <Image
                   src={item.image}
                   alt={item.title}
                   fill
-                  className="object-cover group-hover:scale-105 transition-transform duration-500"
+                  quality={95}
+                  sizes="(max-width: 768px) 100vw, 420px"
+                  className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                 />
-                <div className="absolute top-3 right-3 bg-[#111111]/80 backdrop-blur-md px-3 py-1 rounded-full font-mono-meta text-[11px] font-bold text-white">
-                  {idx % 2 === 0 ? "4:5 CAROUSEL" : "1:1 AD POST"}
+
+                {/* Aspect Ratio Badge */}
+                <div className="absolute top-3 right-3 bg-[#111111]/85 backdrop-blur-md px-3 py-1 rounded-full font-mono-meta text-[10px] font-bold text-white tracking-wider border border-white/10">
+                  {idx % 2 === 0 ? "4:5 INSTAGRAM CAROUSEL" : "1:1 AD POST"}
+                </div>
+
+                {/* HOVER OVERLAY LIGHTBOX TRIGGER */}
+                <div className="absolute inset-0 bg-[#111111]/40 backdrop-blur-xs opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
+                  <button
+                    onClick={() => setSelectedLightboxProject(item)}
+                    className="px-4 py-2.5 rounded-full bg-white text-[#111111] font-mono-meta text-xs font-bold flex items-center gap-2 shadow-xl hover:bg-[#FF6B35] hover:text-white transition-colors transform group-hover:scale-105"
+                  >
+                    <Maximize2 className="w-3.5 h-3.5" />
+                    <span>ZOOM HIGH-RES CREATIVE</span>
+                  </button>
                 </div>
               </div>
 
-              {/* Title & Metadata */}
-              <div className="px-2 pb-2">
-                <div className="flex justify-between items-center font-mono-meta text-xs text-[#707070] mb-1">
-                  <span>{item.client || "CAMPAIGN CREATIVE"}</span>
+              {/* CARD FOOTER INFO */}
+              <div className="px-1 pb-1">
+                <div className="flex justify-between items-center font-mono-meta text-xs text-[#707070] mb-1.5">
+                  <span className="uppercase tracking-wider font-bold text-[#FF6B35]">
+                    {item.client || "CAMPAIGN DESIGN"}
+                  </span>
                   <span>{item.year}</span>
                 </div>
-                <h3 className="font-display text-lg font-bold text-[#111111] group-hover:text-[#FF6B35] transition-colors">
-                  {item.title}
+
+                <h3 className="font-display text-lg font-extrabold text-[#111111] group-hover:text-[#FF6B35] transition-colors flex items-center justify-between">
+                  <span>{item.title}</span>
+                  <Link
+                    href={`/work/${item.slug}`}
+                    className="w-7 h-7 rounded-full bg-[#F7F7F3] border border-[#E5E5E0] flex items-center justify-center text-[#111111] group-hover:bg-[#FF6B35] group-hover:text-white transition-colors"
+                  >
+                    <ArrowUpRight className="w-3.5 h-3.5" />
+                  </Link>
                 </h3>
               </div>
             </motion.div>
           ))}
         </div>
 
+        {/* INTERACTIVE SMOOTH SCROLL PROGRESS BAR */}
+        <div className="mt-4 w-full flex items-center justify-between gap-4 pt-4 border-t border-[#E5E5E0]">
+          <span className="font-mono-meta text-[11px] text-[#707070] uppercase tracking-wider">
+            SWIPE OR USE ARROWS TO NAVIGATE
+          </span>
+
+          <div className="flex-1 max-w-xs h-1.5 bg-[#E5E5E0] rounded-full overflow-hidden">
+            <div
+              className="h-full bg-[#FF6B35] transition-all duration-150 rounded-full"
+              style={{ width: `${Math.max(15, scrollProgress)}%` }}
+            />
+          </div>
+
+          <div className="font-mono-meta text-xs font-bold text-[#111111]">
+            {filteredProjects.length} CREATIVES
+          </div>
+        </div>
+
       </div>
+
+      {/* FULL HIGH-RESOLUTION LIGHTBOX MODAL FOR SOCIAL CREATIVES */}
+      <AnimatePresence>
+        {selectedLightboxProject && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 bg-[#090909]/95 backdrop-blur-xl flex flex-col items-center justify-between p-4 sm:p-8"
+            onClick={() => setSelectedLightboxProject(null)}
+          >
+            {/* LIGHTBOX TOP BAR */}
+            <div className="w-full max-w-6xl flex items-center justify-between z-10">
+              <div className="flex items-center gap-3">
+                <Sparkle3D className="w-5 h-5" />
+                <div>
+                  <h3 className="font-display text-lg font-bold text-white uppercase">
+                    {selectedLightboxProject.title}
+                  </h3>
+                  <span className="font-mono-meta text-xs text-zinc-400">
+                    {selectedLightboxProject.category} • HIGH RESOLUTION CREATIVE
+                  </span>
+                </div>
+              </div>
+
+              <button
+                onClick={() => setSelectedLightboxProject(null)}
+                className="w-10 h-10 rounded-full bg-white/10 text-white flex items-center justify-center hover:bg-[#FF6B35] hover:text-white transition-colors"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* LIGHTBOX MAIN PHOTO DISPLAY */}
+            <div
+              className="relative w-full max-w-4xl h-[70vh] my-auto flex items-center justify-center p-2"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <Image
+                src={selectedLightboxProject.image}
+                alt={selectedLightboxProject.title}
+                fill
+                quality={100}
+                unoptimized
+                sizes="100vw"
+                className="object-contain filter drop-shadow-[0_20px_50px_rgba(0,0,0,0.8)]"
+              />
+            </div>
+
+            {/* LIGHTBOX FOOTER CAPTION */}
+            <div className="w-full max-w-4xl bg-white/10 border border-white/10 backdrop-blur-md rounded-2xl p-4 text-white flex flex-col sm:flex-row items-center justify-between gap-4 z-10">
+              <p className="font-mono-meta text-xs text-zinc-300">
+                {selectedLightboxProject.description}
+              </p>
+              <Link
+                href={`/work/${selectedLightboxProject.slug}`}
+                onClick={() => setSelectedLightboxProject(null)}
+                className="px-5 py-2.5 rounded-xl bg-[#FF6B35] text-white font-display font-bold text-xs uppercase flex items-center gap-1.5 shadow-md hover:bg-white hover:text-[#111111] transition-colors shrink-0"
+              >
+                <span>VIEW CASE STUDY</span>
+                <ArrowUpRight className="w-4 h-4" />
+              </Link>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 }

@@ -1,0 +1,115 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+@layer base {
+  :root {
+    --background: #F7F7F3;
+    --foreground: #111111;
+
+    --surface: #FFFFFF;
+    --surface-foreground: #111111;
+
+    --card: #FFFFFF;
+    --card-foreground: #111111;
+
+    --primary: #FFB800;
+    --primary-foreground: #111111;
+
+    --secondary: #19C8D8;
+    --secondary-foreground: #FFFFFF;
+
+    --accent-orange: #FF6B35;
+
+    --muted: #F0F0EC;
+    --muted-foreground: #707070;
+
+    --border: #E5E5E0;
+    --input: #E5E5E0;
+    --ring: #FFB800;
+
+    --radius: 1rem;
+  }
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+  
+  html, body {
+    background-color: #F7F7F3;
+    color: #111111;
+    font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background-color: #FFB800;
+    color: #111111;
+  }
+}
+
+/* Typography Utility Classes */
+.font-display {
+  font-family: var(--font-display), "Space Grotesk", sans-serif;
+}
+
+.font-mono-meta {
+  font-family: var(--font-mono), "JetBrains Mono", monospace;
+}
+
+/* Editorial Design System Utilities */
+.editorial-pill {
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid #E5E5E0;
+  box-shadow: 0 4px 20px -2px rgba(17, 17, 17, 0.05);
+}
+
+.editorial-card {
+  background-color: #FFFFFF;
+  border: 1px solid #E5E5E0;
+  box-shadow: 0 4px 16px -2px rgba(17, 17, 17, 0.03);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
+}
+
+.editorial-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 36px -4px rgba(17, 17, 17, 0.08);
+  border-color: rgba(255, 184, 0, 0.5);
+}
+
+.shadow-studio {
+  box-shadow: 0 12px 32px -8px rgba(17, 17, 17, 0.06);
+}
+
+.shadow-soft {
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.04);
+}
+
+/* Swiss Grid Pattern */
+.bg-swiss-grid {
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, rgba(17, 17, 17, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(17, 17, 17, 0.03) 1px, transparent 1px);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 7px;
+}
+::-webkit-scrollbar-track {
+  background: #F7F7F3;
+}
+::-webkit-scrollbar-thumb {
+  background: #D5D5CF;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #FFB800;
+}

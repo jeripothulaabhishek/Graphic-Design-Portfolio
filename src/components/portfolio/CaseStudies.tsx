@@ -15,7 +15,7 @@ export default function CaseStudies() {
   return (
     <section className="py-24 bg-[#F7F7F3] bg-swiss-grid border-b border-[#E5E5E0]">
       <div className="max-w-[1400px] mx-auto px-6 md:px-12">
-        
+
         {/* SECTION HEADER */}
         <div className="flex flex-col items-start mb-16">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white border border-[#E5E5E0] shadow-xs mb-4">
@@ -34,7 +34,7 @@ export default function CaseStudies() {
 
         {/* FLAGSHIP CASE STUDY CARD */}
         <div className="bg-white border border-[#E5E5E0] rounded-3xl overflow-hidden shadow-studio">
-          
+
           {/* LARGE 3D DESK & POSTER MOCKUP HERO */}
           <div className="relative h-[380px] sm:h-[500px] lg:h-[600px] w-full bg-[#111111] overflow-hidden">
             <Image
@@ -72,7 +72,7 @@ export default function CaseStudies() {
 
           {/* EDITORIAL NARRATIVE GRID */}
           <div className="p-8 lg:p-12 grid grid-cols-1 lg:grid-cols-12 gap-12">
-            
+
             {/* LEFT: STORY NARRATIVE */}
             <div className="lg:col-span-7 flex flex-col justify-between">
               <div>

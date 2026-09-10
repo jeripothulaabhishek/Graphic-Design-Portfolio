@@ -81,7 +81,7 @@ export default function ToolsSection() {
   return (
     <section id="tools" className="py-24 bg-[#F7F7F3] border-b border-[#E5E5E0]">
       <div className="max-w-[1400px] mx-auto px-6 md:px-12">
-        
+
         {/* SECTION HEADER */}
         <div className="flex flex-col items-start mb-16">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white border border-[#E5E5E0] shadow-xs mb-4">

@@ -25,7 +25,7 @@ export default function SelectedWork() {
   return (
     <section id="work" className="py-24 bg-[#F7F7F3] border-b border-[#E5E5E0]">
       <div className="max-w-[1400px] mx-auto px-6 md:px-12">
-        
+
         {/* SECTION HEADER */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
           <div>
@@ -45,7 +45,7 @@ export default function SelectedWork() {
 
         {/* ASYMMETRIC EDITORIAL GRID */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-          
+
           {/* 1. LARGE FEATURED PROJECT: TEDX ACE COLLEGE (SPAN 12) */}
           {flagshipProject && (
             <motion.div
@@ -56,7 +56,7 @@ export default function SelectedWork() {
               className="lg:col-span-12 group relative bg-white border border-[#E5E5E0] rounded-3xl overflow-hidden shadow-card hover:shadow-lift transition-all duration-300"
             >
               <Link href={`/work/${flagshipProject.slug}`} className="grid grid-cols-1 lg:grid-cols-12 items-center">
-                
+
                 {/* Visual Image Preview */}
                 <div className="lg:col-span-7 relative h-[380px] sm:h-[450px] lg:h-[520px] overflow-hidden bg-[#111111]">
                   <Image

@@ -1,7 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Wrench, Box, Code, Palette, Film, Sparkles, Layers, Cpu } from "lucide-react";
+import { Wrench, Box, Code, Palette, Film, Layers, Cpu } from "lucide-react";
+import Sparkle3D from "@/components/ui/Sparkle3D";
 
 interface ToolItem {
   name: string;
@@ -30,7 +31,7 @@ const TOOLS: ToolItem[] = [
     name: "ILLUSTRATOR",
     category: "VECTOR BRANDING",
     desc: "Precision vector logo marks, typography scales & brand identity guides.",
-    icon: Sparkles,
+    icon: Sparkle3D,
     accent: "bg-[#FF6B35] text-white",
   },
   {
@@ -87,7 +88,7 @@ export default function ToolsSection() {
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white border border-[#E5E5E0] shadow-xs mb-4">
             <Wrench className="w-3.5 h-3.5 text-[#111111]" />
             <span className="font-mono-meta text-xs font-semibold text-[#111111] tracking-widest uppercase">
-              07 / CREATIVE STACK
+              06 / CREATIVE STACK
             </span>
           </div>
           <h2 className="font-display text-4xl sm:text-5xl font-extrabold text-[#111111] uppercase tracking-tight">

@@ -3,7 +3,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowUpRight, Sparkles, CheckCircle2, ShieldCheck } from "lucide-react";
+import { ArrowUpRight, CheckCircle2, ShieldCheck } from "lucide-react";
+import Sparkle3D from "@/components/ui/Sparkle3D";
 import { PORTFOLIO_CATEGORIES } from "@/data/projects";
 
 export default function CaseStudies() {
@@ -19,9 +20,9 @@ export default function CaseStudies() {
         {/* SECTION HEADER */}
         <div className="flex flex-col items-start mb-16">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white border border-[#E5E5E0] shadow-xs mb-4">
-            <Sparkles className="w-3.5 h-3.5 text-[#FFB800]" />
+            <Sparkle3D className="w-4 h-4" />
             <span className="font-mono-meta text-xs font-semibold text-[#FFB800] tracking-widest uppercase">
-              08 / FEATURED CASE STUDY
+              07 / FEATURED CASE STUDY
             </span>
           </div>
           <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-extrabold text-[#111111] uppercase tracking-tight">

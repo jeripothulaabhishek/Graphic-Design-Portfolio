@@ -4,7 +4,8 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { ArrowUpRight, ArrowUp, Mail, Linkedin, Instagram, Sparkles, FolderCheck } from "lucide-react";
+import { ArrowUpRight, ArrowUp, Mail, Linkedin, Instagram, FolderCheck } from "lucide-react";
+import Sparkle3D from "@/components/ui/Sparkle3D";
 
 export default function ContactFooter() {
   const [formData, setFormData] = useState({
@@ -36,9 +37,9 @@ export default function ContactFooter() {
         {/* SECTION HEADER */}
         <div className="flex flex-col items-start mb-16">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white border border-[#E5E5E0] shadow-xs mb-4">
-            <Sparkles className="w-3.5 h-3.5 text-[#FFB800]" />
+            <Sparkle3D className="w-4 h-4" />
             <span className="font-mono-meta text-xs font-semibold text-[#111111] tracking-widest uppercase">
-              09 / CONTACT
+              08 / CONTACT
             </span>
           </div>
           <h2 className="font-display text-4xl sm:text-6xl md:text-7xl font-extrabold text-[#111111] uppercase tracking-tight max-w-3xl leading-[0.95]">
@@ -187,18 +188,23 @@ export default function ContactFooter() {
                 DIRECT CHANNELS
               </span>
 
-              <a
-                href="mailto:contact@abhishek.design"
-                className="flex items-center justify-between p-3.5 rounded-2xl bg-[#F7F7F3] border border-[#E5E5E0] hover:border-[#111111] transition-colors"
-              >
+              <div className="flex items-center justify-between p-3.5 rounded-2xl bg-[#F7F7F3] border border-[#E5E5E0] hover:border-[#111111] transition-colors">
                 <div className="flex items-center gap-3">
                   <Mail className="w-4 h-4 text-[#FFB800]" />
                   <span className="font-mono-meta text-xs font-bold text-[#111111]">
                     abhishekm.designing@gmail.com
                   </span>
                 </div>
-                <ArrowUpRight className="w-4 h-4 text-[#707070]" />
-              </a>
+                <button
+                  onClick={() => {
+                    navigator.clipboard.writeText("abhishekm.designing@gmail.com");
+                    alert("Email copied to clipboard!");
+                  }}
+                  className="font-mono-meta text-[11px] font-bold text-[#FFB800] bg-[#111111] px-2.5 py-1 rounded-md hover:bg-[#FFB800] hover:text-[#111111] transition-colors"
+                >
+                  COPY
+                </button>
+              </div>
 
               <a
                 href="https://www.linkedin.com"

@@ -2,7 +2,8 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { Sparkles, CheckCircle2, Cpu, Palette, Layers, Box, Code, Compass } from "lucide-react";
+import { CheckCircle2, Cpu, Palette, Layers, Box, Code, Compass } from "lucide-react";
+import Sparkle3D from "@/components/ui/Sparkle3D";
 
 const CAPABILITIES = [
   {
@@ -58,7 +59,7 @@ export default function AboutIntro() {
         <div className="flex flex-col items-start mb-16">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white border border-[#E5E5E0] shadow-xs mb-4">
             <span className="font-mono-meta text-xs font-semibold text-[#19C8D8] tracking-widest uppercase">
-              01 / ABOUT
+              02 / ABOUT
             </span>
           </div>
           <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#111111] uppercase tracking-tight max-w-3xl">
@@ -106,7 +107,7 @@ export default function AboutIntro() {
             <div className="w-full h-64 rounded-2xl bg-gradient-to-tr from-[#111111] to-[#222222] p-6 flex flex-col justify-between text-white relative overflow-hidden mb-6 shadow-inner">
               <div className="flex justify-between items-start z-10">
                 <span className="font-mono-meta text-xs text-[#FFB800] tracking-wider uppercase font-semibold">01 / AVATAR MARK</span>
-                <Sparkles className="w-5 h-5 text-[#FFB800]" />
+                <Sparkle3D className="w-5 h-5" />
               </div>
 
               <div className="my-auto text-center py-2 z-10">

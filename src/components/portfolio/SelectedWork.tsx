@@ -3,7 +3,8 @@
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { ArrowUpRight, Sparkles } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
+import Sparkle3D from "@/components/ui/Sparkle3D";
 import { PORTFOLIO_CATEGORIES, ProjectItem } from "@/data/projects";
 
 export default function SelectedWork() {
@@ -31,7 +32,7 @@ export default function SelectedWork() {
           <div>
             <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white border border-[#E5E5E0] shadow-xs mb-4">
               <span className="font-mono-meta text-xs font-semibold text-[#FFB800] tracking-widest uppercase">
-                02 / SELECTED WORK
+                03 / SELECTED WORK
               </span>
             </div>
             <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-extrabold text-[#111111] uppercase tracking-tight">
@@ -68,7 +69,7 @@ export default function SelectedWork() {
                   />
                   <div className="absolute top-6 left-6 z-10">
                     <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#111111]/80 backdrop-blur-md text-white font-mono-meta text-xs font-bold tracking-wider">
-                      <Sparkles className="w-3.5 h-3.5 text-[#FFB800]" />
+                      <Sparkle3D className="w-4 h-4" />
                       FLAGSHIP CASE STUDY 2026
                     </span>
                   </div>

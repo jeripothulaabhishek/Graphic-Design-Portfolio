@@ -4,7 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { Folder, X, ArrowUpRight, Sparkles, Layers, Eye, Maximize2, Film } from "lucide-react";
+import { Folder, X, ArrowUpRight, Layers, Eye, Maximize2, Film } from "lucide-react";
 import { PORTFOLIO_CATEGORIES, ProjectItem } from "@/data/projects";
 
 interface ArchiveFolderItem {
@@ -101,7 +101,7 @@ export default function VisualArchive() {
         <div className="flex flex-col items-start mb-16">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white border border-[#E5E5E0] shadow-xs mb-4">
             <span className="font-mono-meta text-xs font-semibold text-[#FFB800] tracking-widest uppercase">
-              03 / VISUAL ARCHIVE
+              04 / VISUAL ARCHIVE
             </span>
           </div>
           <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-extrabold text-[#111111] uppercase tracking-tight">

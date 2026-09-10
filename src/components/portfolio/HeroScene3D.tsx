@@ -4,7 +4,8 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { motion, useMotionValue, useSpring, useTransform, useMotionTemplate } from "framer-motion";
 import * as THREE from "three";
-import { Sparkles, Layers, Box, Compass, Move3d } from "lucide-react";
+import { Layers, Box, Compass, Move3d } from "lucide-react";
+import Sparkle3D from "@/components/ui/Sparkle3D";
 
 export default function HeroScene3D() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -40,6 +41,8 @@ export default function HeroScene3D() {
   const spotlightY = useTransform(y, [-0.5, 0.5], ["0%", "100%"]);
   const spotlightBg = useMotionTemplate`radial-gradient(600px circle at ${spotlightX} ${spotlightY}, rgba(255, 184, 0, 0.15), transparent 40%)`;
 
+  const [isMobileDevice, setIsMobileDevice] = useState(false);
+
   // Handle Mouse Movement over Card Container
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!containerRef.current) return;
@@ -57,11 +60,73 @@ export default function HeroScene3D() {
     y.set(yPct);
   };
 
+  // Handle Touch Drag on Mobile Devices
+  const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
+    if (!containerRef.current || e.touches.length === 0) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    const width = rect.width;
+    const height = rect.height;
+
+    const touchX = e.touches[0].clientX - rect.left;
+    const touchY = e.touches[0].clientY - rect.top;
+
+    const xPct = Math.max(-0.5, Math.min(0.5, touchX / width - 0.5));
+    const yPct = Math.max(-0.5, Math.min(0.5, touchY / height - 0.5));
+
+    setIsHovered(true);
+    x.set(xPct);
+    y.set(yPct);
+  };
+
   const handleMouseLeave = () => {
     setIsHovered(false);
     x.set(0);
     y.set(0);
   };
+
+  // Mobile Device Orientation Gyroscope Tilt Handler
+  useEffect(() => {
+    const handleOrientation = (e: DeviceOrientationEvent) => {
+      if (e.beta === null || e.gamma === null) return;
+      setIsMobileDevice(true);
+
+      // Normalizing gamma (left/right tilt) [-30, 30] to [-0.5, 0.5]
+      const clampedGamma = Math.max(-25, Math.min(25, e.gamma));
+      const xPct = clampedGamma / 50;
+
+      // Normalizing beta (front/back tilt around 40 deg holding angle) [-25, 25] to [-0.5, 0.5]
+      const targetBeta = e.beta - 40;
+      const clampedBeta = Math.max(-25, Math.min(25, targetBeta));
+      const yPct = clampedBeta / 50;
+
+      x.set(xPct);
+      y.set(yPct);
+    };
+
+    if (typeof window !== "undefined" && window.DeviceOrientationEvent) {
+      if (typeof (DeviceOrientationEvent as any).requestPermission === "function") {
+        const requestGyro = () => {
+          (DeviceOrientationEvent as any)
+            .requestPermission()
+            .then((permissionState: string) => {
+              if (permissionState === "granted") {
+                window.addEventListener("deviceorientation", handleOrientation, true);
+              }
+            })
+            .catch(() => {});
+        };
+        window.addEventListener("touchstart", requestGyro, { once: true });
+      } else {
+        window.addEventListener("deviceorientation", handleOrientation, true);
+      }
+    }
+
+    return () => {
+      if (typeof window !== "undefined") {
+        window.removeEventListener("deviceorientation", handleOrientation, true);
+      }
+    };
+  }, [x, y]);
 
   // Three.js WebGL Ambient Particle Field & Light Dynamics
   useEffect(() => {
@@ -170,7 +235,10 @@ export default function HeroScene3D() {
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={handleMouseLeave}
-      className="relative w-full min-h-[480px] sm:min-h-[540px] md:min-h-[600px] flex items-center justify-center p-2 sm:p-4 select-none perspective-1000"
+      onTouchMove={handleTouchMove}
+      onTouchStart={() => setIsHovered(true)}
+      onTouchEnd={handleMouseLeave}
+      className="relative w-full min-h-[440px] sm:min-h-[540px] md:min-h-[600px] flex items-center justify-center p-2 sm:p-4 select-none perspective-1000 touch-pan-y"
     >
       {/* 1. WEBGL CANVAS BACKDROP FOR AMBIENT PARTICLES & 3D LIGHTING */}
       <canvas
@@ -222,7 +290,7 @@ export default function HeroScene3D() {
           <div className="mt-3.5 pt-3 border-t border-[#E5E5E0]/80 flex items-center justify-between text-xs font-mono-meta text-[#707070]">
             <div className="flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-[#FFB800] animate-pulse" />
-              <span className="font-semibold text-[#111111] uppercase tracking-wider text-[11px]">
+              <span className="font-semibold text-[#111111] uppercase tracking-wider text-[10px] sm:text-[11px]">
                 ABHISHEK 3D CREATIVE STUDIO
               </span>
             </div>
@@ -242,17 +310,17 @@ export default function HeroScene3D() {
             y: floatY1,
             transform: "translateZ(65px)",
           }}
-          className="absolute -top-4 -left-3 sm:-top-6 sm:-left-6 bg-white/95 border border-[#E5E5E0] shadow-xl rounded-xl px-3.5 py-2 flex items-center gap-2.5 backdrop-blur-md z-30 pointer-events-none"
+          className="absolute -top-3 -left-2 sm:-top-6 sm:-left-6 bg-white/95 border border-[#E5E5E0] shadow-xl rounded-xl px-2.5 sm:px-3.5 py-1.5 sm:py-2 flex items-center gap-2 sm:gap-2.5 backdrop-blur-md z-30 pointer-events-none"
         >
-          <div className="w-7 h-7 rounded-lg bg-[#001E36] flex items-center justify-center font-bold text-xs text-[#31A8FF] shadow-xs">
+          <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-lg bg-[#001E36] flex items-center justify-center font-bold text-[10px] sm:text-xs text-[#31A8FF] shadow-xs">
             Ps
           </div>
-          <div className="w-7 h-7 rounded-lg bg-[#330000] flex items-center justify-center font-bold text-xs text-[#FF9A00] shadow-xs">
+          <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-lg bg-[#330000] flex items-center justify-center font-bold text-[10px] sm:text-xs text-[#FF9A00] shadow-xs">
             Ai
           </div>
-          <div className="flex flex-col">
-            <span className="font-display text-xs font-bold text-[#111111]">Visual Art</span>
-            <span className="font-mono-meta text-[10px] text-[#707070]">Adobe Suite 3D</span>
+          <div className="hidden xs:flex flex-col sm:flex flex-col">
+            <span className="font-display text-[11px] sm:text-xs font-bold text-[#111111]">Visual Art</span>
+            <span className="font-mono-meta text-[9px] sm:text-[10px] text-[#707070]">Adobe Suite 3D</span>
           </div>
         </motion.div>
 
@@ -263,14 +331,14 @@ export default function HeroScene3D() {
             y: floatY2,
             transform: "translateZ(55px)",
           }}
-          className="absolute -top-3 -right-3 sm:-top-5 sm:-right-5 bg-white/95 border border-[#E5E5E0] shadow-xl rounded-xl px-3.5 py-2 flex items-center gap-2.5 backdrop-blur-md z-30 pointer-events-none"
+          className="absolute -top-3 -right-2 sm:-top-5 sm:-right-5 bg-white/95 border border-[#E5E5E0] shadow-xl rounded-xl px-2.5 sm:px-3.5 py-1.5 sm:py-2 flex items-center gap-2 sm:gap-2.5 backdrop-blur-md z-30 pointer-events-none"
         >
-          <div className="w-7 h-7 rounded-lg bg-[#1E1E1E] flex items-center justify-center text-white shadow-xs font-bold text-xs">
+          <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-lg bg-[#1E1E1E] flex items-center justify-center text-white shadow-xs font-bold text-[10px] sm:text-xs">
             ❖
           </div>
           <div className="flex flex-col">
-            <span className="font-display text-xs font-bold text-[#111111]">Figma & UI</span>
-            <span className="font-mono-meta text-[10px] text-[#FFB800] font-semibold uppercase">3D Visual Systems</span>
+            <span className="font-display text-[11px] sm:text-xs font-bold text-[#111111]">Figma & UI</span>
+            <span className="font-mono-meta text-[9px] sm:text-[10px] text-[#FFB800] font-semibold uppercase">3D Systems</span>
           </div>
         </motion.div>
 
@@ -281,14 +349,14 @@ export default function HeroScene3D() {
             y: floatY3,
             transform: "translateZ(75px)",
           }}
-          className="absolute -bottom-4 -left-2 sm:-bottom-5 sm:-left-5 bg-white/95 border border-[#E5E5E0] shadow-xl rounded-xl px-3.5 py-2 flex items-center gap-2.5 backdrop-blur-md z-30 pointer-events-none"
+          className="absolute -bottom-3 -left-1 sm:-bottom-5 sm:-left-5 bg-white/95 border border-[#E5E5E0] shadow-xl rounded-xl px-2.5 sm:px-3.5 py-1.5 sm:py-2 flex items-center gap-2 sm:gap-2.5 backdrop-blur-md z-30 pointer-events-none"
         >
-          <div className="w-8 h-8 rounded-lg bg-[#FFB800] flex items-center justify-center text-[#111111] shadow-xs">
-            <Sparkles className="w-4 h-4 fill-current" />
+          <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-[#FFB800] flex items-center justify-center text-[#111111] shadow-xs">
+            <Sparkle3D className="w-4 h-4 sm:w-5 sm:h-5" />
           </div>
           <div className="flex flex-col">
-            <span className="font-display text-xs font-bold text-[#111111]">Design, Create, Move</span>
-            <span className="font-mono-meta text-[10px] text-[#707070]">3D Brand Storytelling</span>
+            <span className="font-display text-[11px] sm:text-xs font-bold text-[#111111]">Design, Move</span>
+            <span className="font-mono-meta text-[9px] sm:text-[10px] text-[#707070]">3D Storytelling</span>
           </div>
         </motion.div>
 
@@ -299,11 +367,11 @@ export default function HeroScene3D() {
             y: floatY2,
             transform: "translateZ(50px)",
           }}
-          className="absolute -bottom-3 -right-2 sm:-bottom-4 sm:-right-4 bg-[#111111] text-white shadow-2xl rounded-full px-3.5 py-1.5 flex items-center gap-2 backdrop-blur-md z-30 pointer-events-none"
+          className="absolute -bottom-3 -right-1 sm:-bottom-4 sm:-right-4 bg-[#111111] text-white shadow-2xl rounded-full px-3 sm:px-3.5 py-1 sm:py-1.5 flex items-center gap-1.5 sm:gap-2 backdrop-blur-md z-30 pointer-events-none"
         >
           <Compass className="w-3.5 h-3.5 text-[#FFB800] animate-spin-slow" />
-          <span className="font-mono-meta text-[10px] font-semibold uppercase tracking-wider">
-            {isHovered ? "3D PERSPECTIVE ACTIVE" : "HOVER TO TILT 3D VIEW"}
+          <span className="font-mono-meta text-[9px] sm:text-[10px] font-semibold uppercase tracking-wider">
+            {isHovered ? "3D ACTIVE" : isMobileDevice ? "TILT / SWIPE 3D" : "HOVER 3D VIEW"}
           </span>
         </motion.div>
 

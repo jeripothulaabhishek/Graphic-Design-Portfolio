@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, ArrowUpRight, CheckCircle2, Sparkles, Folder } from "lucide-react";
+import { ArrowLeft, ArrowUpRight, CheckCircle2, Folder } from "lucide-react";
 import { PORTFOLIO_CATEGORIES, ProjectItem } from "@/data/projects";
 import Navbar from "@/components/navigation/Navbar";
 import ContactFooter from "@/components/portfolio/ContactFooter";

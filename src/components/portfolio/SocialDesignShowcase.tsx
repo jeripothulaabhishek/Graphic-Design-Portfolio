@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { Sparkles, ArrowRight, Instagram } from "lucide-react";
+import { ArrowRight, Instagram } from "lucide-react";
 import { PORTFOLIO_CATEGORIES } from "@/data/projects";
 
 export default function SocialDesignShowcase() {
@@ -19,7 +19,7 @@ export default function SocialDesignShowcase() {
             <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white border border-[#E5E5E0] shadow-xs mb-4">
               <Instagram className="w-3.5 h-3.5 text-[#FF6B35]" />
               <span className="font-mono-meta text-xs font-semibold text-[#FF6B35] tracking-widest uppercase">
-                04 / SOCIAL DESIGN
+                05 / SOCIAL DESIGN
               </span>
             </div>
             <h2 className="font-display text-4xl sm:text-5xl font-extrabold text-[#111111] uppercase tracking-tight">

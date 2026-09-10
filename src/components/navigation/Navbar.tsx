@@ -18,10 +18,16 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("about");
+  const [scrollProgress, setScrollProgress] = useState(0);
 
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 40);
+
+      const totalScroll = document.documentElement.scrollHeight - window.innerHeight;
+      if (totalScroll > 0) {
+        setScrollProgress((window.scrollY / totalScroll) * 100);
+      }
 
       // Simple active section detection
       const sections = NAV_LINKS.map((link) => link.href.substring(1));
@@ -43,6 +49,14 @@ export default function Navbar() {
 
   return (
     <>
+      {/* SCROLL PROGRESS INDICATOR BAR */}
+      <div className="fixed top-0 left-0 right-0 h-1 bg-transparent z-[60] pointer-events-none">
+        <div
+          className="h-full bg-gradient-to-r from-[#FFB800] via-[#FF6B35] to-[#19C8D8] transition-all duration-150 shadow-[0_0_10px_#FFB800]"
+          style={{ width: `${scrollProgress}%` }}
+        />
+      </div>
+
       <header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 pointer-events-none ${
           scrolled ? "py-3" : "py-6"

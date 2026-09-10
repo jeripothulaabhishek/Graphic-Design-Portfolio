@@ -56,7 +56,6 @@ export const metadata: Metadata = {
 };
 
 import CustomCursor from "@/components/ui/CustomCursor";
-import FloatingWidgets from "@/components/ui/FloatingWidgets";
 
 export default function RootLayout({
   children,
@@ -67,7 +66,6 @@ export default function RootLayout({
     <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} scroll-smooth`}>
       <body className="bg-[#F7F7F3] text-[#111111] font-sans antialiased min-h-screen selection:bg-[#FFB800] selection:text-[#111111]">
         <CustomCursor />
-        <FloatingWidgets />
         {children}
       </body>
     </html>

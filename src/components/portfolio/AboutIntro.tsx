@@ -93,7 +93,7 @@ export default function AboutIntro() {
                   />
                 </div>
                 <div>
-                  <h3 className="font-display text-lg font-bold text-[#111111]">ABHISHEK</h3>
+                  <h3 className="font-display text-lg font-bold text-[#111111]">ABHISHEK GOUD</h3>
                   <p className="font-mono-meta text-xs text-[#707070]">VISUAL CREATIVE DIRECTOR</p>
                 </div>
               </div>

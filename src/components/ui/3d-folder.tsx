@@ -4,7 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { Folder, X, ArrowUpRight, Sparkles, Layers, Eye } from "lucide-react";
+import { Folder, X, ArrowUpRight, Sparkles, Layers, Eye, Maximize2, Film } from "lucide-react";
 import { PORTFOLIO_CATEGORIES, ProjectItem } from "@/data/projects";
 
 interface ArchiveFolderItem {
@@ -21,16 +21,28 @@ interface ArchiveFolderItem {
 
 export default function VisualArchive() {
   const [selectedFolder, setSelectedFolder] = useState<ArchiveFolderItem | null>(null);
+  const [activePosterLightbox, setActivePosterLightbox] = useState<ProjectItem | null>(null);
 
   // Map portfolio data into manufactured 3D archive folders
   const FOLDERS: ArchiveFolderItem[] = [
+    {
+      id: "filimy-posters",
+      name: "FILMY POSTERS",
+      category: "CINEMA FAN ART & KEY VISUALS",
+      year: "2026",
+      count: 8,
+      color: "bg-[#111111] text-white border-[#333333]",
+      tabColor: "bg-[#E50914] text-white",
+      badge: "FAN ARTS",
+      projects: PORTFOLIO_CATEGORIES.find((c) => c.id === "filimy-posters")?.projects || [],
+    },
     {
       id: "tedx-ace-2026",
       name: "TEDx ACE 2026",
       category: "EVENT BRAND ECOSYSTEM",
       year: "2026",
       count: 7,
-      color: "bg-[#111111] text-white border-[#333333]",
+      color: "bg-white text-[#111111] border-[#E5E5E0]",
       tabColor: "bg-[#FFB800] text-[#111111]",
       badge: "FLAGSHIP",
       projects: PORTFOLIO_CATEGORIES.find((c) => c.id === "tedx-ace-2026")?.projects || [],
@@ -69,22 +81,11 @@ export default function VisualArchive() {
       projects: PORTFOLIO_CATEGORIES.find((c) => c.id === "web")?.projects || [],
     },
     {
-      id: "3d-motion",
-      name: "3D & MOTION",
-      category: "SPATIAL ASSETS & LOOPS",
-      year: "2024",
-      count: 4,
-      color: "bg-white text-[#111111] border-[#E5E5E0]",
-      tabColor: "bg-[#111111] text-white",
-      badge: "3D ART",
-      projects: PORTFOLIO_CATEGORIES.find((c) => c.id === "ai-creative")?.projects || [],
-    },
-    {
       id: "experimental",
-      name: "EXPERIMENTAL",
+      name: "EXPERIMENTAL & AI",
       category: "AI & TYPOGRAPHY CONCEPTS",
       year: "2026",
-      count: 6,
+      count: 5,
       color: "bg-white text-[#111111] border-[#E5E5E0]",
       tabColor: "bg-[#19C8D8] text-white",
       badge: "CONCEPTS",
@@ -107,7 +108,7 @@ export default function VisualArchive() {
             IDEAS, FILED FOR LATER.
           </h2>
           <p className="text-[#707070] text-base max-w-xl mt-3">
-            A virtual physical archive system. Click any 3D manufactured folder to pull out projects, artwork files, and case studies.
+            A virtual physical archive system. Click any 3D manufactured folder to pull out Filmy Posters, Fan Arts, branding assets, and case studies.
           </p>
         </div>
 
@@ -145,7 +146,11 @@ export default function VisualArchive() {
                     </h3>
                   </div>
                   <div className="w-10 h-10 rounded-full bg-[#F7F7F3] border border-[#E5E5E0] flex items-center justify-center text-[#111111] group-hover:bg-[#FFB800] transition-colors">
-                    <Folder className="w-5 h-5" />
+                    {folder.id === "filimy-posters" ? (
+                      <Film className="w-5 h-5 text-[#E50914]" />
+                    ) : (
+                      <Folder className="w-5 h-5" />
+                    )}
                   </div>
                 </div>
 
@@ -182,7 +187,7 @@ export default function VisualArchive() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 z-50 bg-[#111111]/60 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6"
+              className="fixed inset-0 z-50 bg-[#111111]/70 backdrop-blur-md flex items-center justify-center p-4 sm:p-6 overflow-y-auto"
               onClick={() => setSelectedFolder(null)}
             >
               <motion.div
@@ -191,19 +196,21 @@ export default function VisualArchive() {
                 exit={{ scale: 0.9, y: 20 }}
                 transition={{ type: "spring", stiffness: 300, damping: 25 }}
                 onClick={(e) => e.stopPropagation()}
-                className="w-full max-w-4xl bg-white border border-[#E5E5E0] rounded-3xl p-6 sm:p-10 shadow-2xl max-h-[85vh] overflow-y-auto"
+                className="w-full max-w-5xl bg-white border border-[#E5E5E0] rounded-3xl p-6 sm:p-10 shadow-2xl max-h-[85vh] overflow-y-auto my-auto"
               >
                 {/* MODAL HEADER */}
                 <div className="flex items-center justify-between border-b border-[#E5E5E0] pb-6 mb-8">
                   <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-2xl bg-[#FFB800] text-[#111111] flex items-center justify-center font-display font-black text-xl">
+                    <div className={`w-12 h-12 rounded-2xl flex items-center justify-center font-display font-black text-xl shadow-xs ${
+                      selectedFolder.id === "filimy-posters" ? "bg-[#E50914] text-white" : "bg-[#FFB800] text-[#111111]"
+                    }`}>
                       0{FOLDERS.findIndex((f) => f.id === selectedFolder.id) + 1}
                     </div>
                     <div>
                       <span className="font-mono-meta text-xs text-[#707070] uppercase">
                         ARCHIVE FOLDER • {selectedFolder.year}
                       </span>
-                      <h3 className="font-display text-3xl font-extrabold text-[#111111] uppercase">
+                      <h3 className="font-display text-2xl sm:text-3xl font-extrabold text-[#111111] uppercase">
                         {selectedFolder.name}
                       </h3>
                     </div>
@@ -217,48 +224,141 @@ export default function VisualArchive() {
                   </button>
                 </div>
 
-                {/* PROJECT THUMBNAILS LIST INSIDE FOLDER */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* ADAPTIVE POSTER / PROJECT GRID WITH NATURAL ASPECT RATIO */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                   {selectedFolder.projects.map((project) => (
                     <div
                       key={project.id}
-                      className="group bg-[#F7F7F3] border border-[#E5E5E0] rounded-2xl overflow-hidden hover:border-[#111111] transition-all duration-200"
+                      className="group bg-[#F7F7F3] border border-[#E5E5E0] rounded-2xl overflow-hidden hover:border-[#111111] transition-all duration-300 flex flex-col justify-between"
                     >
-                      <div className="relative h-48 w-full bg-[#111111]">
+                      {/* ADAPTIVE ASPECT RATIO CONTAINER - NO CROPPING */}
+                      <div className="relative w-full aspect-[2/3] bg-[#0E0E0E] flex items-center justify-center overflow-hidden p-2 group">
                         <Image
                           src={project.image}
                           alt={project.title}
                           fill
-                          className="object-cover group-hover:scale-105 transition-transform duration-500"
+                          quality={95}
+                          sizes="(max-width: 768px) 100vw, 400px"
+                          className="object-contain filter drop-shadow-lg group-hover:scale-103 transition-transform duration-500"
                         />
+
+                        {/* FULLSCREEN LIGHTBOX OVERLAY TRIGGER */}
+                        <div className="absolute inset-0 bg-[#111111]/40 backdrop-blur-xs opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-2 p-3">
+                          <button
+                            onClick={() => setActivePosterLightbox(project)}
+                            className="px-4 py-2 rounded-full bg-white text-[#111111] font-mono-meta text-xs font-bold flex items-center gap-1.5 shadow-lg hover:bg-[#FFB800] transition-colors"
+                          >
+                            <Maximize2 className="w-3.5 h-3.5" />
+                            <span>FULL HIGH-RES VIEW</span>
+                          </button>
+                        </div>
                       </div>
-                      <div className="p-5 flex flex-col justify-between">
+
+                      {/* POSTER CARD DETAILS */}
+                      <div className="p-4 flex flex-col justify-between flex-1">
                         <div>
-                          <div className="flex justify-between items-center font-mono-meta text-xs text-[#707070] mb-1">
-                            <span>{project.category}</span>
+                          <div className="flex justify-between items-center font-mono-meta text-[11px] text-[#707070] mb-1">
+                            <span className="text-[#FFB800] font-bold uppercase">{project.category}</span>
                             <span>{project.year}</span>
                           </div>
-                          <h4 className="font-display text-lg font-bold text-[#111111] mb-2">
+                          <h4 className="font-display text-base font-bold text-[#111111] mb-1.5 line-clamp-1">
                             {project.title}
                           </h4>
-                          <p className="text-[#707070] text-xs line-clamp-2 mb-4">
-                            {project.description}
+                          <p className="text-[#707070] text-xs line-clamp-2 mb-3">
+                            {project.subtitle || project.description}
                           </p>
                         </div>
 
-                        <Link
-                          href={`/work/${project.slug}`}
-                          onClick={() => setSelectedFolder(null)}
-                          className="inline-flex items-center justify-between w-full pt-3 border-t border-[#E5E5E0] font-mono-meta text-xs font-bold text-[#111111] group-hover:text-[#FFB800] transition-colors"
-                        >
-                          <span>VIEW PROJECT</span>
-                          <ArrowUpRight className="w-4 h-4" />
-                        </Link>
+                        <div className="pt-3 border-t border-[#E5E5E0] flex items-center justify-between">
+                          <button
+                            onClick={() => setActivePosterLightbox(project)}
+                            className="font-mono-meta text-xs font-bold text-[#111111] hover:text-[#FFB800] flex items-center gap-1 transition-colors"
+                          >
+                            <Eye className="w-3.5 h-3.5" />
+                            <span>ZOOM POSTER</span>
+                          </button>
+                          <Link
+                            href={`/work/${project.slug}`}
+                            onClick={() => setSelectedFolder(null)}
+                            className="w-7 h-7 rounded-full bg-white border border-[#E5E5E0] flex items-center justify-center text-[#111111] hover:bg-[#111111] hover:text-white transition-colors"
+                          >
+                            <ArrowUpRight className="w-3.5 h-3.5" />
+                          </Link>
+                        </div>
                       </div>
                     </div>
                   ))}
                 </div>
               </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* FULL HIGH-RESOLUTION LIGHTBOX MODAL */}
+        <AnimatePresence>
+          {activePosterLightbox && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-50 bg-[#090909]/95 backdrop-blur-xl flex flex-col items-center justify-between p-4 sm:p-8"
+              onClick={() => setActivePosterLightbox(null)}
+            >
+              {/* LIGHTBOX TOP HEADER */}
+              <div className="w-full max-w-6xl flex items-center justify-between z-10">
+                <div className="flex items-center gap-3">
+                  <span className="w-3 h-3 rounded-full bg-[#E50914] animate-pulse" />
+                  <div>
+                    <h3 className="font-display text-lg font-bold text-white uppercase">
+                      {activePosterLightbox.title}
+                    </h3>
+                    <span className="font-mono-meta text-xs text-zinc-400">
+                      {activePosterLightbox.category} • 100% HIGH QUALITY ARTWORK
+                    </span>
+                  </div>
+                </div>
+
+                <button
+                  onClick={() => setActivePosterLightbox(null)}
+                  className="w-10 h-10 rounded-full bg-white/10 text-white flex items-center justify-center hover:bg-[#FFB800] hover:text-[#111111] transition-colors"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+
+              {/* LIGHTBOX FULL IMAGE CONTAINER - PRESERVES NATURAL ASPECT RATIO AT MAX QUALITY */}
+              <div
+                className="relative w-full max-w-5xl h-[72vh] my-auto flex items-center justify-center p-2"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <Image
+                  src={activePosterLightbox.image}
+                  alt={activePosterLightbox.title}
+                  fill
+                  quality={100}
+                  unoptimized
+                  sizes="100vw"
+                  className="object-contain filter drop-shadow-[0_20px_50px_rgba(0,0,0,0.8)]"
+                />
+              </div>
+
+              {/* LIGHTBOX FOOTER CAPTION */}
+              <div className="w-full max-w-4xl bg-white/10 border border-white/10 backdrop-blur-md rounded-2xl p-4 text-white flex flex-col sm:flex-row items-center justify-between gap-4 z-10">
+                <p className="font-mono-meta text-xs text-zinc-300">
+                  {activePosterLightbox.description}
+                </p>
+                <Link
+                  href={`/work/${activePosterLightbox.slug}`}
+                  onClick={() => {
+                    setActivePosterLightbox(null);
+                    setSelectedFolder(null);
+                  }}
+                  className="px-5 py-2.5 rounded-xl bg-[#FFB800] text-[#111111] font-display font-bold text-xs uppercase flex items-center gap-1.5 shadow-md hover:bg-white transition-colors shrink-0"
+                >
+                  <span>VIEW FULL DETAILS</span>
+                  <ArrowUpRight className="w-4 h-4" />
+                </Link>
+              </div>
             </motion.div>
           )}
         </AnimatePresence>

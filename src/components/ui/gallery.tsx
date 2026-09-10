@@ -124,6 +124,7 @@ export function PhotoGallery() {
                 exit={{ opacity: 0, scale: 0.9 }}
                 transition={{ duration: 0.3 }}
                 onClick={() => setSelectedImage(item)}
+                data-cursor="zoom"
                 className="group cursor-pointer bg-white border border-[#E5E5E0] rounded-3xl p-4 shadow-card hover:shadow-lift transition-all duration-300"
               >
                 <div className={`relative w-full ${item.aspectRatio} rounded-2xl overflow-hidden bg-[#111111] mb-3`}>

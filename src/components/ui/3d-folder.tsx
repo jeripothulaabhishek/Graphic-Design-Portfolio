@@ -122,6 +122,7 @@ export default function VisualArchive() {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.08 }}
               onClick={() => setSelectedFolder(folder)}
+              data-cursor="zoom"
               className="group cursor-pointer relative"
             >
               {/* Physical Cardboard Folder Container */}

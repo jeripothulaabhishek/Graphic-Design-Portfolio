@@ -36,6 +36,17 @@ export const metadata: Metadata = {
     "3D Archive Portfolio",
   ],
   authors: [{ name: "Abhishek" }],
+  icons: {
+    icon: [
+      { url: "/icon.svg", type: "image/svg+xml" },
+      { url: "/my-image.png", sizes: "32x32", type: "image/png" },
+      { url: "/my-image.png", sizes: "192x192", type: "image/png" },
+    ],
+    shortcut: ["/icon.svg"],
+    apple: [
+      { url: "/my-image.png", sizes: "180x180", type: "image/png" },
+    ],
+  },
   openGraph: {
     title: "ABHISHEK — Visual Creative & Graphic Designer",
     description: "IDEAS DESERVE BETTER VISUALS. Art-directed portfolio & 3D visual archive.",

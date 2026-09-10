@@ -5,14 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 
 type CursorMode = "default" | "pointer" | "zoom" | "text" | "wait" | "move";
 
-interface TrailPoint {
-  x: number;
-  y: number;
-  time: number;
-  speed: number;
-}
-
-interface InkParticle {
+interface SparkleParticle {
   id: number;
   x: number;
   y: number;
@@ -20,7 +13,11 @@ interface InkParticle {
   vy: number;
   size: number;
   color: string;
+  rotation: number;
+  rotationSpeed: number;
   alpha: number;
+  scale: number;
+  isPixel?: boolean;
 }
 
 export default function CustomCursor() {
@@ -29,16 +26,14 @@ export default function CustomCursor() {
   const [isMouseDown, setIsMouseDown] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [isTouchDevice, setIsTouchDevice] = useState(false);
-  const [particles, setParticles] = useState<InkParticle[]>([]);
+  const [particles, setParticles] = useState<SparkleParticle[]>([]);
 
-  const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const pointsRef = useRef<TrailPoint[]>([]);
   const lastPosRef = useRef({ x: -100, y: -100 });
-  const lastScrollYRef = useRef(0);
   const particleIdRef = useRef(0);
+  const moveDistanceRef = useRef(0);
 
   useEffect(() => {
-    // Check for touch devices
+    // Check if touch device
     if (typeof window !== "undefined") {
       const isTouch =
         "ontouchstart" in window ||
@@ -46,7 +41,6 @@ export default function CustomCursor() {
         window.matchMedia("(pointer: coarse)").matches;
       setIsTouchDevice(isTouch);
       if (isTouch) return;
-      lastScrollYRef.current = window.scrollY;
     }
 
     const onMouseMove = (e: MouseEvent) => {
@@ -54,21 +48,21 @@ export default function CustomCursor() {
       setPosition({ x: clientX, y: clientY });
       if (!isVisible) setIsVisible(true);
 
-      // Calculate speed for dynamic line weight
+      // Track movement distance to spawn 3D sparkle trail
       const dx = clientX - lastPosRef.current.x;
       const dy = clientY - lastPosRef.current.y;
       const dist = Math.sqrt(dx * dx + dy * dy);
+      moveDistanceRef.current += dist;
 
-      pointsRef.current.push({
-        x: clientX,
-        y: clientY,
-        time: Date.now(),
-        speed: dist,
-      });
+      // Spawn 3D sparkle particle every 18px of movement
+      if (moveDistanceRef.current > 18) {
+        spawnTrailSparkle(clientX, clientY);
+        moveDistanceRef.current = 0;
+      }
 
       lastPosRef.current = { x: clientX, y: clientY };
 
-      // Inspect hovered element hierarchy for custom cursor attribute or clickable element
+      // Inspect hovered element hierarchy for custom cursor attribute or standard tag
       const target = e.target as HTMLElement | null;
       if (!target) return;
 
@@ -97,7 +91,7 @@ export default function CustomCursor() {
 
     const onMouseDown = (e: MouseEvent) => {
       setIsMouseDown(true);
-      spawnInkSplatter(e.clientX, e.clientY);
+      spawnClickBurst(e.clientX, e.clientY);
     };
 
     const onMouseUp = () => {
@@ -112,22 +106,9 @@ export default function CustomCursor() {
       setIsVisible(true);
     };
 
-    // Smooth Scroll Offset Adjustment so pen line floats seamlessly with scroll inertia
-    const onScroll = () => {
-      const currentScrollY = window.scrollY;
-      const deltaY = currentScrollY - lastScrollYRef.current;
-      lastScrollYRef.current = currentScrollY;
-
-      // Adjust points by vertical scroll delta
-      pointsRef.current.forEach((p) => {
-        p.y -= deltaY;
-      });
-    };
-
     window.addEventListener("mousemove", onMouseMove);
     window.addEventListener("mousedown", onMouseDown);
     window.addEventListener("mouseup", onMouseUp);
-    window.addEventListener("scroll", onScroll, { passive: true });
     document.addEventListener("mouseleave", onMouseLeave);
     document.addEventListener("mouseenter", onMouseEnter);
 
@@ -135,116 +116,66 @@ export default function CustomCursor() {
       window.removeEventListener("mousemove", onMouseMove);
       window.removeEventListener("mousedown", onMouseDown);
       window.removeEventListener("mouseup", onMouseUp);
-      window.removeEventListener("scroll", onScroll);
       document.removeEventListener("mouseleave", onMouseLeave);
       document.removeEventListener("mouseenter", onMouseEnter);
     };
   }, [isVisible]);
 
-  // 60FPS Fluid Canvas Render Loop for Vanishing Pen Ribbon Trail
-  useEffect(() => {
-    if (isTouchDevice) return;
+  // Spawn 3D Sparkle Star Following Cursor
+  const spawnTrailSparkle = (x: number, y: number) => {
+    const colors = ["#FFB800", "#FFF4B8", "#FF6B35", "#19C8D8", "#FFFFFF"];
+    const offsetAngle = Math.random() * Math.PI * 2;
+    const offsetDist = Math.random() * 8;
 
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
-    let animId: number;
-
-    const resizeCanvas = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    };
-    resizeCanvas();
-    window.addEventListener("resize", resizeCanvas);
-
-    const render = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      const now = Date.now();
-      const maxAge = 650; // Pen stroke vanishes gracefully in 650ms
-
-      // Prune expired trail points
-      pointsRef.current = pointsRef.current.filter((p) => now - p.time < maxAge);
-      const pts = pointsRef.current;
-
-      if (pts.length > 2) {
-        ctx.save();
-        ctx.lineCap = "round";
-        ctx.lineJoin = "round";
-
-        for (let i = 1; i < pts.length; i++) {
-          const p1 = pts[i - 1];
-          const p2 = pts[i];
-          const age = now - p2.time;
-          const life = 1 - age / maxAge; // 1.0 (fresh) -> 0.0 (vanished)
-
-          if (life <= 0) continue;
-
-          ctx.beginPath();
-          ctx.moveTo(p1.x, p1.y);
-
-          // Quadratic curve smoothing
-          const midX = (p1.x + p2.x) / 2;
-          const midY = (p1.y + p2.y) / 2;
-          ctx.quadraticCurveTo(p1.x, p1.y, midX, midY);
-
-          // Dynamic line stroke tapering based on mouse speed & life
-          const speedFactor = Math.min(1.5, Math.max(0.4, p2.speed / 15));
-          const strokeWidth = Math.max(0.8, (i / pts.length) * 5.5 * life * speedFactor);
-          ctx.lineWidth = strokeWidth;
-
-          // Theme Color Gradient (Amber Gold -> Vibrant Coral -> Cyan Glow)
-          const strokeGrad = ctx.createLinearGradient(p1.x, p1.y, p2.x, p2.y);
-          strokeGrad.addColorStop(0, `rgba(255, 184, 0, ${life * 0.95})`);
-          strokeGrad.addColorStop(0.5, `rgba(255, 107, 53, ${life * 0.85})`);
-          strokeGrad.addColorStop(1, `rgba(25, 200, 216, ${life * 0.4})`);
-
-          ctx.strokeStyle = strokeGrad;
-          ctx.shadowColor = "rgba(255, 184, 0, 0.4)";
-          ctx.shadowBlur = 6 * life;
-          ctx.stroke();
-        }
-
-        ctx.restore();
-      }
-
-      animId = requestAnimationFrame(render);
+    const p: SparkleParticle = {
+      id: particleIdRef.current++,
+      x: x + Math.cos(offsetAngle) * offsetDist,
+      y: y + Math.sin(offsetAngle) * offsetDist + 6,
+      vx: (Math.random() - 0.5) * 1.2,
+      vy: (Math.random() - 0.5) * 1.2 - 0.5, // float upward
+      size: 14 + Math.random() * 12,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      rotation: Math.random() * 360,
+      rotationSpeed: (Math.random() - 0.5) * 8,
+      alpha: 1,
+      scale: 1,
+      isPixel: false,
     };
 
-    render();
+    setParticles((prev) => [...prev.slice(-30), p]); // keep up to 30 active trail sparkles
+  };
 
-    return () => {
-      window.removeEventListener("resize", resizeCanvas);
-      cancelAnimationFrame(animId);
-    };
-  }, [isTouchDevice]);
-
-  // Spawn Ink Splatter Particles on Click
-  const spawnInkSplatter = (x: number, y: number) => {
-    const colors = ["#FFB800", "#FF6B35", "#19C8D8", "#111111", "#FFF2A8"];
-    const newParticles: InkParticle[] = [];
-    const count = 9;
+  // Spawn Burst of 3D Sparkles & Retro Blocks on Click
+  const spawnClickBurst = (x: number, y: number) => {
+    const colors = ["#FFB800", "#FFF9C4", "#111111", "#FF6B35", "#19C8D8"];
+    const burstParticles: SparkleParticle[] = [];
+    const count = 12;
 
     for (let i = 0; i < count; i++) {
       const angle = (Math.PI * 2 * i) / count + (Math.random() - 0.5) * 0.4;
-      const speed = 2 + Math.random() * 4;
-      newParticles.push({
+      const speed = 3 + Math.random() * 4;
+      const isPixelBlock = i % 2 === 0;
+
+      burstParticles.push({
         id: particleIdRef.current++,
         x,
         y,
         vx: Math.cos(angle) * speed,
-        vy: Math.sin(angle) * speed - 0.5,
-        size: 3 + Math.random() * 4,
+        vy: Math.sin(angle) * speed - 1,
+        size: isPixelBlock ? 6 + Math.random() * 4 : 16 + Math.random() * 10,
         color: colors[Math.floor(Math.random() * colors.length)],
+        rotation: Math.random() * 360,
+        rotationSpeed: (Math.random() - 0.5) * 12,
         alpha: 1,
+        scale: 1,
+        isPixel: isPixelBlock,
       });
     }
 
-    setParticles((prev) => [...prev, ...newParticles]);
+    setParticles((prev) => [...prev, ...burstParticles]);
   };
 
-  // Particles animation step
+  // Update particles animation loop
   useEffect(() => {
     if (particles.length === 0) return;
 
@@ -255,11 +186,12 @@ export default function CustomCursor() {
             ...p,
             x: p.x + p.vx,
             y: p.y + p.vy,
-            vy: p.vy + 0.12,
-            size: p.size * 0.92,
-            alpha: p.alpha * 0.92,
+            vy: p.vy + (p.isPixel ? 0.15 : 0.04), // gravity
+            rotation: p.rotation + p.rotationSpeed,
+            scale: p.scale * 0.94,
+            alpha: p.alpha * 0.93,
           }))
-          .filter((p) => p.alpha > 0.05 && p.size > 0.5)
+          .filter((p) => p.alpha > 0.05 && p.scale > 0.1)
       );
     }, 16);
 
@@ -270,31 +202,44 @@ export default function CustomCursor() {
 
   return (
     <div className="pointer-events-none fixed inset-0 z-[999999] overflow-hidden select-none">
-      {/* 1. FLUID CANVAS FOR VANISHING PEN STROKE TRAIL */}
-      <canvas
-        ref={canvasRef}
-        className="pointer-events-none fixed inset-0 z-[999998] w-full h-full"
-      />
+      {/* 3D SPARKLE & PIXEL PARTICLES TRAIL */}
+      {particles.map((p) =>
+        p.isPixel ? (
+          <div
+            key={p.id}
+            className="absolute border border-[#111111]/40"
+            style={{
+              left: `${p.x}px`,
+              top: `${p.y}px`,
+              width: `${p.size * p.scale}px`,
+              height: `${p.size * p.scale}px`,
+              backgroundColor: p.color,
+              opacity: p.alpha,
+              transform: `translate(-50%, -50%) rotate(${p.rotation}deg)`,
+              boxShadow: "1px 1px 0px rgba(0,0,0,0.4)",
+              imageRendering: "pixelated",
+            }}
+          />
+        ) : (
+          <div
+            key={p.id}
+            className="absolute pointer-events-none"
+            style={{
+              left: `${p.x}px`,
+              top: `${p.y}px`,
+              width: `${p.size}px`,
+              height: `${p.size}px`,
+              opacity: p.alpha,
+              transform: `translate(-50%, -50%) scale(${p.scale}) rotate(${p.rotation}deg)`,
+              filter: `drop-shadow(0 2px 6px ${p.color}80)`,
+            }}
+          >
+            <Sparkle3DSvg color={p.color} />
+          </div>
+        )
+      )}
 
-      {/* 2. DYNAMIC INK SPLATTER PARTICLES */}
-      {particles.map((p) => (
-        <div
-          key={p.id}
-          className="absolute rounded-full shadow-xs"
-          style={{
-            left: `${p.x}px`,
-            top: `${p.y}px`,
-            width: `${p.size}px`,
-            height: `${p.size}px`,
-            backgroundColor: p.color,
-            opacity: p.alpha,
-            transform: "translate(-50%, -50%)",
-            boxShadow: `0 0 8px ${p.color}`,
-          }}
-        />
-      ))}
-
-      {/* 3. DIGITAL DESIGNER PEN / STYLUS NIB CURSOR CONTAINER */}
+      {/* MAIN RETRO PIXEL CURSOR CONTAINER */}
       <motion.div
         className="fixed top-0 left-0 pointer-events-none z-[999999]"
         style={{
@@ -302,44 +247,43 @@ export default function CustomCursor() {
           y: position.y,
         }}
         animate={{
-          scale: isMouseDown ? 0.85 : cursorMode === "pointer" ? 1.2 : 1,
-          rotate: cursorMode === "pointer" ? 45 : 0,
+          scale: isMouseDown ? 0.85 : cursorMode === "pointer" ? 1.15 : 1,
         }}
         transition={{
           type: "spring",
-          stiffness: 800,
-          damping: 38,
+          stiffness: 850,
+          damping: 45,
           mass: 0.1,
         }}
       >
-        {/* POINTER ACTIVE GLOW RING */}
+        {/* CLICK PULSE RINGS (FOR POINTER STATE) */}
         {cursorMode === "pointer" && (
           <motion.div
-            className="absolute -top-4 -left-4 h-12 w-12 rounded-full border-2 border-dashed border-[#FFB800]"
-            initial={{ scale: 0.7, opacity: 0.8 }}
-            animate={{ scale: [0.9, 1.3, 0.9], opacity: [0.9, 0.3, 0.9], rotate: 360 }}
-            transition={{ duration: 2.5, repeat: Infinity, ease: "linear" }}
+            className="absolute -top-3 -left-3 h-10 w-10 rounded-full border-2 border-dashed border-[#FFB800]/80"
+            initial={{ scale: 0.6, opacity: 0.8 }}
+            animate={{ scale: [0.8, 1.4, 0.8], opacity: [0.8, 0.2, 0.8], rotate: 360 }}
+            transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
           />
         )}
 
-        {/* CLICK IMPACT WAVE */}
+        {/* CLICK WAVE IMPACT */}
         {isMouseDown && (
           <motion.div
-            className="absolute -top-5 -left-5 h-14 w-14 rounded-full border-2 border-[#FFB800] bg-[#FFB800]/25"
+            className="absolute -top-4 -left-4 h-12 w-12 rounded-full border-2 border-[#111111] bg-[#FFB800]/30"
             initial={{ scale: 0.2, opacity: 1 }}
-            animate={{ scale: 1.8, opacity: 0 }}
-            transition={{ duration: 0.3, ease: "easeOut" }}
+            animate={{ scale: 1.6, opacity: 0 }}
+            transition={{ duration: 0.35, ease: "easeOut" }}
           />
         )}
 
-        {/* DESIGNER PEN NIB / PRECISION CURSOR SVG */}
-        <div className="relative -top-1 -left-1">
-          {cursorMode === "default" && <DesignerPenNibSvg isMouseDown={isMouseDown} />}
-          {cursorMode === "pointer" && <DesignerPointerNibSvg isMouseDown={isMouseDown} />}
-          {cursorMode === "zoom" && <DesignerZoomNibSvg />}
-          {cursorMode === "text" && <DesignerTextBeamSvg />}
-          {cursorMode === "move" && <DesignerMoveSvg />}
-          {cursorMode === "wait" && <DesignerWaitSvg />}
+        {/* RETRO PIXEL CURSOR SVGs */}
+        <div className="relative -top-1 -left-1 drop-shadow-[2px_2px_0px_rgba(0,0,0,0.8)]">
+          {cursorMode === "default" && <RetroArrowSvg />}
+          {cursorMode === "pointer" && <RetroPointerHandSvg isMouseDown={isMouseDown} />}
+          {cursorMode === "zoom" && <RetroZoomSvg />}
+          {cursorMode === "text" && <RetroTextSvg />}
+          {cursorMode === "wait" && <RetroHourglassSvg />}
+          {cursorMode === "move" && <RetroMoveSvg />}
         </div>
       </motion.div>
     </div>
@@ -347,11 +291,53 @@ export default function CustomCursor() {
 }
 
 /* =========================================================================
-   DESIGNER DIGITAL STYLUS & PEN NIB SVGs
+   3D FACETED SPARKLE STAR TRAIL SVG
+   ========================================================================= */
+function Sparkle3DSvg({ color = "#FFB800" }: { color?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+      <path d="M12 1.5 L12 12 L1.5 12 Z" fill={color} opacity="0.95" />
+      <path d="M12 1.5 L22.5 12 L12 12 Z" fill="#FFFFFF" opacity="0.7" />
+      <path d="M12 12 L22.5 12 L12 22.5 Z" fill={color} opacity="0.8" />
+      <path d="M12 12 L12 22.5 L1.5 12 Z" fill="#FFF4B8" opacity="0.9" />
+      <circle cx="12" cy="12" r="2" fill="#FFFFFF" />
+    </svg>
+  );
+}
+
+/* =========================================================================
+   RETRO PIXEL ART CURSORS (Cream #FFF9C4 body, Dark #1C1917 pixel outline)
    ========================================================================= */
 
-// 1. Digital Stylus Pen Nib (Default Precision Cursor)
-function DesignerPenNibSvg({ isMouseDown }: { isMouseDown: boolean }) {
+// 1. Retro Arrow Pointer
+function RetroArrowSvg() {
+  return (
+    <svg
+      width="28"
+      height="28"
+      viewBox="0 0 32 32"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      style={{ shapeRendering: "crispEdges" }}
+    >
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M2 2H6V6H10V10H14V14H18V18H22V22H14V26H10V22H6V18H2V2Z"
+        fill="#1C1917"
+      />
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M4 4H6V8H10V12H14V16H18V18H14V20H10V16H6V12H4V4Z"
+        fill="#FFF9C4"
+      />
+    </svg>
+  );
+}
+
+// 2. Retro Pointer Hand
+function RetroPointerHandSvg({ isMouseDown }: { isMouseDown: boolean }) {
   return (
     <svg
       width="32"
@@ -359,72 +345,56 @@ function DesignerPenNibSvg({ isMouseDown }: { isMouseDown: boolean }) {
       viewBox="0 0 32 32"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className="drop-shadow-[0_4px_10px_rgba(0,0,0,0.4)]"
+      style={{ shapeRendering: "crispEdges" }}
     >
-      <defs>
-        <linearGradient id="pen-shaft" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#111111" />
-          <stop offset="100%" stopColor="#222222" />
-        </linearGradient>
-        <linearGradient id="pen-gold" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#FFF4B8" />
-          <stop offset="60%" stopColor="#FFB800" />
-          <stop offset="100%" stopColor="#E59D00" />
-        </linearGradient>
-      </defs>
+      <path d="M12 0H16V4H12V0Z" fill="#FFB800" />
+      <path d="M6 4H10V8H6V4Z" fill="#FFB800" />
+      <path d="M18 4H22V8H18V4Z" fill="#FFB800" />
 
-      {/* Pen Shaft Body */}
-      <path d="M 3 3 L 18 8 L 8 18 Z" fill="url(#pen-shaft)" stroke="#111111" strokeWidth="1" />
-      {/* Metallic Gold Band */}
-      <path d="M 8 18 L 12 14 L 15 17 L 11 21 Z" fill="url(#pen-gold)" />
-      {/* Precision Nib Tip Pointing at (0,0) */}
-      <path d="M 0 0 L 7 3 L 3 7 Z" fill={isMouseDown ? "#FF6B35" : "url(#pen-gold)"} />
-      {/* Nib Specular Core Glow */}
-      <circle cx="2" cy="2" r="1.5" fill="#FFFFFF" />
+      <path
+        d="M12 4H16V16H18V12H22V16H24V14H28V24H26V28H14V26H10V22H8V14H12V4Z"
+        fill="#1C1917"
+      />
+      <path
+        d="M13 6H15V16H19V14H21V16H23V16H27V23H25V27H15V25H11V21H9V15H13V6Z"
+        fill={isMouseDown ? "#FFB800" : "#FFF9C4"}
+      />
+      <path d="M15 18H19V20H15V18Z" fill="#E6D385" />
+      <path d="M19 18H23V20H19V18Z" fill="#E6D385" />
+      <path d="M11 25H15V27H11V25Z" fill="#1C1917" />
     </svg>
   );
 }
 
-// 2. Pointer Nib (Interactive Hover State)
-function DesignerPointerNibSvg({ isMouseDown }: { isMouseDown: boolean }) {
+// 3. Retro Zoom Magnifier
+function RetroZoomSvg() {
   return (
     <svg
-      width="34"
-      height="34"
-      viewBox="0 0 34 34"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      className="drop-shadow-[0_4px_12px_rgba(255,184,0,0.6)]"
-    >
-      <path d="M 0 0 L 10 3 L 4 9 Z" fill="#FFB800" />
-      <path d="M 4 9 L 14 19 L 19 14 L 9 4 Z" fill="#111111" stroke="#FFB800" strokeWidth="1.5" />
-      <circle cx="2" cy="2" r="2" fill="#FFFFFF" />
-    </svg>
-  );
-}
-
-// 3. Zoom Lens Nib
-function DesignerZoomNibSvg() {
-  return (
-    <svg
-      width="32"
-      height="32"
+      width="30"
+      height="30"
       viewBox="0 0 32 32"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className="drop-shadow-[0_4px_10px_rgba(0,0,0,0.4)]"
+      style={{ shapeRendering: "crispEdges" }}
     >
-      <circle cx="12" cy="12" r="9" fill="#111111" stroke="#FFB800" strokeWidth="2.5" />
-      <circle cx="12" cy="12" r="7" fill="#FFB800" opacity="0.25" />
-      <path d="M 12 8 L 12 16 M 8 12 L 16 12" stroke="#FFB800" strokeWidth="2" strokeLinecap="round" />
-      <path d="M 19 19 L 29 29" stroke="#111111" strokeWidth="4" strokeLinecap="round" />
-      <path d="M 19 19 L 29 29" stroke="#FFB800" strokeWidth="2" strokeLinecap="round" />
+      <path
+        d="M6 2H18V4H22V8H24V16H22V20H18V22H16V20H18V16H20V8H18V6H6V8H4V16H6V18H14V22H10V24H8V26H6V28H4V32H0V28H4V26H6V24H8V22H6V20H4V18H2V8H4V4H6V2Z"
+        fill="#1C1917"
+      />
+      <path d="M6 4H18V8H20V16H18V20H6V16H4V8H6V4Z" fill="#FFF9C4" />
+
+      <path d="M11 8H13V16H11V8Z" fill="#1C1917" />
+      <path d="M7 11H17V13H7V11Z" fill="#1C1917" />
+
+      <path d="M18 18H22V22H18V18Z" fill="#FFB800" />
+      <path d="M22 22H26V26H22V22Z" fill="#1C1917" />
+      <path d="M26 26H30V30H26V26Z" fill="#1C1917" />
     </svg>
   );
 }
 
-// 4. Precision Text I-Beam
-function DesignerTextBeamSvg() {
+// 4. Retro Text Beam
+function RetroTextSvg() {
   return (
     <svg
       width="24"
@@ -432,34 +402,16 @@ function DesignerTextBeamSvg() {
       viewBox="0 0 24 28"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className="drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)]"
+      style={{ shapeRendering: "crispEdges" }}
     >
-      <path d="M 4 2 H 20 M 12 2 V 26 M 4 26 H 20" stroke="#FFB800" strokeWidth="3" strokeLinecap="round" />
-      <path d="M 6 4 H 18 M 12 4 V 24 M 6 24 H 18" stroke="#111111" strokeWidth="1.5" strokeLinecap="round" />
+      <path d="M4 2H20V6H16V8H14V20H16V22H20V26H4V22H8V20H10V8H8V6H4V2Z" fill="#1C1917" />
+      <path d="M6 4H18V5H14V7H12V21H14V23H18V24H6V23H10V21H12V7H10V5H6V4Z" fill="#FFF9C4" />
     </svg>
   );
 }
 
-// 5. 4-Way Drag Move Crosshair
-function DesignerMoveSvg() {
-  return (
-    <svg
-      width="30"
-      height="30"
-      viewBox="0 0 30 30"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      className="drop-shadow-[0_4px_10px_rgba(0,0,0,0.4)]"
-    >
-      <circle cx="15" cy="15" r="5" fill="#FFB800" stroke="#111111" strokeWidth="1.5" />
-      <path d="M 15 2 L 15 28 M 2 15 L 28 15" stroke="#111111" strokeWidth="2.5" strokeLinecap="round" />
-      <path d="M 15 2 L 15 28 M 2 15 L 28 15" stroke="#FFB800" strokeWidth="1.5" strokeLinecap="round" />
-    </svg>
-  );
-}
-
-// 6. Hourglass / Wait Spinner
-function DesignerWaitSvg() {
+// 5. Retro Hourglass
+function RetroHourglassSvg() {
   return (
     <svg
       width="28"
@@ -467,10 +419,38 @@ function DesignerWaitSvg() {
       viewBox="0 0 28 28"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className="animate-spin"
+      style={{ shapeRendering: "crispEdges" }}
     >
-      <circle cx="14" cy="14" r="11" stroke="#E5E5E0" strokeWidth="3" />
-      <path d="M 14 3 A 11 11 0 0 1 25 14" stroke="#FFB800" strokeWidth="3" strokeLinecap="round" />
+      <path
+        d="M2 2H26V6H22V10H18V12H16V16H18V18H22V22H26V26H2V22H6V18H10V16H12V12H10V10H6V6H2V2Z"
+        fill="#1C1917"
+      />
+      <path
+        d="M4 4H24V5H20V9H16V11H14V12H13V11H11V9H7V5H4V4ZM4 24H24V23H20V19H16V17H14V16H13V17H11V19H7V23H4V24Z"
+        fill="#FFF9C4"
+      />
+      <path d="M6 6H22V8H18V10H14V11H12V10H8V8H6V6Z" fill="#FFB800" />
+      <path d="M8 20H20V22H22V23H6V22H8V20Z" fill="#FFB800" />
+    </svg>
+  );
+}
+
+// 6. Retro Move 4-Way Crosshair
+function RetroMoveSvg() {
+  return (
+    <svg
+      width="28"
+      height="28"
+      viewBox="0 0 28 28"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      style={{ shapeRendering: "crispEdges" }}
+    >
+      <path
+        d="M12 0H16V4H20V6H16V10H20V6H24V10H28V14H24V18H20V14H16V18H20V22H16V28H12V22H8V18H12V14H8V18H4V14H0V10H4V6H8V10H12V6H8V4H12V0Z"
+        fill="#1C1917"
+      />
+      <path d="M13 2H15V6H13V2ZM22 11H26V13H22V11ZM13 22H15V26H13V22ZM2 11H6V13H2V11Z" fill="#FFF9C4" />
     </svg>
   );
 }

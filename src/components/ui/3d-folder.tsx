@@ -30,7 +30,7 @@ export default function VisualArchive() {
       name: "FILMY POSTERS",
       category: "CINEMA FAN ART & KEY VISUALS",
       year: "2026",
-      count: 8,
+      count: PORTFOLIO_CATEGORIES.find((c) => c.id === "filimy-posters")?.projects.length || 10,
       color: "bg-[#111111] text-white border-[#333333]",
       tabColor: "bg-[#E50914] text-white",
       badge: "FAN ARTS",

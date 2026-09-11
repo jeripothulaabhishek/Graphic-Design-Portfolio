@@ -1,16 +1,16 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { Wrench, Box, Code, Palette, Film, Layers, Cpu, Sparkles } from "lucide-react";
-import Sparkle3D from "@/components/ui/Sparkle3D";
+import { Wrench } from "lucide-react";
 
 interface ToolItem {
   name: string;
   category: string;
-  group: "DESIGN" | "3D" | "DEV";
+  group: "DESIGN" | "MOTION" | "DEV" | "AI";
   desc: string;
-  icon: any;
+  iconUrl: string;
   accent: string;
 }
 
@@ -20,79 +20,72 @@ const TOOLS: ToolItem[] = [
     category: "UI / UX DESIGN",
     group: "DESIGN",
     desc: "Design system architecture, wireframing & interactive prototypes.",
-    icon: Palette,
-    accent: "bg-[#FFB800] text-[#111111]",
+    iconUrl: "/tools/figma-3d.png",
+    accent: "bg-[#FFB800]/10 border-[#FFB800]/30",
   },
   {
     name: "PHOTOSHOP",
     category: "RASTER & PHOTO",
     group: "DESIGN",
     desc: "High-end retouching, photo manipulation & digital campaign posters.",
-    icon: Layers,
-    accent: "bg-[#19C8D8] text-white",
+    iconUrl: "/tools/photoshop-3d.png",
+    accent: "bg-[#19C8D8]/10 border-[#19C8D8]/30",
   },
   {
     name: "ILLUSTRATOR",
     category: "VECTOR BRANDING",
     group: "DESIGN",
     desc: "Precision vector logo marks, typography scales & brand identity guides.",
-    icon: Sparkle3D,
-    accent: "bg-[#FF6B35] text-white",
+    iconUrl: "/tools/illustrator-3d.png",
+    accent: "bg-[#FF6B35]/10 border-[#FF6B35]/30",
   },
   {
     name: "AFTER EFFECTS",
     category: "MOTION & KINETICS",
-    group: "3D",
+    group: "MOTION",
     desc: "Kinetic typography loops, title sequences & logo animation.",
-    icon: Film,
-    accent: "bg-[#111111] text-white",
-  },
-  {
-    name: "BLENDER",
-    category: "3D ART DIRECTION",
-    group: "3D",
-    desc: "Studio product mockups, lighting setups & low-poly 3D assets.",
-    icon: Box,
-    accent: "bg-[#FFB800] text-[#111111]",
-  },
-  {
-    name: "CINEMA 4D",
-    category: "SPATIAL 3D",
-    group: "3D",
-    desc: "Abstract geometric renders, material texturing & spatial motion.",
-    icon: Box,
-    accent: "bg-[#19C8D8] text-white",
+    iconUrl: "/tools/after-effects-3d.png",
+    accent: "bg-[#8E2DE2]/10 border-[#8E2DE2]/30",
   },
   {
     name: "CANVA",
     category: "RAPID ASSETS",
     group: "DESIGN",
     desc: "Quick social collateral, pitch decks & template distributions.",
-    icon: Wrench,
-    accent: "bg-[#FF6B35] text-white",
+    iconUrl: "/tools/canva-3d.png",
+    accent: "bg-[#FF6B35]/10 border-[#FF6B35]/30",
+  },
+  {
+    name: "MIDJOURNEY & AI",
+    category: "AI VISUAL SYNTHESIS",
+    group: "AI",
+    desc: "Generative AI visual exploration, art direction & concept moodboards.",
+    iconUrl: "/tools/midjourney-3d.png",
+    accent: "bg-[#19C8D8]/10 border-[#19C8D8]/30",
   },
   {
     name: "VS CODE",
     category: "DEVELOPMENT",
     group: "DEV",
     desc: "TypeScript, React, Next.js & Tailwind CSS frontend engineering.",
-    icon: Code,
-    accent: "bg-[#111111] text-white",
+    iconUrl: "/tools/vscode-3d.png",
+    accent: "bg-[#111111]/10 border-[#111111]/30",
   },
   {
     name: "REACT & NEXT.JS",
     category: "CREATIVE DEV",
     group: "DEV",
     desc: "Full-stack SSR web applications, smooth state & API integrations.",
-    icon: Cpu,
-    accent: "bg-[#FFB800] text-[#111111]",
+    iconUrl: "/tools/react-next-3d.png",
+    accent: "bg-[#FFB800]/10 border-[#FFB800]/30",
   },
 ];
 
 const STACK_FILTERS = [
   { id: "ALL", label: "ALL TOOLS" },
   { id: "DESIGN", label: "DESIGN & VECTOR" },
-  { id: "3D", label: "3D & MOTION" },
+  { id: "MOTION", label: "MOTION & KINETICS" },
+  { id: "AI", label: "AI CREATIVE" },
   { id: "DEV", label: "FRONTEND DEV" },
 ];
 
@@ -123,7 +116,7 @@ export default function ToolsSection() {
           </div>
 
           {/* FILTER PILLS */}
-          <div className="flex items-center gap-1.5 bg-white p-1.5 rounded-full border border-[#E5E5E0] shadow-xs self-start md:self-auto">
+          <div className="flex flex-wrap items-center gap-1.5 bg-white p-1.5 rounded-2xl md:rounded-full border border-[#E5E5E0] shadow-xs self-start md:self-auto">
             {STACK_FILTERS.map((tab) => {
               const isActive = activeTab === tab.id;
               return (
@@ -144,10 +137,9 @@ export default function ToolsSection() {
         </div>
 
         {/* TOOL CARDS GRID */}
-        <motion.div layout className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <motion.div layout className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           <AnimatePresence>
-            {filteredTools.map((tool, idx) => {
-              const Icon = tool.icon;
+            {filteredTools.map((tool) => {
               return (
                 <motion.div
                   key={tool.name}
@@ -156,16 +148,28 @@ export default function ToolsSection() {
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.95 }}
                   transition={{ duration: 0.3 }}
-                  className="bg-white border border-[#E5E5E0] rounded-2xl p-6 shadow-card hover:shadow-lift transition-all duration-300 group flex flex-col justify-between"
+                  className="bg-white border border-[#E5E5E0] rounded-2xl p-6 shadow-card hover:shadow-lift transition-all duration-300 group flex flex-col justify-between relative overflow-hidden"
                 >
                   <div>
-                    <div className="flex justify-between items-center mb-4">
-                      <span className="font-mono-meta text-xs font-bold text-[#707070] uppercase">
+                    <div className="flex justify-between items-start mb-6">
+                      <span className="font-mono-meta text-[11px] font-bold text-[#707070] uppercase tracking-wider">
                         {tool.category}
                       </span>
-                      <div className={`w-9 h-9 rounded-xl flex items-center justify-center font-bold shadow-xs ${tool.accent}`}>
-                        <Icon className="w-4 h-4" />
-                      </div>
+                      
+                      {/* 3D GLOSSY APP ICON CONTAINER */}
+                      <motion.div 
+                        whileHover={{ scale: 1.12, rotate: 4 }}
+                        transition={{ type: "spring", stiffness: 400, damping: 15 }}
+                        className={`w-14 h-14 rounded-2xl p-1.5 flex items-center justify-center border shadow-sm transition-all group-hover:shadow-md ${tool.accent}`}
+                      >
+                        <Image
+                          src={tool.iconUrl}
+                          alt={`${tool.name} 3D Icon`}
+                          width={52}
+                          height={52}
+                          className="w-full h-full object-contain rounded-xl drop-shadow-[0_4px_8px_rgba(0,0,0,0.15)]"
+                        />
+                      </motion.div>
                     </div>
 
                     <h3 className="font-display text-xl font-extrabold text-[#111111] mb-2 tracking-tight group-hover:text-[#FFB800] transition-colors">
@@ -177,8 +181,8 @@ export default function ToolsSection() {
                     </p>
                   </div>
 
-                  <div className="pt-4 mt-4 border-t border-[#E5E5E0] flex justify-between items-center text-[10px] font-mono-meta text-[#707070]">
-                    <span className="font-bold text-[#111111]">PROFICIENCY: ADVANCED EXPERT</span>
+                  <div className="pt-4 mt-6 border-t border-[#E5E5E0] flex justify-between items-center text-[10px] font-mono-meta text-[#707070]">
+                    <span className="font-bold text-[#111111]">PROFICIENCY: EXPERT</span>
                     <span className="flex items-center gap-1">
                       <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
                       <span className="text-emerald-600 font-bold">100%</span>
@@ -194,3 +198,4 @@ export default function ToolsSection() {
     </section>
   );
 }
+

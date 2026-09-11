@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { CheckCircle2, Cpu, Palette, Layers, Box, Code, Compass } from "lucide-react";
+import { CheckCircle2, Cpu, Palette, Layers, Box, Code, Compass, Film } from "lucide-react";
 import Sparkle3D from "@/components/ui/Sparkle3D";
 
 const CAPABILITIES = [
@@ -29,9 +29,9 @@ const CAPABILITIES = [
   },
   {
     num: "04",
-    title: "3D & MOTION",
-    desc: "3D product mockups, spatial graphic assets, ambient loops & kinetic typography.",
-    icon: Box,
+    title: "MOTION & KINETIC GRAPHICS",
+    desc: "Kinetic typography loops, title sequences, logo animation & video overlays.",
+    icon: Film,
     accent: "border-l-4 border-l-[#111111]",
   },
   {

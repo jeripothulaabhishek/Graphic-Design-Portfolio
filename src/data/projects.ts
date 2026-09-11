@@ -982,6 +982,38 @@ export const PORTFOLIO_CATEGORIES: ProjectCategory[] = [
         deliverables: ["Cinematic Poster", "Promotional Graphic"],
         tags: ["Cinema Poster", "Fan Art", "Movie Key Visual"],
         gradient: "linear-gradient(135deg, #e50914, #ffb800)",
+      },
+      {
+        id: "filmy-9",
+        slug: "f1-movie-fan-poster",
+        title: "F1 Cinema Speed Poster",
+        subtitle: "High-octane racing key visual artwork for F1 Movie",
+        category: "Filmy Posters & Fan Art",
+        image: "/filimy-designs/f1-poster.png",
+        description: "Kinetic motion key visual for F1 racing cinema, featuring high-speed motion blur, energetic typographic overlays, and glossy red metallic contrasts.",
+        client: "Cinema Fan Art",
+        year: "2025",
+        role: "Poster Artist",
+        deliverables: ["Movie Poster", "Key Visual", "Print Art"],
+        tags: ["F1", "Movie Poster", "Racing Art", "Key Visual"],
+        gradient: "linear-gradient(135deg, #e50914, #ffb800)",
+        featured: true,
+      },
+      {
+        id: "filmy-10",
+        slug: "1-nenokkadine-tribute-poster",
+        title: "1 Nenokkadine — Psychological Thriller Art",
+        subtitle: "Cult psychological thriller tribute poster for 1 Nenokkadine",
+        category: "Filmy Posters & Fan Art",
+        image: "/filimy-designs/1-nenokkadine.jpg",
+        description: "Monochrome & high-contrast red psychological thriller fan poster for 1 Nenokkadine, blending distressed textures and editorial typography.",
+        client: "Cinema Fan Art",
+        year: "2024",
+        role: "Poster Artist",
+        deliverables: ["Cult Poster", "Character Graphic", "Tribute Art"],
+        tags: ["1 Nenokkadine", "Psychological Thriller", "Fan Art", "Cult Cinema"],
+        gradient: "linear-gradient(135deg, #e50914, #ffb800)",
+        featured: true,
       }
     ]
   }
@@ -1031,18 +1063,11 @@ export const DESIGN_TOOLS = [
     level: "Mastery"
   },
   {
-    name: "Midjourney & ComfyUI",
+    name: "Midjourney & AI Tools",
     category: "AI Visual Synthesis",
     icon: "Sparkles",
-    description: "Prompt engineering, ControlNet image synthesis, custom LoRA workflows & art direction.",
+    description: "Prompt engineering, generative visual synthesis, custom workflows & creative art direction.",
     level: "Advanced"
-  },
-  {
-    name: "Cinema 4D / Blender",
-    category: "3D Visuals & Renders",
-    icon: "Box",
-    description: "3D folder renders, volumetric lighting, abstract product showcases & spatial mockups.",
-    level: "Intermediate"
   }
 ];
 

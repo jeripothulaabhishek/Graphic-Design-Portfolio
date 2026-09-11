@@ -71,14 +71,14 @@ export default function VisualArchive() {
     },
     {
       id: "web",
-      name: "WEB",
-      category: "DIGITAL & PRODUCT UI/UX",
+      name: "WEB & DIGITAL EXPERIENCES",
+      category: "RESPONSIVE WEBSITES & UI/UX",
       year: "2025",
-      count: 5,
+      count: PORTFOLIO_CATEGORIES.find((c) => c.id === "web-showcase")?.projects.length || 3,
       color: "bg-white text-[#111111] border-[#E5E5E0]",
-      tabColor: "bg-[#FFB800] text-[#111111]",
-      badge: "DIGITAL",
-      projects: PORTFOLIO_CATEGORIES.find((c) => c.id === "web")?.projects || [],
+      tabColor: "bg-[#19C8D8] text-white",
+      badge: "LIVE WEBSITES",
+      projects: PORTFOLIO_CATEGORIES.find((c) => c.id === "web-showcase")?.projects || [],
     },
     {
       id: "experimental",
@@ -227,68 +227,95 @@ export default function VisualArchive() {
 
                 {/* ADAPTIVE POSTER / PROJECT GRID WITH NATURAL ASPECT RATIO */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {selectedFolder.projects.map((project) => (
-                    <div
-                      key={project.id}
-                      className="group bg-[#F7F7F3] border border-[#E5E5E0] rounded-2xl overflow-hidden hover:border-[#111111] transition-all duration-300 flex flex-col justify-between"
-                    >
-                      {/* ADAPTIVE ASPECT RATIO CONTAINER - NO CROPPING */}
-                      <div className="relative w-full aspect-[2/3] bg-[#0E0E0E] flex items-center justify-center overflow-hidden p-2 group">
-                        <Image
-                          src={project.image}
-                          alt={project.title}
-                          fill
-                          quality={95}
-                          sizes="(max-width: 768px) 100vw, 400px"
-                          className="object-contain filter drop-shadow-lg group-hover:scale-103 transition-transform duration-500"
-                        />
+                  {selectedFolder.projects.map((project) => {
+                    const isWebProject = selectedFolder.id === "web" || Boolean(project.externalUrl);
 
-                        {/* FULLSCREEN LIGHTBOX OVERLAY TRIGGER */}
-                        <div className="absolute inset-0 bg-[#111111]/40 backdrop-blur-xs opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-2 p-3">
-                          <button
-                            onClick={() => setActivePosterLightbox(project)}
-                            className="px-4 py-2 rounded-full bg-white text-[#111111] font-mono-meta text-xs font-bold flex items-center gap-1.5 shadow-lg hover:bg-[#FFB800] transition-colors"
-                          >
-                            <Maximize2 className="w-3.5 h-3.5" />
-                            <span>FULL HIGH-RES VIEW</span>
-                          </button>
-                        </div>
-                      </div>
+                    return (
+                      <div
+                        key={project.id}
+                        className="group bg-[#F7F7F3] border border-[#E5E5E0] rounded-2xl overflow-hidden hover:border-[#111111] transition-all duration-300 flex flex-col justify-between"
+                      >
+                        {/* ADAPTIVE ASPECT RATIO CONTAINER - 16:9 FOR WEBSITES, 2:3 FOR POSTERS */}
+                        <div className={`relative w-full ${isWebProject ? "aspect-[16/9]" : "aspect-[2/3]"} bg-[#0E0E0E] flex items-center justify-center overflow-hidden group ${isWebProject ? "" : "p-2"}`}>
+                          <Image
+                            src={project.image}
+                            alt={project.title}
+                            fill
+                            quality={95}
+                            sizes="(max-width: 768px) 100vw, 400px"
+                            className={`${isWebProject ? "object-cover object-top" : "object-contain filter drop-shadow-lg"} group-hover:scale-103 transition-transform duration-500`}
+                          />
 
-                      {/* POSTER CARD DETAILS */}
-                      <div className="p-4 flex flex-col justify-between flex-1">
-                        <div>
-                          <div className="flex justify-between items-center font-mono-meta text-[11px] text-[#707070] mb-1">
-                            <span className="text-[#FFB800] font-bold uppercase">{project.category}</span>
-                            <span>{project.year}</span>
+                          {/* FULLSCREEN LIGHTBOX / LIVE LINK OVERLAY TRIGGER */}
+                          <div className="absolute inset-0 bg-[#111111]/50 backdrop-blur-xs opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-2 p-3">
+                            {project.externalUrl ? (
+                              <a
+                                href={project.externalUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="px-4 py-2 rounded-full bg-white text-[#111111] font-mono-meta text-xs font-bold flex items-center gap-1.5 shadow-lg hover:bg-[#FFB800] transition-colors"
+                              >
+                                <span>OPEN LIVE WEBSITE ↗</span>
+                              </a>
+                            ) : (
+                              <button
+                                onClick={() => setActivePosterLightbox(project)}
+                                className="px-4 py-2 rounded-full bg-white text-[#111111] font-mono-meta text-xs font-bold flex items-center gap-1.5 shadow-lg hover:bg-[#FFB800] transition-colors"
+                              >
+                                <Maximize2 className="w-3.5 h-3.5" />
+                                <span>FULL HIGH-RES VIEW</span>
+                              </button>
+                            )}
                           </div>
-                          <h4 className="font-display text-base font-bold text-[#111111] mb-1.5 line-clamp-1">
-                            {project.title}
-                          </h4>
-                          <p className="text-[#707070] text-xs line-clamp-2 mb-3">
-                            {project.subtitle || project.description}
-                          </p>
                         </div>
 
-                        <div className="pt-3 border-t border-[#E5E5E0] flex items-center justify-between">
-                          <button
-                            onClick={() => setActivePosterLightbox(project)}
-                            className="font-mono-meta text-xs font-bold text-[#111111] hover:text-[#FFB800] flex items-center gap-1 transition-colors"
-                          >
-                            <Eye className="w-3.5 h-3.5" />
-                            <span>ZOOM POSTER</span>
-                          </button>
-                          <Link
-                            href={`/work/${project.slug}`}
-                            onClick={() => setSelectedFolder(null)}
-                            className="w-7 h-7 rounded-full bg-white border border-[#E5E5E0] flex items-center justify-center text-[#111111] hover:bg-[#111111] hover:text-white transition-colors"
-                          >
-                            <ArrowUpRight className="w-3.5 h-3.5" />
-                          </Link>
+                        {/* POSTER / WEBSITE CARD DETAILS */}
+                        <div className="p-4 flex flex-col justify-between flex-1">
+                          <div>
+                            <div className="flex justify-between items-center font-mono-meta text-[11px] text-[#707070] mb-1">
+                              <span className="text-[#FFB800] font-bold uppercase">{project.category}</span>
+                              <span>{project.year}</span>
+                            </div>
+                            <h4 className="font-display text-base font-bold text-[#111111] mb-1.5 line-clamp-1">
+                              {project.title}
+                            </h4>
+                            <p className="text-[#707070] text-xs line-clamp-2 mb-3">
+                              {project.subtitle || project.description}
+                            </p>
+                          </div>
+
+                          <div className="pt-3 border-t border-[#E5E5E0] flex items-center justify-between">
+                            {project.externalUrl ? (
+                              <a
+                                href={project.externalUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="font-mono-meta text-xs font-bold text-[#111111] hover:text-[#19C8D8] flex items-center gap-1 transition-colors"
+                              >
+                                <Eye className="w-3.5 h-3.5" />
+                                <span>VISIT LIVE SITE ↗</span>
+                              </a>
+                            ) : (
+                              <button
+                                onClick={() => setActivePosterLightbox(project)}
+                                className="font-mono-meta text-xs font-bold text-[#111111] hover:text-[#FFB800] flex items-center gap-1 transition-colors"
+                              >
+                                <Eye className="w-3.5 h-3.5" />
+                                <span>ZOOM POSTER</span>
+                              </button>
+                            )}
+                            <Link
+                              href={`/work/${project.slug}`}
+                              onClick={() => setSelectedFolder(null)}
+                              className="w-7 h-7 rounded-full bg-white border border-[#E5E5E0] flex items-center justify-center text-[#111111] hover:bg-[#111111] hover:text-white transition-colors"
+                            >
+                              <ArrowUpRight className="w-3.5 h-3.5" />
+                            </Link>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               </motion.div>
             </motion.div>

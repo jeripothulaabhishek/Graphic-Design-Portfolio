@@ -136,7 +136,7 @@ export default async function ProjectPage({
                 rel="noopener noreferrer"
                 className="mt-4 w-full bg-[#FFB800] text-[#111111] hover:bg-[#111111] hover:text-white transition-colors text-center py-3.5 rounded-xl font-display font-bold text-xs flex items-center justify-center gap-2"
               >
-                <span>VIEW LIVE ON BEHANCE</span>
+                <span>{project.externalUrl.includes("vercel.app") || project.externalUrl.includes("http") ? "EXPLORE LIVE WEBSITE" : "VIEW LIVE PROJECT"}</span>
                 <ArrowUpRight className="w-4 h-4" />
               </a>
             )}

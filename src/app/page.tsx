@@ -2,6 +2,7 @@ import Navbar from "@/components/navigation/Navbar";
 import Hero from "@/components/portfolio/Hero";
 import AboutIntro from "@/components/portfolio/AboutIntro";
 import SelectedWork from "@/components/portfolio/SelectedWork";
+import WebShowcase from "@/components/portfolio/WebShowcase";
 import VisualArchive from "@/components/ui/3d-folder";
 import SocialDesignShowcase from "@/components/portfolio/SocialDesignShowcase";
 import ToolsSection from "@/components/portfolio/ToolsSection";
@@ -23,19 +24,22 @@ export default function Home() {
       {/* 03 / SELECTED WORK MASONRY GRID */}
       <SelectedWork />
 
-      {/* 04 / 3D MANUFACTURED VISUAL ARCHIVE */}
+      {/* 04 / WEBSITES & DIGITAL EXPERIENCES SHOWCASE */}
+      <WebShowcase />
+
+      {/* 05 / 3D MANUFACTURED VISUAL ARCHIVE */}
       <VisualArchive />
 
-      {/* 05 / SOCIAL DESIGN SHOWCASE */}
+      {/* 06 / SOCIAL DESIGN SHOWCASE */}
       <SocialDesignShowcase />
 
-      {/* 06 / CREATIVE STACK & TOOLS */}
+      {/* 07 / CREATIVE STACK & TOOLS */}
       <ToolsSection />
 
-      {/* 07 / FLAGSHIP TEDX CASE STUDY */}
+      {/* 08 / FLAGSHIP TEDX CASE STUDY */}
       <CaseStudies />
 
-      {/* 08 / CONTACT & MINIMAL FOOTER */}
+      {/* 09 / CONTACT & MINIMAL FOOTER */}
       <ContactFooter />
     </main>
   );

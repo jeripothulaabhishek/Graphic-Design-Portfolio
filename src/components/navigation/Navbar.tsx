@@ -9,6 +9,7 @@ import { ArrowUpRight, Menu, X } from "lucide-react";
 const NAV_LINKS = [
   { label: "ABOUT", href: "#about" },
   { label: "WORK", href: "#work" },
+  { label: "WEBSITES", href: "#web-showcase" },
   { label: "ARCHIVE", href: "#archive" },
   { label: "TOOLS", href: "#tools" },
   { label: "CONTACT", href: "#contact" },

@@ -75,7 +75,7 @@ export default function Hero() {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="text-lg md:text-xl text-[#707070] font-normal leading-relaxed max-w-lg mb-10"
             >
-              I turn ideas into visual identities, campaigns, event branding and digital experiences that leave a lasting mark.
+              I design visuals people notice — and complete digital experiences they remember. From brand identity to responsive websites.
             </motion.p>
 
             {/* ACTION BUTTONS */}

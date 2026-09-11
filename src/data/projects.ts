@@ -1016,6 +1016,86 @@ export const PORTFOLIO_CATEGORIES: ProjectCategory[] = [
         featured: true,
       }
     ]
+  },
+  {
+    id: "web-showcase",
+    title: "Web & Digital Experiences",
+    gradient: "linear-gradient(135deg, #111111, #333333)",
+    description: "From visual identities to complete digital experiences — interactive responsive websites designed and built for real brands.",
+    projects: [
+      {
+        id: "web-mgr-constructions",
+        slug: "mgr-constructions-prime-estates",
+        externalUrl: "https://mgr-constructions.vercel.app/",
+        title: "PRIME ESTATES",
+        subtitle: "Luxury, translated into a digital experience.",
+        category: "Real Estate • Web Design • UI/UX",
+        image: "/websites/prime-estates.jpg",
+        description: "A premium real-estate web experience designed around luxury, trust, architectural storytelling and conversion-focused property discovery.",
+        client: "Prime Estates / MGR Constructions",
+        year: "2025",
+        role: "Lead Web Designer & UI/UX Architect",
+        deliverables: ["Web Design System", "UI/UX Architecture", "Property Discovery", "Responsive Frontend", "Interactive Site Visit Scheduler"],
+        tags: ["Real Estate", "Web Design", "UI/UX", "Luxury Branding"],
+        gradient: "linear-gradient(135deg, #c9a227, #1a1c1e)",
+        featured: true,
+        content: {
+          overview: "Prime Estates needed a digital presence that reflects its 15-year architectural legacy in Hyderabad. The goal was to transform property browsing into an immersive luxury experience that builds instant credibility with high-net-worth homebuyers.",
+          challenge: "Communicating architectural precision, Vastu compliance, and complex floor plans across varied device sizes without overwhelming prospective buyers.",
+          solution: "Architected an obsidian-and-gold visual hierarchy featuring high-resolution property imagery, glassmorphic information cards, and a streamlined site visit scheduling workflow.",
+          keyTakeaway: "Subtle luxury motion and clear spatial typography elevate real estate discovery into a high-converting digital journey.",
+          gallery: ["/websites/prime-estates.jpg"]
+        }
+      },
+      {
+        id: "web-this-is-it-cafe",
+        slug: "this-is-it-cafe-website",
+        externalUrl: "https://this-is-it-cafe-website.vercel.app/",
+        title: "THIS IS IT CAFÉ",
+        subtitle: "A café experience, designed before the first sip.",
+        category: "Hospitality • Web Design • UI/UX",
+        image: "/websites/this-is-it-cafe.jpg",
+        description: "A warm, contemporary café website designed to communicate atmosphere, food, personality and brand experience through digital interaction.",
+        client: "Ember & Oak Café",
+        year: "2025",
+        role: "Brand & Web UI/UX Designer",
+        deliverables: ["Web UI/UX", "Artisanal Menu Showcase", "Table Reservation Flow", "Atmosphere Storytelling"],
+        tags: ["Hospitality", "Web Design", "UI/UX", "Brand Experience"],
+        gradient: "linear-gradient(135deg, #c85a32, #2c1a14)",
+        featured: true,
+        content: {
+          overview: "Designed a warm digital sanctuary for Ember & Oak Café that conveys artisanal coffee craftsmanship, seasonal food menus, and cozy neighbourhood atmosphere.",
+          challenge: "Capturing the sensory warmth of a specialty coffee shop in a clean digital layout that guides visitors toward table reservations and menu exploration.",
+          solution: "Formulated a warm cream and terracotta color system paired with high-contrast food photography and clean tabbed menu navigation.",
+          keyTakeaway: "Digital hospitality design should make visitors feel the warmth of the space before they even walk through the door.",
+          gallery: ["/websites/this-is-it-cafe.jpg"]
+        }
+      },
+      {
+        id: "web-keesari-hospital",
+        slug: "keesari-hospital-website",
+        externalUrl: "https://keesari-hospital.vercel.app/",
+        title: "KEESARI HOSPITAL",
+        subtitle: "When design has to feel reassuring.",
+        category: "Healthcare • Web Design • UX",
+        image: "/websites/keesari-hospital.jpg",
+        description: "A patient-focused healthcare website designed to make specialist information, appointments, emergency access and hospital services easier to understand and navigate.",
+        client: "Keesari Hospital Ongole",
+        year: "2025",
+        role: "Healthcare UX Architect & Lead Web Designer",
+        deliverables: ["Healthcare UX", "Emergency NICU Line", "Doctor Profiles", "OPD Appointment Flow", "Speciality Architecture"],
+        tags: ["Healthcare", "Web Design", "UX", "Patient Accessibility"],
+        gradient: "linear-gradient(135deg, #1b659c, #0d3859)",
+        featured: true,
+        content: {
+          overview: "Keesari Hospital needed a reassuring, accessible web platform for patients seeking pediatric, neonatal NICU, and endocrine clinical care in Ongole.",
+          challenge: "Structuring critical healthcare information—such as 24/7 NICU emergency lines, doctor availability, and speciality details—so anxious families can act instantly.",
+          solution: "Designed a high-contrast clinical blue architecture featuring prominent emergency hotlines, a 4-step patient journey, and clear specialist doctor cards.",
+          keyTakeaway: "In healthcare UX, clarity and empathy eliminate friction when families need care most.",
+          gallery: ["/websites/keesari-hospital.jpg"]
+        }
+      }
+    ]
   }
 ];
 

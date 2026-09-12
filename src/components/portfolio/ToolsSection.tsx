@@ -8,7 +8,7 @@ import { Wrench } from "lucide-react";
 interface ToolItem {
   name: string;
   category: string;
-  group: "DESIGN" | "MOTION" | "DEV" | "AI";
+  group: "DESIGN" | "MARKETING" | "DEV" | "AI";
   desc: string;
   iconUrl: string;
   accent: string;
@@ -41,9 +41,9 @@ const TOOLS: ToolItem[] = [
   },
   {
     name: "AFTER EFFECTS",
-    category: "MOTION & KINETICS",
-    group: "MOTION",
-    desc: "Kinetic typography loops, title sequences & logo animation.",
+    category: "MARKETING & VIDEO",
+    group: "MARKETING",
+    desc: "Social media video graphics, promotional animation & campaign video assets.",
     iconUrl: "/tools/after-effects-3d.png",
     accent: "bg-[#8E2DE2]/10 border-[#8E2DE2]/30",
   },
@@ -73,9 +73,9 @@ const TOOLS: ToolItem[] = [
   },
   {
     name: "REACT & NEXT.JS",
-    category: "CREATIVE DEV",
+    category: "WEB DEVELOPMENT",
     group: "DEV",
-    desc: "Full-stack SSR web applications, smooth state & API integrations.",
+    desc: "Full-stack SSR web applications, responsive layouts & API integrations.",
     iconUrl: "/tools/react-next-3d.png",
     accent: "bg-[#FFB800]/10 border-[#FFB800]/30",
   },
@@ -83,10 +83,10 @@ const TOOLS: ToolItem[] = [
 
 const STACK_FILTERS = [
   { id: "ALL", label: "ALL TOOLS" },
-  { id: "DESIGN", label: "DESIGN & VECTOR" },
-  { id: "MOTION", label: "MOTION & KINETICS" },
+  { id: "DESIGN", label: "UI & VECTOR" },
+  { id: "MARKETING", label: "MARKETING & VIDEO" },
   { id: "AI", label: "AI CREATIVE" },
-  { id: "DEV", label: "FRONTEND DEV" },
+  { id: "DEV", label: "WEB DEV" },
 ];
 
 export default function ToolsSection() {

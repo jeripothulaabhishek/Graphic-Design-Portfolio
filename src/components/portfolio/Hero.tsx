@@ -13,10 +13,10 @@ const HeroScene3D = dynamic(() => import("./HeroScene3D"), {
 const MARQUEE_ITEMS = [
   "BRAND IDENTITY",
   "POSTER ART",
-  "3D VISUAL ARCHIVE",
-  "MOTION & EVENT GRAPHICS",
+  "UI & WEB DESIGN",
+  "MARKETING & EVENT GRAPHICS",
   "TYPOGRAPHY & EDITORIAL",
-  "CREATIVE DIRECTION",
+  "UI/UX DESIGN",
   "TEDx BRANDING",
 ];
 

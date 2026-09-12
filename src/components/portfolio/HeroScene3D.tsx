@@ -291,17 +291,17 @@ export default function HeroScene3D() {
             <div className="flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-[#FFB800] animate-pulse" />
               <span className="font-semibold text-[#111111] uppercase tracking-wider text-[10px] sm:text-[11px]">
-                ABHISHEK 3D CREATIVE STUDIO
+                ABHISHEK CREATIVE DESIGN STUDIO
               </span>
             </div>
             <div className="hidden sm:flex items-center gap-1.5 text-[10px] text-[#707070] uppercase tracking-widest font-bold">
-              <Move3d className="w-3.5 h-3.5 text-[#FFB800]" />
-              <span>3D • MOTION • UI</span>
+              <Layers className="w-3.5 h-3.5 text-[#FFB800]" />
+              <span>UI/UX • WEB • GRAPHICS</span>
             </div>
           </div>
         </div>
 
-        {/* 4. FLOATING 3D DEPTH TAGS (PARALLAX Z-LAYERS) */}
+        {/* 4. FLOATING DEPTH TAGS (PARALLAX Z-LAYERS) */}
         
         {/* TOP LEFT BADGE: PHOTOSHOP & ILLUSTRATOR */}
         <motion.div
@@ -320,7 +320,7 @@ export default function HeroScene3D() {
           </div>
           <div className="hidden xs:flex flex-col sm:flex flex-col">
             <span className="font-display text-[11px] sm:text-xs font-bold text-[#111111]">Visual Art</span>
-            <span className="font-mono-meta text-[9px] sm:text-[10px] text-[#707070]">Adobe Suite 3D</span>
+            <span className="font-mono-meta text-[9px] sm:text-[10px] text-[#707070]">Adobe Suite</span>
           </div>
         </motion.div>
 
@@ -338,7 +338,7 @@ export default function HeroScene3D() {
           </div>
           <div className="flex flex-col">
             <span className="font-display text-[11px] sm:text-xs font-bold text-[#111111]">Figma & UI</span>
-            <span className="font-mono-meta text-[9px] sm:text-[10px] text-[#FFB800] font-semibold uppercase">3D Systems</span>
+            <span className="font-mono-meta text-[9px] sm:text-[10px] text-[#FFB800] font-semibold uppercase">Design Systems</span>
           </div>
         </motion.div>
 
@@ -355,8 +355,8 @@ export default function HeroScene3D() {
             <Sparkle3D className="w-4 h-4 sm:w-5 sm:h-5" />
           </div>
           <div className="flex flex-col">
-            <span className="font-display text-[11px] sm:text-xs font-bold text-[#111111]">Design, Move</span>
-            <span className="font-mono-meta text-[9px] sm:text-[10px] text-[#707070]">3D Storytelling</span>
+            <span className="font-display text-[11px] sm:text-xs font-bold text-[#111111]">Design, Create</span>
+            <span className="font-mono-meta text-[9px] sm:text-[10px] text-[#707070]">Brand Storytelling</span>
           </div>
         </motion.div>
 
@@ -371,7 +371,7 @@ export default function HeroScene3D() {
         >
           <Compass className="w-3.5 h-3.5 text-[#FFB800] animate-spin-slow" />
           <span className="font-mono-meta text-[9px] sm:text-[10px] font-semibold uppercase tracking-wider">
-            {isHovered ? "3D ACTIVE" : isMobileDevice ? "TILT / SWIPE 3D" : "HOVER 3D VIEW"}
+            {isHovered ? "INTERACTIVE STAGE" : isMobileDevice ? "TILT TO VIEW" : "HOVER TO VIEW"}
           </span>
         </motion.div>
 

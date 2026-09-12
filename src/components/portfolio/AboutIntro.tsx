@@ -29,15 +29,15 @@ const CAPABILITIES = [
   },
   {
     num: "04",
-    title: "MOTION & KINETIC GRAPHICS",
-    desc: "Kinetic typography loops, title sequences, logo animation & video overlays.",
+    title: "MARKETING & GRAPHIC DESIGN",
+    desc: "Digital marketing collateral, promotional banners, print suites & pitch presentation decks.",
     icon: Film,
     accent: "border-l-4 border-l-[#111111]",
   },
   {
     num: "05",
-    title: "CREATIVE DEVELOPMENT",
-    desc: "Full-stack Next.js, React, Tailwind CSS & interactive Three.js web applications.",
+    title: "WEB DESIGN & DEVELOPMENT",
+    desc: "Production Next.js, React, Tailwind CSS & responsive client web applications.",
     icon: Code,
     accent: "border-l-4 border-l-[#FFB800]",
   },
@@ -134,7 +134,7 @@ export default function AboutIntro() {
 
             {/* Quick Summary Bio */}
             <p className="text-[#707070] text-sm leading-relaxed mb-6">
-              Combining visual thinking with modern engineering to craft brand identities, spatial 3D graphics, high-converting social campaigns, and high-performance digital experiences.
+              Combining visual thinking with modern engineering to craft brand identities, marketing collateral, high-converting social campaigns, and high-performance digital experiences.
             </p>
 
             <div className="flex items-center gap-2 text-xs font-mono-meta text-[#111111] font-semibold">
@@ -158,7 +158,7 @@ export default function AboutIntro() {
                 Hello, I'm Abhishek.
               </h3>
               <p className="text-[#707070] text-base md:text-lg leading-relaxed">
-                I design brand identities, digital campaigns, interfaces and visual systems — while exploring the space between design, technology and 3D. My work bridges physical editorial aesthetics with modern interactive web architecture.
+                I design brand identities, digital campaigns, interfaces and visual systems — while exploring the space between design, technology and user experience. My work bridges physical editorial aesthetics with modern interactive web architecture.
               </p>
             </motion.div>
 

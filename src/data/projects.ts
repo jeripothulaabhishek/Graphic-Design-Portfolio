@@ -457,12 +457,12 @@ export const PORTFOLIO_CATEGORIES: ProjectCategory[] = [
         subtitle: "Minimalist fintech user acquisition creatives",
         category: "Social & Ad Creative",
         image: "https://images.unsplash.com/photo-1559526324-4b87b5e36e44?q=80&w=1200&auto=format&fit=crop",
-        description: "Sleek 3D illustration ads highlighting instant global transfers.",
+        description: "Sleek vector & UI illustration ads highlighting instant global transfers.",
         client: "Krypton Pay",
         year: "2023",
         role: "UI/Ad Designer",
-        deliverables: ["3D Ad Visuals", "Social Posts", "Web Banners"],
-        tags: ["Fintech", "3D Visuals", "Social Ads"],
+        deliverables: ["UI Ad Visuals", "Social Posts", "Web Banners"],
+        tags: ["Fintech", "UI Visuals", "Social Ads"],
         gradient: "linear-gradient(to right, #f7b733, #fc4a1a)",
         content: {
           overview: "Clean financial advertisement campaign building user trust.",
@@ -686,21 +686,21 @@ export const PORTFOLIO_CATEGORIES: ProjectCategory[] = [
         id: "web-4",
         slug: "strata-ai-landing",
         title: "Strata Intelligence Landing",
-        subtitle: "Interactive 3D landing page for AI startup",
+        subtitle: "Interactive digital landing page for AI startup",
         category: "Web & Product Design",
         image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1200&auto=format&fit=crop",
         description: "Interactive canvas background with glowing node connections and animated hero text.",
         client: "Strata AI",
         year: "2024",
         role: "Creative Developer",
-        deliverables: ["Interactive Landing", "Three.js Scene", "Micro-Interactions"],
-        tags: ["Creative Dev", "Three.js", "AI Landing Page"],
+        deliverables: ["Interactive Landing", "Web UI System", "Micro-Interactions"],
+        tags: ["Creative Dev", "UI/UX", "AI Landing Page"],
         gradient: "linear-gradient(135deg, #8e2de2, #4a00e0)",
         content: {
           overview: "Futuristic landing experience showcasing AI data pipeline capabilities.",
-          challenge: "Rendering responsive 3D node networks at smooth 60 FPS.",
+          challenge: "Rendering responsive interactive node networks at smooth 60 FPS.",
           solution: "Built custom WebGL shader scenes optimized for mobile devices.",
-          keyTakeaway: "Interactive 3D visuals captivate tech decision-makers instantly.",
+          keyTakeaway: "Interactive web visuals captivate tech decision-makers instantly.",
           gallery: ["https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1200&auto=format&fit=crop"]
         }
       },
@@ -768,7 +768,7 @@ export const PORTFOLIO_CATEGORIES: ProjectCategory[] = [
         id: "ai-2",
         slug: "cyber-botanica-concept",
         title: "Cyber Botanica Series",
-        subtitle: "Bionic botanical 3D imagery & editorial design",
+        subtitle: "Bionic botanical concept imagery & editorial design",
         category: "AI-Assisted Creative",
         image: "https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?q=80&w=1200&auto=format&fit=crop",
         description: "Surreal fusion of organic plants and chrome mechanical structures.",
@@ -990,7 +990,7 @@ export const PORTFOLIO_CATEGORIES: ProjectCategory[] = [
         subtitle: "High-octane racing key visual artwork for F1 Movie",
         category: "Filmy Posters & Fan Art",
         image: "/filimy-designs/f1-poster.png",
-        description: "Kinetic motion key visual for F1 racing cinema, featuring high-speed motion blur, energetic typographic overlays, and glossy red metallic contrasts.",
+        description: "Dynamic key visual for F1 racing cinema, featuring high-speed visual impact, energetic typographic overlays, and glossy red metallic contrasts.",
         client: "Cinema Fan Art",
         year: "2025",
         role: "Poster Artist",
@@ -1130,9 +1130,9 @@ export const DESIGN_TOOLS = [
   },
   {
     name: "Adobe After Effects",
-    category: "Motion & Kinetic Typography",
+    category: "Marketing & Video Graphics",
     icon: "Video",
-    description: "Kinetic motion sequences, logo reveals, speed ramping & Lottie UI animation export.",
+    description: "Marketing video graphics, promotional animation, video ads & UI animation export.",
     level: "Advanced"
   },
   {
@@ -1167,7 +1167,7 @@ export const CASE_STUDIES = [
       { label: "Social Reach", value: "85,000+" },
       { label: "Assets Delivered", value: "45+" }
     ],
-    deliverables: ["Stage Backdrop & Lighting Specs", "Speaker Announcement Posters", "Attendee Lanyards & Badges", "Social Media Campaign Kit", "Motion Title Sequences"],
+    deliverables: ["Stage Backdrop & Lighting Specs", "Speaker Announcement Posters", "Attendee Lanyards & Badges", "Social Media Campaign Kit", "Promotional Video Sequences"],
     linkText: "View Full Brand Assets"
   },
   {

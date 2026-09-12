@@ -40,7 +40,7 @@ export default function SelectedWork() {
             </h2>
           </div>
           <p className="text-[#707070] text-base max-w-md">
-            A curated collection of brand identities, event ecosystems, digital campaigns, interfaces and 3D visual experiments.
+            A curated collection of brand identities, event ecosystems, digital campaigns, user interfaces and marketing graphics.
           </p>
         </div>
 

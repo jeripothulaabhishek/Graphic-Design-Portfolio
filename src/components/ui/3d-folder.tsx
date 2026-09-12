@@ -108,7 +108,7 @@ export default function VisualArchive() {
             IDEAS, FILED FOR LATER.
           </h2>
           <p className="text-[#707070] text-base max-w-xl mt-3">
-            A virtual physical archive system. Click any 3D manufactured folder to pull out Filmy Posters, Fan Arts, branding assets, and case studies.
+            A visual archive system. Click any archive folder to pull out Filmy Posters, Fan Arts, branding assets, and web case studies.
           </p>
         </div>
 

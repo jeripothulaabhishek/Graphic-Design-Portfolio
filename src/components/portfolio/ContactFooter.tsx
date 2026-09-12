@@ -142,7 +142,7 @@ export default function ContactFooter() {
                     <option value="Social Campaign & Ads">Social Campaign & Ad Creatives</option>
                     <option value="TEDx Event Branding">TEDx / Event Branding Ecosystem</option>
                     <option value="UI/UX Interface Design">UI/UX Interface Design</option>
-                    <option value="3D Art & Motion Graphics">3D Art & Motion Graphics</option>
+                    <option value="Web & Graphic Design">Web & Graphic Design</option>
                     <option value="Full Creative Direction">Full Creative Direction</option>
                     <option value="Other Design Inquiry">Other Design Inquiry</option>
                   </select>

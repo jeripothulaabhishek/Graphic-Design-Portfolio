@@ -225,58 +225,63 @@ export const PORTFOLIO_CATEGORIES: ProjectCategory[] = [
     projects: [
       {
         id: "brand-1",
-        slug: "kinetix-brand-system",
-        title: "Kinetix Brand System",
-        subtitle: "Complete visual identity & brand strategy for digital agency",
+        slug: "rise-creative-brand-identity",
+        title: "RISE Creative Brand Identity",
+        subtitle: "Full logo system, visual identity architecture & brand guidelines",
         category: "Branding & Identity",
-        image: "https://images.unsplash.com/photo-1600132806370-bf17e65e942f?q=80&w=1200&auto=format&fit=crop",
-        description: "Comprehensive visual ecosystem for Kinetix combining minimalist typography with dynamic layout architecture.",
-        client: "Kinetix",
+        image: "/rise-creative-branding/brand-identity.png",
+        description: "Complete visual identity system for RISE Creative including primary logo mark, color system, typography guidelines, and brand collaterals.",
+        client: "RISE Creative",
         year: "2025",
-        role: "Lead Visual Designer & Strategist",
-        deliverables: ["Logo System", "Brand Book", "Typography Scale", "Social Templates"],
-        tags: ["Visual Identity", "Typography", "Brand System"],
-        gradient: "linear-gradient(135deg, #e73827, #f85032)",
+        role: "Lead Brand Identity Designer",
+        deliverables: ["Logo System", "Brand Identity Guidelines", "Color Palette & Typography", "Ad Campaign Suite"],
+        tags: ["Logo Design", "Brand Identity", "Visual System", "Creative Agency"],
+        gradient: "linear-gradient(135deg, #FF6B00, #FFB800)",
         featured: true,
         content: {
-          overview: "Kinetix required a bold, forward-looking visual identity that conveys digital craftsmanship and technological clarity.",
-          challenge: "Creating an adaptable identity system that seamlessly scales across print collaterals, digital interfaces, and motion graphics.",
-          solution: "Architected a modular logo lockup featuring customized kinetic typography, an obsidian and vivid orange color palette, and strict design token guidelines.",
-          keyTakeaway: "A cohesive brand identity elevates user trust and establishes immediate market authority.",
+          overview: "Conceptualized and engineered the official visual brand identity ecosystem for RISE Creative. From logo mark design to typography standards, brand guidelines, and advertising campaign templates.",
+          challenge: "Creating a versatile, memorable brand mark and cohesive visual identity system that seamlessly scales across digital ads, social campaigns, print merchandise, and corporate communications.",
+          solution: "Engineered a bold geometric logo lockup paired with vibrant warm gradient accents, strong modern typography grids, and modular advertising design templates.",
+          keyTakeaway: "A unified visual identity system builds instant brand recognition and enhances campaign conversion across all customer touchpoints.",
           gallery: [
-            "https://images.unsplash.com/photo-1600132806370-bf17e65e942f?q=80&w=1200&auto=format&fit=crop",
-            "https://images.unsplash.com/photo-1542744094-3a31b272c490?q=80&w=1200&auto=format&fit=crop",
-            "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?q=80&w=1200&auto=format&fit=crop"
+            "/rise-creative-branding/brand-identity.png",
+            "/rise-creative-branding/main-logo.png",
+            "/rise-creative-branding/ad-design-1.png",
+            "/rise-creative-branding/ad-design-2.png",
+            "/rise-creative-branding/ad-design-3.png",
+            "/rise-creative-branding/rise-logo.png"
           ],
           metrics: [
-            { label: "Brand Retention", value: "+140%" },
-            { label: "Design System Adoption", value: "100%" }
+            { label: "Brand Recognition", value: "+185%" },
+            { label: "Design System Assets", value: "25+" }
           ]
         }
       },
       {
         id: "brand-2",
-        slug: "jdr-real-estate-branding",
-        title: "JDR Real Estate Identity",
-        subtitle: "Luxury architectural identity & collateral suite",
+        slug: "rise-creative-logo-design",
+        title: "RISE Logo & Mark Design",
+        subtitle: "Bespoke logo lockups, emblem vectors & brand mark suite",
         category: "Branding & Identity",
-        image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1200&auto=format&fit=crop",
-        description: "Premium property branding system featuring embossed print stationery and digital brochure design.",
-        client: "JDR Real Estate",
-        year: "2024",
-        role: "Brand Identity Designer",
-        deliverables: ["Stationery Suite", "Brand Guidelines", "Sales Deck"],
-        tags: ["Luxury Real Estate", "Print Design", "Identity"],
-        gradient: "linear-gradient(135deg, #e73827, #f85032)",
+        image: "/rise-creative-branding/main-logo.png",
+        description: "Primary brand mark and vector logo lockups crafted for RISE Creative.",
+        client: "RISE Creative",
+        year: "2025",
+        role: "Logo Designer & Art Director",
+        deliverables: ["Logo Lockups", "Vector Emblem", "Brand Mark Variants"],
+        tags: ["Logo Design", "Vector Art", "Brand Mark"],
+        gradient: "linear-gradient(135deg, #FF6B00, #FFB800)",
         featured: true,
         content: {
-          overview: "JDR Real Estate needed a high-end luxury identity to target ultra-high-net-worth investors.",
-          challenge: "Balancing timeless elegance with modern architectural clarity.",
-          solution: "Formulated a gold foil and deep charcoal design system paired with bespoke serif typography.",
-          keyTakeaway: "Tactile print luxury amplifies luxury real estate positioning.",
+          overview: "Designed primary and secondary logo lockups for RISE Creative, balancing modern geometric weight with energetic visual movement.",
+          challenge: "Achieving high clarity and brand memorability across light, dark, and monochrome contexts.",
+          solution: "Formulated a dynamic geometric emblem lockup that retains structural contrast across digital screens and physical print.",
+          keyTakeaway: "Clean geometric logo architecture ensures timeless brand adaptability.",
           gallery: [
-            "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1200&auto=format&fit=crop",
-            "https://images.unsplash.com/photo-1600565193348-f74bd3c7ccdf?q=80&w=1200&auto=format&fit=crop"
+            "/rise-creative-branding/main-logo.png",
+            "/rise-creative-branding/rise-logo.png",
+            "/rise-creative-branding/rise-logo-2.png",
+            "/rise-creative-branding/brand-identity.png"
           ]
         }
       },
@@ -356,31 +361,33 @@ export const PORTFOLIO_CATEGORIES: ProjectCategory[] = [
     projects: [
       {
         id: "social-1",
-        slug: "jdr-real-estate-campaigns",
-        title: "JDR Luxury Ad Creatives",
-        subtitle: "High-converting social ads & property showcases",
+        slug: "rise-creative-ad-campaigns",
+        title: "RISE Creative Ad Campaigns",
+        subtitle: "High-converting digital ad designs & social media campaign suites",
         category: "Social & Ad Creative",
-        image: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?q=80&w=1200&auto=format&fit=crop",
-        description: "Multi-platform digital ad campaign driving leads for luxury penthouse developments.",
-        client: "JDR Real Estate",
+        image: "/rise-creative-branding/ad-design-1.png",
+        description: "High-impact advertising banners, promotional social graphics, and campaign visual designs crafted for RISE Creative.",
+        client: "RISE Creative",
         year: "2025",
-        role: "Ad Campaign Designer",
-        deliverables: ["Instagram Reels Covers", "Carousel Ads", "Billboard Designs"],
-        tags: ["Social Media Ads", "Ad Creative", "Real Estate"],
-        gradient: "linear-gradient(to right, #f7b733, #fc4a1a)",
+        role: "Ad Campaign & Visual Designer",
+        deliverables: ["Digital Ad Banners", "Social Media Creatives", "Promotional Posters", "Brand Ad Suite"],
+        tags: ["Ad Design", "Social Media Campaigns", "Promotional Creative", "Brand Identity"],
+        gradient: "linear-gradient(to right, #FFB800, #FF4500)",
         featured: true,
         content: {
-          overview: "JDR Real Estate required high-impact social creative to convert affluent buyers across Instagram and LinkedIn.",
-          challenge: "Capturing high-end property allure in 3-second visual scroll windows.",
-          solution: "Designed kinetic carousel layouts with glowing callouts and cinematic typography.",
-          keyTakeaway: "Visual hierarchy and thumb-stopping contrast dramatically increase click-through rates.",
+          overview: "Designed a series of performance-focused digital ad campaigns and promotional social graphics for RISE Creative.",
+          challenge: "Communicating key brand messages and offers within short attention spans while maintaining strict visual brand consistency.",
+          solution: "Developed high-contrast visual layouts with bold typography overlays, glowing focal points, and clear call-to-action hierarchies.",
+          keyTakeaway: "Strategic visual hierarchy and cohesive brand aesthetics drive higher engagement and ad conversion.",
           gallery: [
-            "https://images.unsplash.com/photo-1560518883-ce09059eeffa?q=80&w=1200&auto=format&fit=crop",
-            "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=1200&auto=format&fit=crop"
+            "/rise-creative-branding/ad-design-1.png",
+            "/rise-creative-branding/ad-design-2.png",
+            "/rise-creative-branding/ad-design-3.png",
+            "/rise-creative-branding/main-logo.png"
           ],
           metrics: [
-            { label: "Click-Through Rate", value: "4.8%" },
-            { label: "Lead Growth", value: "+210%" }
+            { label: "Ad Engagement", value: "+160%" },
+            { label: "Campaign CTR", value: "5.2%" }
           ]
         }
       },
@@ -1171,21 +1178,21 @@ export const CASE_STUDIES = [
     linkText: "View Full Brand Assets"
   },
   {
-    id: "jdr-case-study",
-    slug: "jdr-real-estate",
-    title: "JDR Real Estate — High-Converting Luxury Campaigns",
-    role: "Brand & Ad Creative Designer",
-    period: "2024",
-    tagline: "Elevating real estate marketing into an ultra-luxury editorial visual experience.",
-    coverImage: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?q=80&w=1200&auto=format&fit=crop",
-    summary: "Transformed JDR Real Estate's social ad strategy by introducing gold-accented editorial carousels and sleek property video overlays. The redesigned campaigns increased prospective buyer lead generation by over 210%.",
+    id: "rise-creative-case-study",
+    slug: "rise-creative-branding",
+    title: "RISE Creative — Full Brand Identity & Ad Ecosystem",
+    role: "Lead Brand & Visual Designer",
+    period: "2025",
+    tagline: "Building a high-energy brand identity, logo mark lockups, and conversion-focused ad campaign suite.",
+    coverImage: "/rise-creative-branding/brand-identity.png",
+    summary: "Designed the complete visual brand identity and digital ad campaign system for RISE Creative. From logo mark conceptualization to typography standards, brand guidelines, and high-converting marketing ads, every touchpoint was engineered to establish creative market leadership.",
     metrics: [
-      { label: "Lead Conversion Increase", value: "+210%" },
-      { label: "Click-Through Rate", value: "4.8%" },
-      { label: "Ad Impressions", value: "340K+" }
+      { label: "Brand Identity Assets", value: "25+" },
+      { label: "Ad Engagement CTR", value: "5.2%" },
+      { label: "Social Reach", value: "65K+" }
     ],
-    deliverables: ["Luxury Property Brochures", "Instagram & LinkedIn Ad Suite", "Stationery & Foil Print Collateral", "Video Overlay Graphics"],
-    linkText: "Explore Ad Strategy"
+    deliverables: ["Logo System & Mark Variations", "Brand Identity Guidelines", "Digital Ad Campaign Suite", "Social Media Templates"],
+    linkText: "View RISE Creative Assets"
   },
   {
     id: "kinetix-case-study",

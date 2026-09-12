@@ -301,77 +301,205 @@ export default function HeroScene3D() {
           </div>
         </div>
 
-        {/* 4. FLOATING DEPTH TAGS (PARALLAX Z-LAYERS) */}
+        {/* 4. FLOATING DEPTH 3D APP LOGOS & PARALLAX Z-LAYERS AROUND HERO FRAME */}
         
-        {/* TOP LEFT BADGE: PHOTOSHOP & ILLUSTRATOR */}
+        {/* TOP LEFT BADGE: PHOTOSHOP & CAPCUT 3D */}
         <motion.div
           style={{
             x: floatX1,
             y: floatY1,
-            transform: "translateZ(65px)",
+            transform: "translateZ(75px)",
           }}
-          className="absolute -top-3 -left-2 sm:-top-6 sm:-left-6 bg-white/95 border border-[#E5E5E0] shadow-xl rounded-xl px-2.5 sm:px-3.5 py-1.5 sm:py-2 flex items-center gap-2 sm:gap-2.5 backdrop-blur-md z-30 pointer-events-none"
+          animate={{
+            y: [-4, 6, -4],
+            rotate: [-1.5, 1.5, -1.5],
+          }}
+          transition={{
+            duration: 4.5,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+          className="absolute -top-4 -left-3 sm:-top-8 sm:-left-8 bg-white/95 border border-[#E5E5E0] shadow-2xl rounded-2xl px-3 sm:px-4 py-2 sm:py-2.5 flex items-center gap-2.5 sm:gap-3 backdrop-blur-xl z-30 pointer-events-none group"
         >
-          <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-lg bg-[#001E36] flex items-center justify-center font-bold text-[10px] sm:text-xs text-[#31A8FF] shadow-xs">
-            Ps
+          <div className="flex items-center -space-x-1.5">
+            <div className="relative w-7 h-7 sm:w-8 sm:h-8 rounded-xl overflow-hidden shadow-md border border-white/60 bg-[#001E36]">
+              <Image
+                src="/tools/photoshop-3d.png"
+                alt="Photoshop 3D"
+                fill
+                className="object-cover p-0.5"
+              />
+            </div>
+            <div className="relative w-7 h-7 sm:w-8 sm:h-8 rounded-xl overflow-hidden shadow-md border border-white/60 bg-[#111111]">
+              <Image
+                src="/tools/capcut-3d.jpg"
+                alt="CapCut 3D"
+                fill
+                className="object-cover"
+              />
+            </div>
           </div>
-          <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-lg bg-[#330000] flex items-center justify-center font-bold text-[10px] sm:text-xs text-[#FF9A00] shadow-xs">
-            Ai
-          </div>
-          <div className="hidden xs:flex flex-col sm:flex flex-col">
-            <span className="font-display text-[11px] sm:text-xs font-bold text-[#111111]">Visual Art</span>
-            <span className="font-mono-meta text-[9px] sm:text-[10px] text-[#707070]">Adobe Suite</span>
+          <div className="flex flex-col">
+            <span className="font-display text-[11px] sm:text-xs font-bold text-[#111111]">Photoshop & CapCut</span>
+            <span className="font-mono-meta text-[9px] sm:text-[10px] text-[#707070] font-medium">Visual & Motion Graphics</span>
           </div>
         </motion.div>
 
-        {/* TOP RIGHT BADGE: FIGMA & CREATIVE SUITE */}
+        {/* TOP RIGHT BADGE: FIGMA & CANVA 3D */}
         <motion.div
           style={{
             x: floatX2,
             y: floatY2,
-            transform: "translateZ(55px)",
+            transform: "translateZ(65px)",
           }}
-          className="absolute -top-3 -right-2 sm:-top-5 sm:-right-5 bg-white/95 border border-[#E5E5E0] shadow-xl rounded-xl px-2.5 sm:px-3.5 py-1.5 sm:py-2 flex items-center gap-2 sm:gap-2.5 backdrop-blur-md z-30 pointer-events-none"
+          animate={{
+            y: [5, -7, 5],
+            rotate: [1.5, -1.5, 1.5],
+          }}
+          transition={{
+            duration: 5,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+          className="absolute -top-4 -right-3 sm:-top-7 sm:-right-7 bg-white/95 border border-[#E5E5E0] shadow-2xl rounded-2xl px-3 sm:px-4 py-2 sm:py-2.5 flex items-center gap-2.5 sm:gap-3 backdrop-blur-xl z-30 pointer-events-none group"
         >
-          <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-lg bg-[#1E1E1E] flex items-center justify-center text-white shadow-xs font-bold text-[10px] sm:text-xs">
-            ❖
+          <div className="flex items-center -space-x-1.5">
+            <div className="relative w-7 h-7 sm:w-8 sm:h-8 rounded-xl overflow-hidden shadow-md border border-white/60 bg-[#1E1E1E]">
+              <Image
+                src="/tools/figma-3d.png"
+                alt="Figma 3D"
+                fill
+                className="object-cover p-0.5"
+              />
+            </div>
+            <div className="relative w-7 h-7 sm:w-8 sm:h-8 rounded-xl overflow-hidden shadow-md border border-white/60 bg-[#00C4CC]">
+              <Image
+                src="/tools/canva-3d.png"
+                alt="Canva 3D"
+                fill
+                className="object-cover p-0.5"
+              />
+            </div>
           </div>
           <div className="flex flex-col">
-            <span className="font-display text-[11px] sm:text-xs font-bold text-[#111111]">Figma & UI</span>
-            <span className="font-mono-meta text-[9px] sm:text-[10px] text-[#FFB800] font-semibold uppercase">Design Systems</span>
+            <span className="font-display text-[11px] sm:text-xs font-bold text-[#111111]">Figma & Canva</span>
+            <span className="font-mono-meta text-[9px] sm:text-[10px] text-[#FFB800] font-semibold uppercase tracking-wider">
+              UI/UX & Design Systems
+            </span>
           </div>
         </motion.div>
 
-        {/* BOTTOM LEFT BADGE: CREATIVE CAMERA & BRANDING */}
+        {/* MIDDLE LEFT BADGE: 3D UI / UX DESIGN */}
+        <motion.div
+          style={{
+            x: floatX3,
+            y: floatY1,
+            transform: "translateZ(85px)",
+          }}
+          animate={{
+            y: [-6, 6, -6],
+            scale: [0.98, 1.02, 0.98],
+          }}
+          transition={{
+            duration: 4.2,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+          className="hidden md:flex absolute top-1/2 -left-10 -translate-y-1/2 bg-white/95 border border-[#E5E5E0] shadow-2xl rounded-2xl px-3.5 py-2.5 items-center gap-3 backdrop-blur-xl z-30 pointer-events-none"
+        >
+          <div className="relative w-8 h-8 rounded-xl overflow-hidden shadow-md border border-white/60 bg-[#0D1117]">
+            <Image
+              src="/tools/ui-ux-3d.jpg"
+              alt="UI/UX 3D"
+              fill
+              className="object-cover"
+            />
+          </div>
+          <div className="flex flex-col">
+            <span className="font-display text-xs font-bold text-[#111111]">UI / UX Design</span>
+            <span className="font-mono-meta text-[10px] text-[#00D2FF] font-semibold">Interactive Prototypes</span>
+          </div>
+        </motion.div>
+
+        {/* MIDDLE RIGHT BADGE: WEB DEV & REACT NEXT 3D */}
+        <motion.div
+          style={{
+            x: floatX1,
+            y: floatY3,
+            transform: "translateZ(70px)",
+          }}
+          animate={{
+            y: [6, -6, 6],
+            scale: [1.02, 0.98, 1.02],
+          }}
+          transition={{
+            duration: 4.8,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+          className="hidden md:flex absolute top-1/2 -right-10 -translate-y-1/2 bg-white/95 border border-[#E5E5E0] shadow-2xl rounded-2xl px-3.5 py-2.5 items-center gap-3 backdrop-blur-xl z-30 pointer-events-none"
+        >
+          <div className="relative w-8 h-8 rounded-xl overflow-hidden shadow-md border border-white/60 bg-[#000000]">
+            <Image
+              src="/tools/react-next-3d.png"
+              alt="Web Dev 3D"
+              fill
+              className="object-cover p-0.5"
+            />
+          </div>
+          <div className="flex flex-col">
+            <span className="font-display text-xs font-bold text-[#111111]">Web Dev</span>
+            <span className="font-mono-meta text-[10px] text-[#707070] font-medium">React / Next.js Apps</span>
+          </div>
+        </motion.div>
+
+        {/* BOTTOM LEFT BADGE: BRAND STORYTELLING */}
         <motion.div
           style={{
             x: floatX3,
             y: floatY3,
-            transform: "translateZ(75px)",
+            transform: "translateZ(80px)",
           }}
-          className="absolute -bottom-3 -left-1 sm:-bottom-5 sm:-left-5 bg-white/95 border border-[#E5E5E0] shadow-xl rounded-xl px-2.5 sm:px-3.5 py-1.5 sm:py-2 flex items-center gap-2 sm:gap-2.5 backdrop-blur-md z-30 pointer-events-none"
+          animate={{
+            y: [-5, 5, -5],
+            rotate: [-1, 2, -1],
+          }}
+          transition={{
+            duration: 4.6,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+          className="absolute -bottom-4 -left-2 sm:-bottom-7 sm:-left-7 bg-white/95 border border-[#E5E5E0] shadow-2xl rounded-2xl px-3 sm:px-4 py-2 sm:py-2.5 flex items-center gap-2.5 sm:gap-3 backdrop-blur-xl z-30 pointer-events-none"
         >
-          <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-[#FFB800] flex items-center justify-center text-[#111111] shadow-xs">
-            <Sparkle3D className="w-4 h-4 sm:w-5 sm:h-5" />
+          <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-[#FFB800] to-[#FF8A00] flex items-center justify-center text-[#111111] shadow-md">
+            <Sparkle3D className="w-4 h-4 sm:w-5 sm:h-5 text-[#111111]" />
           </div>
           <div className="flex flex-col">
-            <span className="font-display text-[11px] sm:text-xs font-bold text-[#111111]">Design, Create</span>
+            <span className="font-display text-[11px] sm:text-xs font-bold text-[#111111]">Design, Create & Elevate</span>
             <span className="font-mono-meta text-[9px] sm:text-[10px] text-[#707070]">Brand Storytelling</span>
           </div>
         </motion.div>
 
-        {/* BOTTOM RIGHT FLOATING BADGE: INTERACTIVE PERSPECTIVE HINT */}
+        {/* BOTTOM RIGHT BADGE: INTERACTIVE STAGE COMPASS */}
         <motion.div
           style={{
             x: floatX1,
             y: floatY2,
-            transform: "translateZ(50px)",
+            transform: "translateZ(55px)",
           }}
-          className="absolute -bottom-3 -right-1 sm:-bottom-4 sm:-right-4 bg-[#111111] text-white shadow-2xl rounded-full px-3 sm:px-3.5 py-1 sm:py-1.5 flex items-center gap-1.5 sm:gap-2 backdrop-blur-md z-30 pointer-events-none"
+          animate={{
+            y: [4, -4, 4],
+          }}
+          transition={{
+            duration: 3.8,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+          className="absolute -bottom-4 -right-2 sm:-bottom-6 sm:-right-6 bg-[#111111] text-white shadow-2xl rounded-full px-3.5 sm:px-4 py-1.5 sm:py-2 flex items-center gap-2 backdrop-blur-xl z-30 pointer-events-none border border-white/10"
         >
           <Compass className="w-3.5 h-3.5 text-[#FFB800] animate-spin-slow" />
-          <span className="font-mono-meta text-[9px] sm:text-[10px] font-semibold uppercase tracking-wider">
-            {isHovered ? "INTERACTIVE STAGE" : isMobileDevice ? "TILT TO VIEW" : "HOVER TO VIEW"}
+          <span className="font-mono-meta text-[9px] sm:text-[10px] font-semibold uppercase tracking-wider text-white/90">
+            {isHovered ? "INTERACTIVE STAGE" : isMobileDevice ? "TILT TO VIEW" : "HOVER TO VIEW 3D"}
           </span>
         </motion.div>
 

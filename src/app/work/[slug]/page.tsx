@@ -5,6 +5,7 @@ import { ArrowLeft, ArrowUpRight, CheckCircle2, Folder } from "lucide-react";
 import { PORTFOLIO_CATEGORIES, ProjectItem } from "@/data/projects";
 import Navbar from "@/components/navigation/Navbar";
 import ContactFooter from "@/components/portfolio/ContactFooter";
+import ProjectShowcaseCarousel from "@/components/portfolio/ProjectShowcaseCarousel";
 
 export async function generateStaticParams() {
   const allProjects: { slug: string }[] = [];
@@ -48,6 +49,12 @@ export default async function ProjectPage({
   const currentIndex = allProjectsList.findIndex((p) => p.slug === slug || p.id === slug);
   const nextProject = allProjectsList[(currentIndex + 1) % allProjectsList.length];
 
+  // Collect all unique showcase images
+  const allShowcaseImages = [
+    project.image,
+    ...(project.content?.gallery || []),
+  ].filter((url, idx, self) => Boolean(url) && self.indexOf(url) === idx);
+
   return (
     <main className="min-h-screen bg-[#F7F7F3] text-[#111111]">
       <Navbar />
@@ -77,20 +84,12 @@ export default async function ProjectPage({
           </p>
         </div>
 
-        {/* LARGE PROJECT HERO IMAGE */}
-        <div className="relative h-[360px] sm:h-[500px] lg:h-[650px] w-full rounded-3xl overflow-hidden bg-[#0A0A0C] border border-[#E5E5E0] shadow-studio flex items-center justify-center p-3">
-          <Image
-            src={project.image}
-            alt={project.title}
-            fill
-            className={`${
-              project.image.includes("logo") || project.image.includes("Main logo") || project.image.includes("ad-design") || project.image.includes("AD design")
-                ? "object-contain p-6 sm:p-12 filter drop-shadow-2xl"
-                : "object-cover"
-            }`}
-            priority
-          />
-        </div>
+        {/* INTERACTIVE SHOWCASE CAROUSEL (ZERO BLACK VOIDS) */}
+        <ProjectShowcaseCarousel
+          images={allShowcaseImages}
+          title={project.title}
+          category={project.category}
+        />
 
       </section>
 
@@ -185,27 +184,48 @@ export default async function ProjectPage({
               </div>
             )}
 
-            {/* HIGH-RES GALLERY IMAGES */}
+            {/* HIGH-RES GALLERY IMAGES WITH AMBIENT BACKDROPS */}
             {project.content?.gallery && project.content.gallery.length > 0 && (
               <div className="flex flex-col gap-8">
-                <span className="font-mono-meta text-xs font-bold text-[#111111] uppercase tracking-widest">
-                  PROJECT GALLERY & MOCKUPS
-                </span>
+                <div className="flex items-center justify-between">
+                  <span className="font-mono-meta text-xs font-bold text-[#111111] uppercase tracking-widest">
+                    PROJECT GALLERY & CREATIVE ASSETS
+                  </span>
+                  <span className="font-mono-meta text-xs font-semibold text-[#707070]">
+                    {project.content.gallery.length} ASSETS
+                  </span>
+                </div>
+
                 {project.content.gallery.map((imgUrl, i) => (
                   <div
                     key={i}
-                    className="relative h-[380px] sm:h-[520px] w-full rounded-3xl overflow-hidden bg-[#0A0A0C] border border-[#E5E5E0] shadow-card flex items-center justify-center p-3"
+                    className="relative h-[380px] sm:h-[540px] lg:h-[620px] w-full rounded-3xl overflow-hidden bg-[#0C0C0E] border border-[#E5E5E0] shadow-studio group flex items-center justify-center"
                   >
-                    <Image
-                      src={imgUrl}
-                      alt={`${project.title} gallery image ${i + 1}`}
-                      fill
-                      className={`${
-                        imgUrl.includes("logo") || imgUrl.includes("Main logo") || imgUrl.includes("ad-design") || imgUrl.includes("AD design")
-                          ? "object-contain p-6 sm:p-10 filter drop-shadow-xl"
-                          : "object-cover"
-                      }`}
-                    />
+                    {/* AMBIENT BACKGROUND GLOW DERIVED FROM IMAGE */}
+                    <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+                      <Image
+                        src={imgUrl}
+                        alt=""
+                        fill
+                        className="object-cover blur-3xl opacity-35 scale-125 brightness-110"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#0C0C0E]/80 via-transparent to-[#0C0C0E]/40" />
+                    </div>
+
+                    {/* MAIN IMAGE */}
+                    <div className="relative z-10 w-full h-full p-4 sm:p-8 flex items-center justify-center">
+                      <Image
+                        src={imgUrl}
+                        alt={`${project.title} gallery asset ${i + 1}`}
+                        fill
+                        quality={98}
+                        className={`${
+                          imgUrl.includes("logo") || imgUrl.includes("Main logo") || imgUrl.includes("ad-design") || imgUrl.includes("AD design")
+                            ? "object-contain p-4 sm:p-10 filter drop-shadow-2xl max-h-[92%]"
+                            : "object-contain sm:object-cover group-hover:scale-102 transition-transform duration-700 ease-out"
+                        }`}
+                      />
+                    </div>
                   </div>
                 ))}
               </div>

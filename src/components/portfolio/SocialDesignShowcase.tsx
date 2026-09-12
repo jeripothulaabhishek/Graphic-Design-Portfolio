@@ -132,13 +132,25 @@ export default function SocialDesignShowcase() {
             >
               {/* IMAGE ASPECT RATIO CONTAINER */}
               <div className="relative w-full h-[390px] sm:h-[460px] rounded-2xl overflow-hidden bg-[#0A0A0C] mb-4 flex items-center justify-center p-2">
+                
+                {/* AMBIENT BACKGROUND GLOW DERIVED FROM IMAGE */}
+                <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+                  <Image
+                    src={item.image}
+                    alt=""
+                    fill
+                    className="object-cover blur-3xl opacity-40 scale-125 brightness-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0C]/80 via-transparent to-[#0A0A0C]/40" />
+                </div>
+
                 <Image
                   src={item.image}
                   alt={item.title}
                   fill
                   quality={95}
                   sizes="(max-width: 768px) 100vw, 420px"
-                  className={`${
+                  className={`relative z-10 ${
                     item.image.includes("logo") || item.image.includes("Main logo") || item.image.includes("ad-design") || item.image.includes("AD design")
                       ? "object-contain p-4 filter drop-shadow-xl"
                       : "object-cover"

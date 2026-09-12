@@ -1,9 +1,8 @@
-"use client";
-
+import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Sparkles, Layers } from "lucide-react";
 import Sparkle3D from "@/components/ui/Sparkle3D";
 import { PORTFOLIO_CATEGORIES, ProjectItem } from "@/data/projects";
 
@@ -22,6 +21,17 @@ export default function SelectedWork() {
   const kinetixWebProject = webCat?.projects.find((p) => p.id === "web-1") || webCat?.projects[0];
   const socialCampaignProject = socialCat?.projects[0];
   const aiProject = aiCat?.projects[0];
+
+  // Interactive preview state for RISE Creative Card
+  const [risePreviewIndex, setRisePreviewIndex] = useState(0);
+  const risePreviewImages = [
+    "/rise-creative-branding/main-logo.png",
+    "/rise-creative-branding/brand-identity.png",
+    "/rise-creative-branding/ad-design-1.png",
+    "/rise-creative-branding/ad-design-2.png",
+    "/rise-creative-branding/rise-logo.png",
+  ];
+  const currentRiseImage = risePreviewImages[risePreviewIndex] || riseProject?.image || "/rise-creative-branding/main-logo.png";
 
   return (
     <section id="work" className="py-24 bg-[#F7F7F3] border-b border-[#E5E5E0]">
@@ -68,7 +78,7 @@ export default function SelectedWork() {
                     priority
                   />
                   <div className="absolute top-6 left-6 z-10">
-                    <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#111111]/80 backdrop-blur-md text-white font-mono-meta text-xs font-bold tracking-wider">
+                    <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#111111]/80 backdrop-blur-md text-white font-mono-meta text-xs font-bold tracking-wider shadow-lg">
                       <Sparkle3D className="w-4 h-4" />
                       FLAGSHIP CASE STUDY 2026
                     </span>
@@ -129,18 +139,55 @@ export default function SelectedWork() {
               className="lg:col-span-7 group bg-white border border-[#E5E5E0] rounded-3xl overflow-hidden shadow-card hover:shadow-lift transition-all duration-300 flex flex-col justify-between"
             >
               <Link href={`/work/${riseProject.slug}`}>
-                <div className="relative h-72 sm:h-96 overflow-hidden bg-[#0D0D0D] flex items-center justify-center">
+                {/* AMBIENT STUDIO CANVAS (ZERO BLACK BARS) */}
+                <div className="relative h-72 sm:h-96 overflow-hidden bg-[#0A0A0E] flex items-center justify-center">
+
+                  {/* AMBIENT BACKGROUND GLOW DERIVED FROM ACTIVE IMAGE */}
+                  <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+                    <Image
+                      src={currentRiseImage}
+                      alt=""
+                      fill
+                      className="object-cover blur-3xl opacity-50 scale-125 brightness-110 transition-all duration-700 ease-out"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0E]/80 via-transparent to-[#0A0A0E]/30" />
+                  </div>
+
+                  {/* ACTIVE IMAGE DISPLAY */}
                   <Image
-                    src={riseProject.image}
+                    src={currentRiseImage}
                     alt={riseProject.title}
                     fill
-                    className="object-contain p-6 sm:p-10 filter drop-shadow-2xl group-hover:scale-105 transition-transform duration-700 ease-out"
+                    className="relative z-10 object-contain p-6 sm:p-10 filter drop-shadow-2xl group-hover:scale-105 transition-transform duration-700 ease-out"
                   />
-                  <div className="absolute top-4 left-4 z-10">
-                    <span className="px-3.5 py-1.5 rounded-full bg-white/90 backdrop-blur-md text-[#111111] font-mono-meta text-xs font-bold shadow-sm">
-                      {riseProject.category}
+
+                  {/* TOP BADGE */}
+                  <div className="absolute top-4 left-4 z-20">
+                    <span className="px-3.5 py-1.5 rounded-full bg-white/90 backdrop-blur-md text-[#111111] font-mono-meta text-xs font-bold shadow-sm flex items-center gap-1.5">
+                      <Sparkles className="w-3.5 h-3.5 text-[#FFB800]" />
+                      <span>{riseProject.category}</span>
                     </span>
                   </div>
+
+                  {/* INTERACTIVE MINI THUMBNAIL PREVIEW SWITCHER */}
+                  <div className="absolute bottom-4 right-4 z-20 flex items-center gap-1.5 p-1.5 rounded-full bg-[#111111]/85 backdrop-blur-md border border-white/10 shadow-lg">
+                    {risePreviewImages.map((img, i) => (
+                      <button
+                        key={i}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          setRisePreviewIndex(i);
+                        }}
+                        className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${risePreviewIndex === i
+                            ? "bg-[#FFB800] scale-125 shadow-xs"
+                            : "bg-white/40 hover:bg-white"
+                          }`}
+                        aria-label={`Preview Asset ${i + 1}`}
+                      />
+                    ))}
+                  </div>
+
                 </div>
 
                 <div className="p-6 md:p-8">
@@ -201,7 +248,7 @@ export default function SelectedWork() {
             </motion.div>
           )}
 
-          {/* 4. SOCIAL CAMPAIGNS PROJECT (SPAN 6) */}
+          {/* 4. SOCIAL CAMPAIGNS PROJECT: RISE CREATIVE AD CAMPAIGNS (SPAN 6) */}
           {socialCampaignProject && (
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -211,16 +258,24 @@ export default function SelectedWork() {
               className="lg:col-span-6 group bg-white border border-[#E5E5E0] rounded-3xl overflow-hidden shadow-card hover:shadow-lift transition-all duration-300"
             >
               <Link href={`/work/${socialCampaignProject.slug}`}>
-                <div className="relative h-64 sm:h-80 overflow-hidden bg-[#0D0D0D] flex items-center justify-center p-2">
+                <div className="relative h-64 sm:h-80 overflow-hidden bg-[#0A0A0E] flex items-center justify-center">
+
+                  {/* AMBIENT BACKGROUND GLOW DERIVED FROM AD IMAGE */}
+                  <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+                    <Image
+                      src={socialCampaignProject.image}
+                      alt=""
+                      fill
+                      className="object-cover blur-3xl opacity-45 scale-125 brightness-110"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0E]/80 via-transparent to-[#0A0A0E]/30" />
+                  </div>
+
                   <Image
                     src={socialCampaignProject.image}
                     alt={socialCampaignProject.title}
                     fill
-                    className={`${
-                      socialCampaignProject.image.includes("ad-design") || socialCampaignProject.image.includes("AD design")
-                        ? "object-contain p-3"
-                        : "object-cover"
-                    } group-hover:scale-105 transition-transform duration-700 ease-out`}
+                    className="relative z-10 object-contain p-4 filter drop-shadow-2xl group-hover:scale-105 transition-transform duration-700 ease-out"
                   />
                 </div>
                 <div className="p-6">
@@ -273,3 +328,4 @@ export default function SelectedWork() {
     </section>
   );
 }
+

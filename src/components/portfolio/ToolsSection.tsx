@@ -2,8 +2,8 @@
 
 import { useState, useRef } from "react";
 import Image from "next/image";
-import { motion, AnimatePresence, useScroll, useTransform, useSpring } from "framer-motion";
-import { Wrench, Sparkle, X, ExternalLink, Layers, CheckCircle2, ChevronRight, Zap } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Wrench, Sparkle, X, Layers, CheckCircle2, ChevronRight, Zap, PlayCircle, Code2, Palette, Flame } from "lucide-react";
 
 export interface SkillItem {
   id: string;
@@ -23,9 +23,24 @@ export interface SkillItem {
 
 const SKILLS: SkillItem[] = [
   {
+    id: "capcut",
+    name: "CapCut",
+    category: "SHORT-FORM MOTION & REELS",
+    group: "MOTION",
+    desc: "Dynamic short-form video editing, auto-captioning & viral reel pacing.",
+    details: "Keyframe animation, kinetic text overlays, speed ramping, audio sync, and high-engagement short-form video content creation for Instagram Reels, Shorts & TikTok.",
+    proficiency: 100,
+    experience: "3+ Years",
+    keyProjects: ["TEDx ACE Promo Reels", "Rise Creative Campaign Shorts", "Client Video Ads"],
+    iconUrl: "/tools/capcut-3d.jpg",
+    accentBg: "bg-[#111111]/10",
+    accentBorder: "border-[#111111]/30",
+    accentText: "text-[#111111]",
+  },
+  {
     id: "figma",
     name: "Figma",
-    category: "UI / UX DESIGN",
+    category: "UI / UX & DESIGN SYSTEMS",
     group: "DESIGN",
     desc: "Design system architecture, wireframing & interactive prototypes.",
     details: "Mastery over design tokens, auto-layout 5.0, component variants, and interactive prototype flows for web & mobile applications.",
@@ -83,21 +98,6 @@ const SKILLS: SkillItem[] = [
     accentText: "text-[#00C4CC]",
   },
   {
-    id: "capcut",
-    name: "CapCut",
-    category: "SHORT-FORM MOTION",
-    group: "MOTION",
-    desc: "Dynamic video editing, auto-captioning & viral reel pacing.",
-    details: "Keyframe animation, kinetic text overlays, speed ramping, and trend-focused audio sync for Instagram Reels & TikTok.",
-    proficiency: 95,
-    experience: "3+ Years",
-    keyProjects: ["TEDx Event Promo Reels", "Rise Creative Campaign Shorts"],
-    iconUrl: "/tools/capcut-3d.jpg",
-    accentBg: "bg-[#111111]/10",
-    accentBorder: "border-[#111111]/30",
-    accentText: "text-[#111111]",
-  },
-  {
     id: "after-effects",
     name: "After Effects",
     category: "MOTION & VISUAL FX",
@@ -108,24 +108,24 @@ const SKILLS: SkillItem[] = [
     experience: "3+ Years",
     keyProjects: ["TEDx Stage Backdrop Motion", "Logo Ident Animations"],
     iconUrl: "/tools/after-effects-3d.png",
-    accentBg: "bg-[#9999FF]/10",
-    accentBorder: "border-[#9999FF]/30",
-    accentText: "text-[#9999FF]",
+    accentBg: "bg-[#8E2DE2]/10",
+    accentBorder: "border-[#8E2DE2]/30",
+    accentText: "text-[#8E2DE2]",
   },
   {
     id: "premiere-pro",
-    name: "Premiere Pro",
+    name: "Premiere Pro & Video",
     category: "VIDEO PRODUCTION",
     group: "MOTION",
-    desc: "Multi-cam timeline editing, Lumetri color grading & sound design.",
-    details: "Narrative pacing, dialogue cleanup, multi-track audio mastering, and broadcast-ready H.264/HEVC encoding.",
-    proficiency: 90,
+    desc: "Timeline editing, Lumetri color grading & multi-track sound design.",
+    details: "Narrative pacing, dialogue cleanup, multi-track audio mastering, and broadcast-ready H.264/HEVC video production.",
+    proficiency: 95,
     experience: "3+ Years",
     keyProjects: ["TEDx Keynote Recap Video", "Brand Story Documentaries"],
-    iconUrl: "/tools/after-effects-3d.png",
-    accentBg: "bg-[#EA1D5D]/10",
-    accentBorder: "border-[#EA1D5D]/30",
-    accentText: "text-[#EA1D5D]",
+    iconUrl: "/tools/capcut-3d.jpg",
+    accentBg: "bg-[#111111]/10",
+    accentBorder: "border-[#111111]/30",
+    accentText: "text-[#111111]",
   },
   {
     id: "html",
@@ -242,10 +242,10 @@ const SKILLS: SkillItem[] = [
     proficiency: 95,
     experience: "3+ Years",
     keyProjects: ["TEDx Event Key Visuals", "Rise Creative Reels"],
-    iconUrl: "/tools/after-effects-3d.png",
-    accentBg: "bg-[#8E2DE2]/10",
-    accentBorder: "border-[#8E2DE2]/30",
-    accentText: "text-[#8E2DE2]",
+    iconUrl: "/tools/capcut-3d.jpg",
+    accentBg: "bg-[#111111]/10",
+    accentBorder: "border-[#111111]/30",
+    accentText: "text-[#111111]",
   },
   {
     id: "social-design",
@@ -295,19 +295,16 @@ const SKILLS: SkillItem[] = [
 ];
 
 const STACK_FILTERS = [
-  { id: "ALL", label: "ALL 18 SKILLS" },
-  { id: "DESIGN", label: "UI & DESIGN" },
-  { id: "DEV", label: "WEB DEV" },
-  { id: "MOTION", label: "MOTION & VIDEO" },
-  { id: "STRATEGY", label: "BRAND STRATEGY" },
+  { id: "ALL", label: "ALL 18 SKILLS", icon: Sparkle },
+  { id: "MOTION", label: "MOTION & CAPCUT", icon: PlayCircle },
+  { id: "DESIGN", label: "UI & VECTOR", icon: Palette },
+  { id: "DEV", label: "WEB DEV", icon: Code2 },
+  { id: "STRATEGY", label: "BRAND STRATEGY", icon: Flame },
 ];
 
 export default function ToolsSection() {
   const [activeTab, setActiveTab] = useState("ALL");
   const [selectedSkill, setSelectedSkill] = useState<SkillItem | null>(null);
-  const [isStackView, setIsStackView] = useState(false);
-
-  const sectionRef = useRef<HTMLDivElement>(null);
 
   const filteredSkills = SKILLS.filter((s) => {
     if (activeTab === "ALL") return true;
@@ -316,12 +313,11 @@ export default function ToolsSection() {
 
   return (
     <section 
-      ref={sectionRef} 
       id="tools" 
       className="relative py-28 bg-[#F7F7F3] bg-swiss-grid border-b border-[#E5E5E0] overflow-hidden"
     >
       {/* AMBIENT BACKGROUND GLOW */}
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-[#FFB800]/10 rounded-full blur-[140px] pointer-events-none -z-10" />
+      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[700px] h-[700px] bg-[#FFB800]/10 rounded-full blur-[150px] pointer-events-none -z-10" />
 
       <div className="max-w-[1400px] mx-auto px-6 md:px-12">
 
@@ -361,174 +357,104 @@ export default function ToolsSection() {
             </motion.p>
           </div>
 
-          {/* FILTER CONTROLS & STACK TOGGLE */}
-          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
-            {/* VIEW MODE TOGGLE */}
-            <button
-              onClick={() => setIsStackView(!isStackView)}
-              className={`inline-flex items-center gap-2 px-4 py-2 rounded-full font-mono-meta text-xs font-bold tracking-wider transition-all duration-300 border ${
-                isStackView
-                  ? "bg-[#FFB800] text-[#111111] border-[#FFB800] shadow-sm"
-                  : "bg-white text-[#111111] border-[#E5E5E0] hover:border-[#111111]"
-              }`}
-            >
-              <Layers className="w-3.5 h-3.5" />
-              <span>{isStackView ? "GRID VIEW" : "3D STACK PILE"}</span>
-            </button>
-
-            {/* FILTER PILLS */}
-            <div className="flex flex-wrap items-center gap-1 bg-white p-1.5 rounded-2xl md:rounded-full border border-[#E5E5E0] shadow-xs">
-              {STACK_FILTERS.map((tab) => {
-                const isActive = activeTab === tab.id;
-                return (
-                  <button
-                    key={tab.id}
-                    onClick={() => setActiveTab(tab.id)}
-                    className={`px-3.5 py-1.5 rounded-full font-mono-meta text-xs font-bold tracking-wider transition-all duration-200 ${
-                      isActive
-                        ? "bg-[#111111] text-[#FFB800] shadow-xs"
-                        : "text-[#707070] hover:text-[#111111] hover:bg-[#F7F7F3]"
-                    }`}
-                  >
-                    {tab.label}
-                  </button>
-                );
-              })}
-            </div>
+          {/* FILTER PILLS WITH ICON BADGES */}
+          <div className="flex flex-wrap items-center gap-2 bg-white p-2 rounded-2xl md:rounded-full border border-[#E5E5E0] shadow-xs">
+            {STACK_FILTERS.map((tab) => {
+              const isActive = activeTab === tab.id;
+              const TabIcon = tab.icon;
+              return (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveTab(tab.id)}
+                  className={`flex items-center gap-1.5 px-4 py-2 rounded-full font-mono-meta text-xs font-bold tracking-wider transition-all duration-300 ${
+                    isActive
+                      ? "bg-[#111111] text-[#FFB800] shadow-sm scale-105"
+                      : "text-[#707070] hover:text-[#111111] hover:bg-[#F7F7F3]"
+                  }`}
+                >
+                  <TabIcon className="w-3.5 h-3.5" />
+                  <span>{tab.label}</span>
+                </button>
+              );
+            })}
           </div>
         </div>
 
-        {/* INTERACTIVE 3D STACK / GRID SHOWCASE */}
-        <div className="relative min-h-[520px]">
-          {isStackView ? (
-            /* 3D PILE STACK FORMATION */
-            <div className="relative w-full max-w-4xl mx-auto h-[480px] flex items-center justify-center perspective-1000 my-8">
-              {filteredSkills.slice(0, 10).map((skill, index) => {
-                const offset = (index - 4) * 25;
-                const rotateDeg = (index - 4) * 4;
-                const scaleVal = 1 - Math.abs(index - 4) * 0.04;
-                return (
-                  <motion.div
-                    key={skill.id}
-                    initial={{ y: 50, opacity: 0 }}
-                    animate={{ 
-                      x: offset * 1.8, 
-                      y: Math.abs(index - 4) * 8, 
-                      rotate: rotateDeg,
-                      scale: scaleVal,
-                      opacity: 1,
-                      zIndex: 30 - Math.abs(index - 4),
-                    }}
-                    whileHover={{ 
-                      scale: 1.08, 
-                      y: -20, 
-                      rotate: 0,
-                      zIndex: 50,
-                      transition: { type: "spring", stiffness: 400, damping: 20 }
-                    }}
-                    onClick={() => setSelectedSkill(skill)}
-                    className="absolute w-72 sm:w-80 bg-white/95 border border-[#E5E5E0] shadow-2xl rounded-3xl p-6 backdrop-blur-xl cursor-pointer select-none group"
-                  >
-                    <div className="flex justify-between items-start mb-6">
-                      <span className="font-mono-meta text-[10px] font-bold text-[#707070] uppercase tracking-wider">
-                        {skill.category}
-                      </span>
-                      <div className={`w-12 h-12 rounded-2xl p-1 flex items-center justify-center border shadow-xs ${skill.accentBg} ${skill.accentBorder}`}>
-                        <Image
-                          src={skill.iconUrl}
-                          alt={`${skill.name} Icon`}
-                          width={44}
-                          height={44}
-                          className="w-full h-full object-contain rounded-xl drop-shadow-sm"
-                        />
-                      </div>
+        {/* FLUID STAGGERED GRID SHOWCASE WITH SMOOTH SPRING ANIMATIONS */}
+        <motion.div 
+          layout
+          className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 min-h-[460px]"
+        >
+          <AnimatePresence mode="popLayout">
+            {filteredSkills.map((skill) => (
+              <motion.div
+                key={skill.id}
+                layout
+                initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.85, y: -10 }}
+                transition={{
+                  type: "spring",
+                  stiffness: 350,
+                  damping: 25,
+                }}
+                whileHover={{ 
+                  y: -8, 
+                  scale: 1.02,
+                  transition: { type: "spring", stiffness: 400, damping: 20 } 
+                }}
+                onClick={() => setSelectedSkill(skill)}
+                className="bg-white/90 border border-[#E5E5E0] rounded-3xl p-6 shadow-card hover:shadow-2xl hover:border-[#FFB800]/70 transition-all duration-300 group flex flex-col justify-between cursor-pointer relative overflow-hidden backdrop-blur-xl"
+              >
+                {/* TOP ACCENT LINE ON HOVER */}
+                <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-transparent via-[#FFB800] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+                <div>
+                  <div className="flex justify-between items-start mb-6">
+                    <span className="font-mono-meta text-[10px] font-bold text-[#707070] uppercase tracking-wider">
+                      {skill.category}
+                    </span>
+                    
+                    {/* 3D GLOSSY APP ICON CONTAINER */}
+                    <div className={`w-14 h-14 rounded-2xl p-1.5 flex items-center justify-center border shadow-xs transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3 ${skill.accentBg} ${skill.accentBorder}`}>
+                      <Image
+                        src={skill.iconUrl}
+                        alt={`${skill.name} 3D Icon`}
+                        width={52}
+                        height={52}
+                        className="w-full h-full object-contain rounded-xl filter drop-shadow-sm"
+                      />
                     </div>
+                  </div>
 
-                    <h3 className="font-display text-xl font-extrabold text-[#111111] mb-2 group-hover:text-[#FFB800] transition-colors">
-                      {skill.name}
-                    </h3>
-                    <p className="text-[#707070] text-xs leading-relaxed line-clamp-2 mb-6">
-                      {skill.desc}
-                    </p>
+                  <h3 className="font-display text-xl font-extrabold text-[#111111] mb-2 tracking-tight group-hover:text-[#FFB800] transition-colors flex items-center justify-between">
+                    <span>{skill.name}</span>
+                    <Zap className="w-4 h-4 text-[#FFB800] opacity-0 group-hover:opacity-100 transition-opacity" />
+                  </h3>
 
-                    <div className="pt-3 border-t border-[#E5E5E0] flex justify-between items-center text-[10px] font-mono-meta text-[#707070]">
-                      <span className="font-bold text-[#111111]">INSIGHTS & PROJECTS</span>
-                      <ChevronRight className="w-3.5 h-3.5 text-[#FFB800] group-hover:translate-x-1 transition-transform" />
-                    </div>
-                  </motion.div>
-                );
-              })}
-            </div>
-          ) : (
-            /* STANDARD FLOWING RESPONSIVE GRID */
-            <motion.div 
-              layout 
-              className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
-            >
-              <AnimatePresence>
-                {filteredSkills.map((skill, idx) => (
-                  <motion.div
-                    key={skill.id}
-                    layout
-                    initial={{ opacity: 0, y: 20, scale: 0.95 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.9 }}
-                    transition={{ duration: 0.35, delay: idx * 0.02 }}
-                    whileHover={{ y: -6, scale: 1.02 }}
-                    onClick={() => setSelectedSkill(skill)}
-                    className="bg-white border border-[#E5E5E0] rounded-3xl p-6 shadow-card hover:shadow-2xl hover:border-[#FFB800]/60 transition-all duration-300 group flex flex-col justify-between cursor-pointer relative overflow-hidden backdrop-blur-md"
-                  >
-                    {/* TOP ACCENT LINE ON HOVER */}
-                    <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-transparent via-[#FFB800] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <p className="text-[#707070] text-xs leading-relaxed mb-4 line-clamp-2">
+                    {skill.desc}
+                  </p>
+                </div>
 
-                    <div>
-                      <div className="flex justify-between items-start mb-6">
-                        <span className="font-mono-meta text-[10px] font-bold text-[#707070] uppercase tracking-wider">
-                          {skill.category}
-                        </span>
-                        
-                        {/* 3D GLOSSY APP ICON CONTAINER */}
-                        <div className={`w-14 h-14 rounded-2xl p-1.5 flex items-center justify-center border shadow-xs transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3 ${skill.accentBg} ${skill.accentBorder}`}>
-                          <Image
-                            src={skill.iconUrl}
-                            alt={`${skill.name} 3D Icon`}
-                            width={52}
-                            height={52}
-                            className="w-full h-full object-contain rounded-xl filter drop-shadow-sm"
-                          />
-                        </div>
-                      </div>
-
-                      <h3 className="font-display text-xl font-extrabold text-[#111111] mb-2 tracking-tight group-hover:text-[#FFB800] transition-colors flex items-center justify-between">
-                        <span>{skill.name}</span>
-                        <Zap className="w-3.5 h-3.5 text-[#FFB800] opacity-0 group-hover:opacity-100 transition-opacity" />
-                      </h3>
-
-                      <p className="text-[#707070] text-xs leading-relaxed mb-4">
-                        {skill.desc}
-                      </p>
-                    </div>
-
-                    <div className="pt-4 border-t border-[#E5E5E0] flex justify-between items-center text-[10px] font-mono-meta text-[#707070]">
-                      <span className="font-bold text-[#111111]">EXP: {skill.experience}</span>
-                      <div className="flex items-center gap-1">
-                        <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                        <span className="text-emerald-600 font-bold">{skill.proficiency}% PROFICIENT</span>
-                      </div>
-                    </div>
-                  </motion.div>
-                ))}
-              </AnimatePresence>
-            </motion.div>
-          )}
-        </div>
+                <div className="pt-4 border-t border-[#E5E5E0] flex justify-between items-center text-[10px] font-mono-meta text-[#707070]">
+                  <span className="font-bold text-[#111111]">EXP: {skill.experience}</span>
+                  <div className="flex items-center gap-1">
+                    <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                    <span className="text-emerald-600 font-bold">{skill.proficiency}% PROFICIENT</span>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </motion.div>
 
       </div>
 
       {/* SKILL CONTEXTUAL INSIGHT MODAL DRAWER */}
       <AnimatePresence>
         {selectedSkill && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-[#111111]/70 backdrop-blur-md">
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-[#111111]/75 backdrop-blur-md">
             <motion.div
               initial={{ opacity: 0, scale: 0.9, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}

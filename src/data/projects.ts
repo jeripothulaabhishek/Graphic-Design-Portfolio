@@ -229,7 +229,7 @@ export const PORTFOLIO_CATEGORIES: ProjectCategory[] = [
         title: "RISE Creative Brand Identity",
         subtitle: "Full logo system, visual identity architecture & brand guidelines",
         category: "Branding & Identity",
-        image: "/rise-creative-branding/brand-identity.png",
+        image: "/rise-creative-branding/main-logo.png",
         description: "Complete visual identity system for RISE Creative including primary logo mark, color system, typography guidelines, and brand collaterals.",
         client: "RISE Creative",
         year: "2025",

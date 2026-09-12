@@ -131,19 +131,29 @@ export default function SocialDesignShowcase() {
               className="snap-start shrink-0 w-[290px] sm:w-[350px] md:w-[390px] bg-white border border-[#E5E5E0] rounded-3xl p-4 shadow-card hover:shadow-lift transition-all duration-300 group flex flex-col justify-between"
             >
               {/* IMAGE ASPECT RATIO CONTAINER */}
-              <div className="relative w-full h-[390px] sm:h-[460px] rounded-2xl overflow-hidden bg-[#0F0F0F] mb-4">
+              <div className="relative w-full h-[390px] sm:h-[460px] rounded-2xl overflow-hidden bg-[#0A0A0C] mb-4 flex items-center justify-center p-2">
                 <Image
                   src={item.image}
                   alt={item.title}
                   fill
                   quality={95}
                   sizes="(max-width: 768px) 100vw, 420px"
-                  className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                  className={`${
+                    item.image.includes("logo") || item.image.includes("Main logo") || item.image.includes("ad-design") || item.image.includes("AD design")
+                      ? "object-contain p-4 filter drop-shadow-xl"
+                      : "object-cover"
+                  } group-hover:scale-105 transition-transform duration-700 ease-out`}
                 />
 
                 {/* Aspect Ratio Badge */}
-                <div className="absolute top-3 right-3 bg-[#111111]/85 backdrop-blur-md px-3 py-1 rounded-full font-mono-meta text-[10px] font-bold text-white tracking-wider border border-white/10">
-                  {idx % 2 === 0 ? "4:5 INSTAGRAM CAROUSEL" : "1:1 AD POST"}
+                <div className="absolute top-3 right-3 bg-[#111111]/85 backdrop-blur-md px-3 py-1 rounded-full font-mono-meta text-[10px] font-bold text-white tracking-wider border border-white/10 shadow-sm">
+                  {item.image.includes("logo") || item.image.includes("Main logo")
+                    ? "LOGO & BRAND MARK"
+                    : item.image.includes("ad-design") || item.image.includes("AD design")
+                    ? "PROMOTIONAL AD DESIGN"
+                    : idx % 2 === 0
+                    ? "4:5 INSTAGRAM CAROUSEL"
+                    : "1:1 AD POST"}
                 </div>
 
                 {/* HOVER OVERLAY LIGHTBOX TRIGGER */}

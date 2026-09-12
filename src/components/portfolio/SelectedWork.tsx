@@ -129,15 +129,15 @@ export default function SelectedWork() {
               className="lg:col-span-7 group bg-white border border-[#E5E5E0] rounded-3xl overflow-hidden shadow-card hover:shadow-lift transition-all duration-300 flex flex-col justify-between"
             >
               <Link href={`/work/${riseProject.slug}`}>
-                <div className="relative h-72 sm:h-96 overflow-hidden bg-[#111111]">
+                <div className="relative h-72 sm:h-96 overflow-hidden bg-[#0D0D0D] flex items-center justify-center">
                   <Image
                     src={riseProject.image}
                     alt={riseProject.title}
                     fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                    className="object-contain p-6 sm:p-10 filter drop-shadow-2xl group-hover:scale-105 transition-transform duration-700 ease-out"
                   />
                   <div className="absolute top-4 left-4 z-10">
-                    <span className="px-3 py-1 rounded-full bg-white/90 backdrop-blur-md text-[#111111] font-mono-meta text-xs font-bold">
+                    <span className="px-3.5 py-1.5 rounded-full bg-white/90 backdrop-blur-md text-[#111111] font-mono-meta text-xs font-bold shadow-sm">
                       {riseProject.category}
                     </span>
                   </div>
@@ -145,7 +145,7 @@ export default function SelectedWork() {
 
                 <div className="p-6 md:p-8">
                   <div className="flex items-center justify-between font-mono-meta text-xs text-[#707070] mb-2">
-                    <span>{riseProject.client}</span>
+                    <span className="font-bold text-[#FFB800]">{riseProject.client}</span>
                     <span>{riseProject.year}</span>
                   </div>
                   <h4 className="font-display text-2xl font-bold text-[#111111] uppercase tracking-tight group-hover:text-[#FFB800] transition-colors flex items-center justify-between">
@@ -178,7 +178,7 @@ export default function SelectedWork() {
                     className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                   />
                   <div className="absolute top-4 left-4 z-10">
-                    <span className="px-3 py-1 rounded-full bg-white/90 backdrop-blur-md text-[#111111] font-mono-meta text-xs font-bold">
+                    <span className="px-3.5 py-1.5 rounded-full bg-white/90 backdrop-blur-md text-[#111111] font-mono-meta text-xs font-bold shadow-sm">
                       {kinetixWebProject.category}
                     </span>
                   </div>
@@ -186,7 +186,7 @@ export default function SelectedWork() {
 
                 <div className="p-6 md:p-8">
                   <div className="flex items-center justify-between font-mono-meta text-xs text-[#707070] mb-2">
-                    <span>{kinetixWebProject.client}</span>
+                    <span className="font-bold text-[#19C8D8]">{kinetixWebProject.client}</span>
                     <span>{kinetixWebProject.year}</span>
                   </div>
                   <h4 className="font-display text-2xl font-bold text-[#111111] uppercase tracking-tight group-hover:text-[#19C8D8] transition-colors flex items-center justify-between">
@@ -211,20 +211,25 @@ export default function SelectedWork() {
               className="lg:col-span-6 group bg-white border border-[#E5E5E0] rounded-3xl overflow-hidden shadow-card hover:shadow-lift transition-all duration-300"
             >
               <Link href={`/work/${socialCampaignProject.slug}`}>
-                <div className="relative h-64 sm:h-80 overflow-hidden bg-[#111111]">
+                <div className="relative h-64 sm:h-80 overflow-hidden bg-[#0D0D0D] flex items-center justify-center p-2">
                   <Image
                     src={socialCampaignProject.image}
                     alt={socialCampaignProject.title}
                     fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                    className={`${
+                      socialCampaignProject.image.includes("ad-design") || socialCampaignProject.image.includes("AD design")
+                        ? "object-contain p-3"
+                        : "object-cover"
+                    } group-hover:scale-105 transition-transform duration-700 ease-out`}
                   />
                 </div>
                 <div className="p-6">
                   <span className="font-mono-meta text-xs text-[#FF6B35] font-bold uppercase tracking-wider block mb-1">
                     {socialCampaignProject.category}
                   </span>
-                  <h4 className="font-display text-xl font-bold text-[#111111] group-hover:text-[#FF6B35] transition-colors">
-                    {socialCampaignProject.title}
+                  <h4 className="font-display text-xl font-bold text-[#111111] group-hover:text-[#FF6B35] transition-colors flex items-center justify-between">
+                    <span>{socialCampaignProject.title}</span>
+                    <ArrowUpRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
                   </h4>
                 </div>
               </Link>
@@ -253,8 +258,9 @@ export default function SelectedWork() {
                   <span className="font-mono-meta text-xs text-[#19C8D8] font-bold uppercase tracking-wider block mb-1">
                     {aiProject.category}
                   </span>
-                  <h4 className="font-display text-xl font-bold text-[#111111] group-hover:text-[#19C8D8] transition-colors">
-                    {aiProject.title}
+                  <h4 className="font-display text-xl font-bold text-[#111111] group-hover:text-[#19C8D8] transition-colors flex items-center justify-between">
+                    <span>{aiProject.title}</span>
+                    <ArrowUpRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
                   </h4>
                 </div>
               </Link>

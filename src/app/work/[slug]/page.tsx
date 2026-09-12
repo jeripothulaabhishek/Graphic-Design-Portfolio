@@ -78,12 +78,16 @@ export default async function ProjectPage({
         </div>
 
         {/* LARGE PROJECT HERO IMAGE */}
-        <div className="relative h-[360px] sm:h-[500px] lg:h-[650px] w-full rounded-3xl overflow-hidden bg-[#111111] border border-[#E5E5E0] shadow-studio">
+        <div className="relative h-[360px] sm:h-[500px] lg:h-[650px] w-full rounded-3xl overflow-hidden bg-[#0A0A0C] border border-[#E5E5E0] shadow-studio flex items-center justify-center p-3">
           <Image
             src={project.image}
             alt={project.title}
             fill
-            className="object-cover"
+            className={`${
+              project.image.includes("logo") || project.image.includes("Main logo") || project.image.includes("ad-design") || project.image.includes("AD design")
+                ? "object-contain p-6 sm:p-12 filter drop-shadow-2xl"
+                : "object-cover"
+            }`}
             priority
           />
         </div>
@@ -190,13 +194,17 @@ export default async function ProjectPage({
                 {project.content.gallery.map((imgUrl, i) => (
                   <div
                     key={i}
-                    className="relative h-[380px] sm:h-[500px] w-full rounded-3xl overflow-hidden bg-[#111111] border border-[#E5E5E0] shadow-card"
+                    className="relative h-[380px] sm:h-[520px] w-full rounded-3xl overflow-hidden bg-[#0A0A0C] border border-[#E5E5E0] shadow-card flex items-center justify-center p-3"
                   >
                     <Image
                       src={imgUrl}
                       alt={`${project.title} gallery image ${i + 1}`}
                       fill
-                      className="object-cover"
+                      className={`${
+                        imgUrl.includes("logo") || imgUrl.includes("Main logo") || imgUrl.includes("ad-design") || imgUrl.includes("AD design")
+                          ? "object-contain p-6 sm:p-10 filter drop-shadow-xl"
+                          : "object-cover"
+                      }`}
                     />
                   </div>
                 ))}

@@ -480,6 +480,68 @@ export default function HeroScene3D() {
           </div>
         </motion.div>
 
+        {/* EXTRA FLOATING 3D OBJECT: CAMERA 3D BADGE */}
+        <motion.div
+          style={{
+            x: floatX2,
+            y: floatY1,
+            transform: "translateZ(90px)",
+          }}
+          animate={{
+            y: [-7, 5, -7],
+            rotate: [2, -2, 2],
+          }}
+          transition={{
+            duration: 5.2,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+          className="hidden xl:flex absolute -top-12 left-1/3 -translate-x-1/2 bg-white/95 border border-[#E5E5E0] shadow-2xl rounded-2xl p-2 items-center gap-2.5 backdrop-blur-xl z-30 pointer-events-none"
+        >
+          <div className="relative w-7 h-7 rounded-xl overflow-hidden shadow-sm border border-white/60 bg-[#111111]">
+            <Image
+              src="/tools/camera-3d.jpg"
+              alt="Camera 3D"
+              fill
+              className="object-cover"
+            />
+          </div>
+          <span className="font-mono-meta text-[10px] font-bold text-[#111111] uppercase tracking-wider pr-1">
+            PHOTOGRAPHY & CAMERA
+          </span>
+        </motion.div>
+
+        {/* EXTRA FLOATING 3D OBJECT: COLOR PALETTE 3D BADGE */}
+        <motion.div
+          style={{
+            x: floatX1,
+            y: floatY3,
+            transform: "translateZ(85px)",
+          }}
+          animate={{
+            y: [6, -6, 6],
+            rotate: [-2, 2, -2],
+          }}
+          transition={{
+            duration: 4.4,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+          className="hidden xl:flex absolute -bottom-10 left-1/3 -translate-x-1/2 bg-white/95 border border-[#E5E5E0] shadow-2xl rounded-2xl p-2 items-center gap-2.5 backdrop-blur-xl z-30 pointer-events-none"
+        >
+          <div className="relative w-7 h-7 rounded-xl overflow-hidden shadow-sm border border-white/60 bg-[#111111]">
+            <Image
+              src="/tools/palette-3d.jpg"
+              alt="Palette 3D"
+              fill
+              className="object-cover"
+            />
+          </div>
+          <span className="font-mono-meta text-[10px] font-bold text-[#FFB800] uppercase tracking-wider pr-1">
+            COLOR SWATCHES & GRIDS
+          </span>
+        </motion.div>
+
         {/* BOTTOM RIGHT BADGE: INTERACTIVE STAGE COMPASS */}
         <motion.div
           style={{

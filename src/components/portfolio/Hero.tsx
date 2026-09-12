@@ -62,20 +62,20 @@ export default function Hero() {
               <br />
               <span className="relative inline-block text-[#111111]">
                 MADE TO
-                <span className="absolute bottom-2 left-0 w-full h-3 bg-[#FFB800] -z-10 rounded-sm" />
+                <span className="absolute bottom-2 left-0 w-full h-3.5 bg-[#FFB800] -z-10 rounded-sm" />
               </span>
               <br />
               MOVE.
             </motion.h1>
 
-            {/* SUPPORTING COPY */}
+            {/* SUPPORTING POSITIONING STATEMENT */}
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-lg md:text-xl text-[#707070] font-normal leading-relaxed max-w-lg mb-10"
+              className="text-lg md:text-xl text-[#707070] font-normal leading-relaxed max-w-xl mb-10"
             >
-              I design visuals people notice — and complete digital experiences they remember. From brand identity to responsive websites.
+              I craft visual identities people notice — and complete digital experiences they remember. Specializing in brand architecture, UI/UX interfaces, responsive websites, high-converting social campaigns, and motion graphics.
             </motion.p>
 
             {/* ACTION BUTTONS */}
@@ -83,43 +83,47 @@ export default function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
-              className="flex flex-wrap items-center gap-4 w-full sm:w-auto"
+              className="flex flex-wrap items-center gap-4 w-full sm:w-auto mb-12"
             >
               <Link
                 href="#work"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 bg-[#FFB800] text-[#111111] hover:bg-[#111111] hover:text-white font-display font-bold text-sm px-7 py-4 rounded-xl shadow-sm transition-all duration-300 transform hover:-translate-y-0.5"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 bg-[#FFB800] text-[#111111] hover:bg-[#111111] hover:text-[#FFB800] font-display font-bold text-sm px-8 py-4 rounded-xl shadow-md transition-all duration-300 transform hover:-translate-y-0.5"
               >
                 <span>EXPLORE WORK</span>
                 <ArrowUpRight className="w-4 h-4" />
               </Link>
 
               <Link
-                href="#about"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 bg-white text-[#111111] border border-[#E5E5E0] hover:border-[#111111] font-display font-semibold text-sm px-7 py-4 rounded-xl shadow-xs transition-all duration-300 transform hover:-translate-y-0.5"
+                href="#contact"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 bg-[#111111] text-white hover:bg-[#FFB800] hover:text-[#111111] font-display font-bold text-sm px-8 py-4 rounded-xl shadow-md transition-all duration-300 transform hover:-translate-y-0.5"
               >
-                <span>ABOUT ABHISHEK</span>
-                <ArrowRight className="w-4 h-4 text-[#707070]" />
+                <span>LET'S BUILD</span>
+                <ArrowRight className="w-4 h-4" />
               </Link>
             </motion.div>
 
-            {/* METADATA STRIP */}
+            {/* CREDIBILITY METRICS STRIP */}
             <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}
-              className="mt-12 pt-8 border-t border-[#E5E5E0] w-full grid grid-cols-3 gap-4"
+              className="pt-8 border-t border-[#E5E5E0] w-full grid grid-cols-2 sm:grid-cols-4 gap-6"
             >
               <div>
-                <span className="block font-mono-meta text-[11px] text-[#707070] uppercase tracking-wider">ROLE</span>
-                <span className="font-display text-sm font-bold text-[#111111]">Design Lead</span>
+                <span className="font-display text-2xl sm:text-3xl font-extrabold text-[#111111]">50+</span>
+                <span className="block font-mono-meta text-[11px] text-[#707070] uppercase tracking-wider font-medium mt-0.5">Projects Completed</span>
               </div>
               <div>
-                <span className="block font-mono-meta text-[11px] text-[#707070] uppercase tracking-wider">FLAGSHIP</span>
-                <span className="font-display text-sm font-bold text-[#111111]">TEDx ACE 2026</span>
+                <span className="font-display text-2xl sm:text-3xl font-extrabold text-[#111111]">20+</span>
+                <span className="block font-mono-meta text-[11px] text-[#707070] uppercase tracking-wider font-medium mt-0.5">Happy Clients</span>
               </div>
               <div>
-                <span className="block font-mono-meta text-[11px] text-[#707070] uppercase tracking-wider">LOCATION</span>
-                <span className="font-display text-sm font-bold text-[#111111]">Available Worldwide</span>
+                <span className="font-display text-2xl sm:text-3xl font-extrabold text-[#111111]">3+</span>
+                <span className="block font-mono-meta text-[11px] text-[#707070] uppercase tracking-wider font-medium mt-0.5">Years Learning</span>
+              </div>
+              <div>
+                <span className="font-display text-2xl sm:text-3xl font-extrabold text-[#111111]">∞</span>
+                <span className="block font-mono-meta text-[11px] text-[#707070] uppercase tracking-wider font-medium mt-0.5">Ideas to Build</span>
               </div>
             </motion.div>
 
@@ -138,8 +142,27 @@ export default function Hero() {
         </div>
       </div>
 
+      {/* SUBTLE SCROLL TO EXPLORE INDICATOR */}
+      <motion.div 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1 }}
+        className="hidden md:flex absolute bottom-16 right-12 flex-col items-center gap-2 z-20 pointer-events-none"
+      >
+        <span className="font-mono-meta text-[10px] font-bold text-[#707070] tracking-widest uppercase rotate-90 origin-right translate-x-4">
+          SCROLL
+        </span>
+        <div className="w-5 h-9 rounded-full border-2 border-[#111111]/30 p-1 flex justify-center mt-6">
+          <motion.div 
+            animate={{ y: [0, 12, 0] }}
+            transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+            className="w-1.5 h-1.5 rounded-full bg-[#FFB800]"
+          />
+        </div>
+      </motion.div>
+
       {/* INFINITE MARQUEE TICKER */}
-      <div className="mt-14 w-full bg-[#111111] text-white py-3 overflow-hidden border-y border-[#111111]">
+      <div className="mt-14 w-full bg-[#111111] text-white py-3.5 overflow-hidden border-y border-[#111111]">
         <div className="flex w-max animate-marquee space-x-8">
           {[...MARQUEE_ITEMS, ...MARQUEE_ITEMS, ...MARQUEE_ITEMS].map((item, idx) => (
             <div key={idx} className="flex items-center space-x-8">

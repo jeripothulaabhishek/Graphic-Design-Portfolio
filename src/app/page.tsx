@@ -1,11 +1,12 @@
 import Navbar from "@/components/navigation/Navbar";
 import Hero from "@/components/portfolio/Hero";
+import ToolsSection from "@/components/portfolio/ToolsSection";
+import WhatICreate from "@/components/portfolio/WhatICreate";
 import AboutIntro from "@/components/portfolio/AboutIntro";
 import SelectedWork from "@/components/portfolio/SelectedWork";
 import WebShowcase from "@/components/portfolio/WebShowcase";
 import VisualArchive from "@/components/ui/3d-folder";
 import SocialDesignShowcase from "@/components/portfolio/SocialDesignShowcase";
-import ToolsSection from "@/components/portfolio/ToolsSection";
 import CaseStudies from "@/components/portfolio/CaseStudies";
 import ContactFooter from "@/components/portfolio/ContactFooter";
 
@@ -18,28 +19,31 @@ export default function Home() {
       {/* 01 / HERO WITH 3D CREATIVE STUDIO SCENE */}
       <Hero />
 
-      {/* 02 / ABOUT ABHISHEK & CAPABILITIES */}
-      <AboutIntro />
-
-      {/* 03 / SELECTED WORK MASONRY GRID */}
-      <SelectedWork />
-
-      {/* 04 / WEBSITES & DIGITAL EXPERIENCES SHOWCASE */}
-      <WebShowcase />
-
-      {/* 05 / 3D MANUFACTURED VISUAL ARCHIVE */}
-      <VisualArchive />
-
-      {/* 06 / SOCIAL DESIGN SHOWCASE */}
-      <SocialDesignShowcase />
-
-      {/* 07 / CREATIVE STACK & TOOLS */}
+      {/* 02 / MY CREATIVE STACK (18 SKILLS & 3D PILE SHOWCASE) */}
       <ToolsSection />
 
-      {/* 08 / FLAGSHIP TEDX CASE STUDY */}
+      {/* 03 / WHAT I CREATE (4 EDITORIAL DISCIPLINES) */}
+      <WhatICreate />
+
+      {/* 04 / ABOUT ABHISHEK & CAPABILITIES */}
+      <AboutIntro />
+
+      {/* 05 / SELECTED WORK MASONRY GRID */}
+      <SelectedWork />
+
+      {/* 06 / WEBSITES & DIGITAL EXPERIENCES SHOWCASE */}
+      <WebShowcase />
+
+      {/* 07 / 3D MANUFACTURED VISUAL ARCHIVE */}
+      <VisualArchive />
+
+      {/* 08 / SOCIAL DESIGN SHOWCASE */}
+      <SocialDesignShowcase />
+
+      {/* 09 / FLAGSHIP TEDX CASE STUDY */}
       <CaseStudies />
 
-      {/* 09 / CONTACT & MINIMAL FOOTER */}
+      {/* 10 / CONTACT & MINIMAL FOOTER */}
       <ContactFooter />
     </main>
   );
